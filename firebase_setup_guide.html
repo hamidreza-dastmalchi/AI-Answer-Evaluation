@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Setup Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        .code {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔥 Firebase Firestore Setup Guide</h1>
+    
+    <p>If your evaluation tool is not saving to Firebase, you need to configure the Firestore security rules.</p>
+    
+    <div class="step">
+        <h2>Step 1: Go to Firebase Console</h2>
+        <p>Visit: <a href="https://console.firebase.google.com/" target="_blank">https://console.firebase.google.com/</a></p>
+        <p>Select your project: <strong>ai-evaluation-82fc8</strong></p>
+    </div>
+    
+    <div class="step">
+        <h2>Step 2: Navigate to Firestore Database</h2>
+        <p>In the left sidebar, click on "Firestore Database"</p>
+        <p>Click on the "Rules" tab at the top</p>
+    </div>
+    
+    <div class="step">
+        <h2>Step 3: Update Security Rules</h2>
+        <p>Replace the existing rules with these:</p>
+        <div class="code">
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow read/write access to evaluations collection for authenticated users
+    match /evaluations/{document} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Allow read access to test collection for connectivity testing
+    match /test/{document} {
+      allow read: if request.auth != null;
+    }
+    
+    // Deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+        </div>
+    </div>
+    
+    <div class="step">
+        <h2>Step 4: Publish Rules</h2>
+        <p>Click the "Publish" button to save the new rules</p>
+    </div>
+    
+    <div class="warning">
+        <h3>⚠️ Important Notes:</h3>
+        <ul>
+            <li>These rules allow <strong>any authenticated user</strong> to read and write to the evaluations collection</li>
+            <li>For production use, you might want more restrictive rules</li>
+            <li>The rules require users to be authenticated (which your app does with anonymous auth)</li>
+        </ul>
+    </div>
+    
+    <div class="step">
+        <h2>Step 5: Test the Connection</h2>
+        <p>After updating the rules:</p>
+        <ol>
+            <li>Open your evaluation tool</li>
+            <li>Open the browser console (F12)</li>
+            <li>Look for these messages:
+                <ul>
+                    <li>"Signed in anonymously to Firebase"</li>
+                    <li>"Firebase read test successful"</li>
+                    <li>"Firestore write successful!" (when saving)</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+    
+    <div class="step">
+        <h2>Troubleshooting</h2>
+        <p>If you still see errors in the console:</p>
+        <ul>
+            <li><strong>Permission denied:</strong> Rules are not published yet</li>
+            <li><strong>Network error:</strong> Check your internet connection</li>
+            <li><strong>Project not found:</strong> Verify the project ID in the Firebase config</li>
+        </ul>
+    </div>
+</body>
+</html> 

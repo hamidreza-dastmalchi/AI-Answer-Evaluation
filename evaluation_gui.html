@@ -641,11 +641,26 @@
         auth.signInAnonymously()
             .then(() => {
                 console.log('Signed in anonymously to Firebase');
+                // Test Firebase connectivity
+                testFirebaseConnection();
             })
             .catch((error) => {
                 console.error('Error signing in anonymously:', error);
                 console.log('Continuing without Firebase authentication - some features may be limited');
             });
+
+        function testFirebaseConnection() {
+            console.log('Testing Firebase connection...');
+            // Try to read from a test document
+            db.collection('test').doc('connection-test').get()
+                .then((doc) => {
+                    console.log('Firebase read test successful');
+                })
+                .catch((error) => {
+                    console.error('Firebase read test failed:', error);
+                    console.log('This might indicate Firestore security rules are blocking access');
+                });
+        }
 
         // Global state
         let questions = [];
@@ -1293,6 +1308,19 @@
                     }
                     
                     function performFirestoreSave() {
+                        console.log('Attempting to write to Firestore...');
+                        console.log('Collection: evaluations, Document: ' + evaluationId);
+                        console.log('Data to save:', {
+                            timestamp: timestamp,
+                            totalQuestions: questions.length,
+                            results: finalResults,
+                            metadata: {
+                                sampleFraction: SAMPLE_FRACTION,
+                                manualFile: MANUAL_FILE,
+                                modelFile: MODEL_FILE
+                            }
+                        });
+                        
                         db.collection('evaluations').doc(evaluationId).set({
                             timestamp: timestamp,
                             totalQuestions: questions.length,
@@ -1304,10 +1332,13 @@
                             }
                         })
                         .then(() => {
+                            console.log('Firestore write successful!');
                             resolve();
                         })
                         .catch((error) => {
-                            console.error('Firestore write failed:', error);
+                            console.error('Firestore write failed with error:', error);
+                            console.error('Error code:', error.code);
+                            console.error('Error message:', error.message);
                             reject(error);
                         });
                     }
