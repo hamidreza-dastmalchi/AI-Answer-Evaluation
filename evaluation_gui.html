@@ -637,13 +637,14 @@
         const db = firebase.firestore();
         const auth = firebase.auth();
 
-        // Sign in anonymously to enable Firestore writes
+        // Try to sign in anonymously, but don't block the app if it fails
         auth.signInAnonymously()
             .then(() => {
                 console.log('Signed in anonymously to Firebase');
             })
             .catch((error) => {
                 console.error('Error signing in anonymously:', error);
+                console.log('Continuing without Firebase authentication - some features may be limited');
             });
 
         // Global state
@@ -1257,98 +1258,84 @@
             
             // Show loading message
             const successMessage = document.getElementById('successMessage');
-            successMessage.textContent = 'Saving results to cloud...';
+            successMessage.textContent = 'Saving results...';
             successMessage.style.display = 'block';
             
-            // Check if user is authenticated
-            if (!auth.currentUser) {
-                console.log('User not authenticated, attempting to sign in...');
-                auth.signInAnonymously()
-                    .then(() => {
-                        console.log('Signed in successfully, now saving...');
-                        saveToFirestore();
-                    })
-                    .catch((error) => {
-                        console.error('Authentication failed:', error);
-                        showError('Authentication failed. Please try again.');
-                    });
-            } else {
-                console.log('User already authenticated, saving...');
-                saveToFirestore();
-            }
-            
-            function saveToFirestore() {
-                db.collection('evaluations').doc(evaluationId).set({
-                    timestamp: timestamp,
-                    totalQuestions: questions.length,
-                    results: finalResults,
-                    metadata: {
-                        sampleFraction: SAMPLE_FRACTION,
-                        manualFile: MANUAL_FILE,
-                        modelFile: MODEL_FILE
-                    }
-                })
+            // Try to save to Firebase first
+            saveToFirestore()
                 .then(() => {
                     console.log('Results saved to Firebase successfully');
-                    
-                    // Show thank you page
                     showThankYouPage(evaluationId, finalResults);
                 })
                 .catch((error) => {
-                    console.error('Error saving to Firebase:', error);
-                    showError('Error saving to cloud. Please try again.');
+                    console.error('Firebase save failed:', error);
+                    // Fallback to local save
+                    saveLocally(finalResults, evaluationId);
+                });
+            
+            function saveToFirestore() {
+                return new Promise((resolve, reject) => {
+                    // Check if we can write to Firestore
+                    if (!auth.currentUser) {
+                        console.log('No authenticated user, trying to sign in...');
+                        auth.signInAnonymously()
+                            .then(() => {
+                                console.log('Signed in successfully, now saving...');
+                                performFirestoreSave();
+                            })
+                            .catch((error) => {
+                                console.error('Authentication failed:', error);
+                                reject(new Error('Authentication failed'));
+                            });
+                    } else {
+                        console.log('User already authenticated, saving...');
+                        performFirestoreSave();
+                    }
+                    
+                    function performFirestoreSave() {
+                        db.collection('evaluations').doc(evaluationId).set({
+                            timestamp: timestamp,
+                            totalQuestions: questions.length,
+                            results: finalResults,
+                            metadata: {
+                                sampleFraction: SAMPLE_FRACTION,
+                                manualFile: MANUAL_FILE,
+                                modelFile: MODEL_FILE
+                            }
+                        })
+                        .then(() => {
+                            resolve();
+                        })
+                        .catch((error) => {
+                            console.error('Firestore write failed:', error);
+                            reject(error);
+                        });
+                    }
                 });
             }
             
-            function showThankYouPage(evaluationId, results) {
-                // Hide main content and sidebar
-                document.getElementById('mainContent').style.display = 'none';
-                document.querySelector('.sidebar').style.display = 'none';
+            function saveLocally(results, evaluationId) {
+                // Create a downloadable version as fallback
+                const dataStr = JSON.stringify(results, null, 4);
+                const dataBlob = new Blob([dataStr], {type: 'application/json'});
                 
-                // Show thank you page
-                const thankYouPage = document.getElementById('thankYouPage');
-                thankYouPage.style.display = 'block';
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(dataBlob);
+                link.download = `evaluation_results_${evaluationId}.json`;
+                link.click();
                 
-                // Set evaluation ID
-                document.getElementById('evaluationIdSpan').textContent = evaluationId;
+                // Show thank you page with local save message
+                showThankYouPage(evaluationId, results, true);
                 
-                // Calculate and display statistics
-                const statsGrid = document.getElementById('statsGrid');
-                const totalQuestions = results.length;
-                const totalEvaluations = results.reduce((sum, result) => {
-                    return sum + (result.covered_essential_ground_truth || 0) + (result.covered_optional_ground_truth || 0);
-                }, 0);
-                
-                statsGrid.innerHTML = `
-                    <div class="stat-card">
-                        <div class="stat-number">${totalQuestions}</div>
-                        <div class="stat-label">Questions Evaluated</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">${totalEvaluations}</div>
-                        <div class="stat-label">Total Evaluations</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">${new Date().toLocaleDateString()}</div>
-                        <div class="stat-label">Completion Date</div>
-                    </div>
-                `;
-                
-                // Scroll to top
-                window.scrollTo(0, 0);
-            }
-            
-            function showError(message) {
-                // Show error message
+                // Show info message
                 const errorMessage = document.getElementById('errorMessage');
-                errorMessage.textContent = message;
+                errorMessage.textContent = 'Results saved locally. Firebase authentication failed.';
                 errorMessage.style.display = 'block';
+                errorMessage.style.background = '#d1ecf1';
+                errorMessage.style.color = '#0c5460';
                 setTimeout(() => {
                     errorMessage.style.display = 'none';
                 }, 5000);
-                
-                // Hide loading message
-                successMessage.style.display = 'none';
             }
         }
 
@@ -1405,6 +1392,50 @@
             
             // Reload data and update UI
             loadAndPrepareData();
+        }
+
+        function showThankYouPage(evaluationId, results, isLocalSave = false) {
+            // Hide main content and sidebar
+            document.getElementById('mainContent').style.display = 'none';
+            document.querySelector('.sidebar').style.display = 'none';
+            
+            // Show thank you page
+            const thankYouPage = document.getElementById('thankYouPage');
+            thankYouPage.style.display = 'block';
+            
+            // Set evaluation ID
+            document.getElementById('evaluationIdSpan').textContent = evaluationId;
+            
+            // Update title if it's a local save
+            if (isLocalSave) {
+                document.querySelector('#thankYouPage h1').textContent = '🎉 Thank You! (Local Save)';
+                document.querySelector('#thankYouPage h2').textContent = 'Your evaluation has been saved locally';
+            }
+            
+            // Calculate and display statistics
+            const statsGrid = document.getElementById('statsGrid');
+            const totalQuestions = results.length;
+            const totalEvaluations = results.reduce((sum, result) => {
+                return sum + (result.covered_essential_ground_truth || 0) + (result.covered_optional_ground_truth || 0);
+            }, 0);
+            
+            statsGrid.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${totalQuestions}</div>
+                    <div class="stat-label">Questions Evaluated</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${totalEvaluations}</div>
+                    <div class="stat-label">Total Evaluations</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${new Date().toLocaleDateString()}</div>
+                    <div class="stat-label">Completion Date</div>
+                </div>
+            `;
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
         }
     </script>
 </body>
