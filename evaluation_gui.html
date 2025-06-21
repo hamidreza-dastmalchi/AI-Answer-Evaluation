@@ -735,10 +735,6 @@
                         console.log('✅ Firebase write test successful');
                         resultDiv.textContent = resultDiv.textContent.replace(' | Testing write...', ' | ✅ Write OK');
                         resultDiv.style.color = '#28a745';
-                        
-                        setTimeout(() => {
-                            resultDiv.textContent = '✅ Firebase working perfectly!';
-                        }, 2000);
                     })
                     .catch((error) => {
                         console.error('❌ Firebase write test failed:', error);
