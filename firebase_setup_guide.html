@@ -49,13 +49,27 @@
     </div>
     
     <div class="step">
-        <h2>Step 2: Navigate to Firestore Database</h2>
+        <h2>Step 2: Enable Anonymous Authentication</h2>
+        <p><strong>This is the most important step!</strong></p>
+        <ol>
+            <li>In the left sidebar, click on "Authentication"</li>
+            <li>Click on the "Sign-in method" tab</li>
+            <li>Find "Anonymous" in the list of providers</li>
+            <li>Click on "Anonymous"</li>
+            <li>Toggle the switch to "Enable"</li>
+            <li>Click "Save"</li>
+        </ol>
+        <p><em>This is required for the evaluation tool to work!</em></p>
+    </div>
+    
+    <div class="step">
+        <h2>Step 3: Navigate to Firestore Database</h2>
         <p>In the left sidebar, click on "Firestore Database"</p>
         <p>Click on the "Rules" tab at the top</p>
     </div>
     
     <div class="step">
-        <h2>Step 3: Update Security Rules</h2>
+        <h2>Step 4: Update Security Rules</h2>
         <p>Replace the existing rules with these:</p>
         <div class="code">
 rules_version = '2';
@@ -81,7 +95,7 @@ service cloud.firestore {
     </div>
     
     <div class="step">
-        <h2>Step 4: Publish Rules</h2>
+        <h2>Step 5: Publish Rules</h2>
         <p>Click the "Publish" button to save the new rules</p>
     </div>
     
@@ -95,7 +109,7 @@ service cloud.firestore {
     </div>
     
     <div class="step">
-        <h2>Step 5: Test the Connection</h2>
+        <h2>Step 6: Test the Connection</h2>
         <p>After updating the rules:</p>
         <ol>
             <li>Open your evaluation tool</li>

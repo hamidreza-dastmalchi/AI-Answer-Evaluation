@@ -681,7 +681,16 @@
                     })
                     .catch((error) => {
                         console.error('❌ Anonymous sign-in failed:', error);
-                        resultDiv.textContent = '❌ Auth failed: ' + error.message;
+                        let errorMessage = 'Authentication failed: ' + error.message;
+                        
+                        // Provide specific help for common issues
+                        if (error.code === 'auth/configuration-not-found') {
+                            errorMessage = 'Anonymous Authentication is not enabled in Firebase. Please enable it in the Firebase Console under Authentication > Sign-in methods > Anonymous.';
+                        } else if (error.code === 'auth/network-request-failed') {
+                            errorMessage = 'Network error. Please check your internet connection.';
+                        }
+                        
+                        resultDiv.textContent = '❌ ' + errorMessage;
                         resultDiv.style.color = '#dc3545';
                     });
                 return;
@@ -1389,7 +1398,16 @@
                             })
                             .catch((error) => {
                                 console.error('❌ Anonymous sign-in failed:', error);
-                                reject(new Error('Authentication failed: ' + error.message));
+                                let errorMessage = 'Authentication failed: ' + error.message;
+                                
+                                // Provide specific help for common issues
+                                if (error.code === 'auth/configuration-not-found') {
+                                    errorMessage = 'Anonymous Authentication is not enabled in Firebase. Please enable it in the Firebase Console under Authentication > Sign-in methods > Anonymous.';
+                                } else if (error.code === 'auth/network-request-failed') {
+                                    errorMessage = 'Network error. Please check your internet connection.';
+                                }
+                                
+                                reject(new Error(errorMessage));
                             });
                     } else {
                         console.log('✅ User already authenticated:', auth.currentUser.uid);
