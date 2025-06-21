@@ -615,11 +615,6 @@
         <div class="progress-text" id="progressText">Question 1 of 1</div>
         
         <button class="btn btn-primary" style="width: 100%;" onclick="finishAndSave()">Finish and Save Results</button>
-        
-        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #dee2e6;">
-            <button class="btn btn-secondary" style="width: 100%; margin-bottom: 10px;" onclick="testFirebaseConnection()">Test Firebase Connection</button>
-            <div id="firebaseTestResult" style="font-size: 0.8rem; color: #6c757d; text-align: center;"></div>
-        </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
@@ -646,103 +641,11 @@
         auth.signInAnonymously()
             .then(() => {
                 console.log('Signed in anonymously to Firebase');
-                // Test Firebase connectivity
-                testFirebaseConnection();
             })
             .catch((error) => {
                 console.error('Error signing in anonymously:', error);
                 console.log('Continuing without Firebase authentication - some features may be limited');
             });
-
-        function testFirebaseConnection() {
-            console.log('🧪 Testing Firebase connection...');
-            const resultDiv = document.getElementById('firebaseTestResult');
-            resultDiv.textContent = 'Testing...';
-            resultDiv.style.color = '#6c757d';
-            
-            // Test 1: Check authentication
-            console.log('1. Checking authentication...');
-            if (auth.currentUser) {
-                console.log('✅ User is authenticated:', auth.currentUser.uid);
-                resultDiv.textContent = '✅ Authenticated: ' + auth.currentUser.uid.substring(0, 8) + '...';
-                resultDiv.style.color = '#28a745';
-            } else {
-                console.log('⚠️ No authenticated user, trying to sign in...');
-                resultDiv.textContent = '🔄 Signing in...';
-                
-                auth.signInAnonymously()
-                    .then((result) => {
-                        console.log('✅ Anonymous sign-in successful:', result.user.uid);
-                        resultDiv.textContent = '✅ Authenticated: ' + result.user.uid.substring(0, 8) + '...';
-                        resultDiv.style.color = '#28a745';
-                        
-                        // Test 2: Try to read from Firestore
-                        testFirestoreRead();
-                    })
-                    .catch((error) => {
-                        console.error('❌ Anonymous sign-in failed:', error);
-                        let errorMessage = 'Authentication failed: ' + error.message;
-                        
-                        // Provide specific help for common issues
-                        if (error.code === 'auth/configuration-not-found') {
-                            errorMessage = 'Anonymous Authentication is not enabled in Firebase. Please enable it in the Firebase Console under Authentication > Sign-in methods > Anonymous.';
-                        } else if (error.code === 'auth/network-request-failed') {
-                            errorMessage = 'Network error. Please check your internet connection.';
-                        }
-                        
-                        resultDiv.textContent = '❌ ' + errorMessage;
-                        resultDiv.style.color = '#dc3545';
-                    });
-                return;
-            }
-            
-            // If already authenticated, test Firestore read
-            testFirestoreRead();
-            
-            function testFirestoreRead() {
-                console.log('2. Testing Firestore read...');
-                resultDiv.textContent += ' | Testing read...';
-                
-                // Try to read from a test document
-                db.collection('test').doc('connection-test').get()
-                    .then((doc) => {
-                        console.log('✅ Firebase read test successful');
-                        resultDiv.textContent = resultDiv.textContent.replace(' | Testing read...', ' | ✅ Read OK');
-                        resultDiv.style.color = '#28a745';
-                        
-                        // Test 3: Try to write to Firestore
-                        testFirestoreWrite();
-                    })
-                    .catch((error) => {
-                        console.error('❌ Firebase read test failed:', error);
-                        resultDiv.textContent = resultDiv.textContent.replace(' | Testing read...', ' | ❌ Read failed: ' + error.message);
-                        resultDiv.style.color = '#dc3545';
-                    });
-            }
-            
-            function testFirestoreWrite() {
-                console.log('3. Testing Firestore write...');
-                resultDiv.textContent += ' | Testing write...';
-                
-                const testData = {
-                    timestamp: new Date().toISOString(),
-                    test: true,
-                    message: 'Connection test'
-                };
-                
-                db.collection('test').doc('connection-test').set(testData)
-                    .then(() => {
-                        console.log('✅ Firebase write test successful');
-                        resultDiv.textContent = resultDiv.textContent.replace(' | Testing write...', ' | ✅ Write OK');
-                        resultDiv.style.color = '#28a745';
-                    })
-                    .catch((error) => {
-                        console.error('❌ Firebase write test failed:', error);
-                        resultDiv.textContent = resultDiv.textContent.replace(' | Testing write...', ' | ❌ Write failed: ' + error.message);
-                        resultDiv.style.color = '#dc3545';
-                    });
-            }
-        }
 
         // Global state
         let questions = [];
