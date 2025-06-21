@@ -431,6 +431,92 @@
             display: none;
         }
 
+        .thank-you-page {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin: 20px 0;
+            display: none;
+        }
+
+        .thank-you-page h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .thank-you-page h2 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .thank-you-page p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .evaluation-id {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .restart-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .restart-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+
         @media (max-width: 1200px) {
             .two-column {
                 grid-template-columns: 1fr;
@@ -489,6 +575,22 @@
 
         <div class="main-content" id="mainContent">
             <!-- Content will be dynamically generated -->
+        </div>
+
+        <div class="thank-you-page" id="thankYouPage">
+            <h1>🎉 Thank You!</h1>
+            <h2>Your evaluation has been completed successfully</h2>
+            <p>Thank you for taking the time to evaluate the AI assistant responses. Your feedback is invaluable for improving the quality of AI-generated answers.</p>
+            
+            <div class="evaluation-id" id="evaluationIdDisplay">
+                Evaluation ID: <span id="evaluationIdSpan"></span>
+            </div>
+            
+            <div class="stats-grid" id="statsGrid">
+                <!-- Stats will be populated dynamically -->
+            </div>
+            
+            <button class="restart-btn" onclick="restartEvaluation()">Start New Evaluation</button>
         </div>
 
         <div class="success-message" id="successMessage">
@@ -1189,17 +1291,51 @@
                 .then(() => {
                     console.log('Results saved to Firebase successfully');
                     
-                    // Show success message
-                    successMessage.textContent = `Results saved successfully to cloud! Evaluation ID: ${evaluationId}`;
-                    successMessage.style.display = 'block';
-                    setTimeout(() => {
-                        successMessage.style.display = 'none';
-                    }, 5000);
+                    // Show thank you page
+                    showThankYouPage(evaluationId, finalResults);
                 })
                 .catch((error) => {
                     console.error('Error saving to Firebase:', error);
                     showError('Error saving to cloud. Please try again.');
                 });
+            }
+            
+            function showThankYouPage(evaluationId, results) {
+                // Hide main content and sidebar
+                document.getElementById('mainContent').style.display = 'none';
+                document.querySelector('.sidebar').style.display = 'none';
+                
+                // Show thank you page
+                const thankYouPage = document.getElementById('thankYouPage');
+                thankYouPage.style.display = 'block';
+                
+                // Set evaluation ID
+                document.getElementById('evaluationIdSpan').textContent = evaluationId;
+                
+                // Calculate and display statistics
+                const statsGrid = document.getElementById('statsGrid');
+                const totalQuestions = results.length;
+                const totalEvaluations = results.reduce((sum, result) => {
+                    return sum + (result.covered_essential_ground_truth || 0) + (result.covered_optional_ground_truth || 0);
+                }, 0);
+                
+                statsGrid.innerHTML = `
+                    <div class="stat-card">
+                        <div class="stat-number">${totalQuestions}</div>
+                        <div class="stat-label">Questions Evaluated</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${totalEvaluations}</div>
+                        <div class="stat-label">Total Evaluations</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${new Date().toLocaleDateString()}</div>
+                        <div class="stat-label">Completion Date</div>
+                    </div>
+                `;
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
             }
             
             function showError(message) {
@@ -1252,6 +1388,23 @@
                 notMentionedBtn.classList.remove('active');
                 row.classList.remove('faded');
             }
+        }
+
+        function restartEvaluation() {
+            // Reset all state
+            currentIndex = 0;
+            currentStep = 1;
+            results = {};
+            
+            // Hide thank you page
+            document.getElementById('thankYouPage').style.display = 'none';
+            
+            // Show main content and sidebar
+            document.getElementById('mainContent').style.display = 'block';
+            document.querySelector('.sidebar').style.display = 'block';
+            
+            // Reload data and update UI
+            loadAndPrepareData();
         }
     </script>
 </body>
