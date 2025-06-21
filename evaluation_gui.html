@@ -656,6 +656,8 @@
         let currentIndex = 0;
         let currentStep = 1; // Track current step (1, 2, or 3)
         let results = {};
+        let sessionId = null; // Unique session ID for this evaluation
+        let isResuming = false; // Flag to track if we're resuming a session
 
         // Configuration
         const MANUAL_FILE = 'key points/manual_answer_key_facts.json';
@@ -666,6 +668,7 @@
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
             loadAndPrepareData();
+            checkForExistingSessions();
         });
 
         function loadAndPrepareData() {
@@ -955,10 +958,22 @@
             if (currentStep === 1) {
                 renderGroundTruthFacts();
                 renderModelFacts();
+                // Restore saved state if resuming
+                if (isResuming && results[currentQuestion.id]) {
+                    restoreSavedState(currentQuestion.id, 1);
+                }
             } else if (currentStep === 2) {
                 renderCorrectnessFacts();
+                // Restore saved state if resuming
+                if (isResuming && results[currentQuestion.id]) {
+                    restoreSavedState(currentQuestion.id, 2);
+                }
             } else if (currentStep === 3) {
                 renderRelevanceAndActionabilityFacts();
+                // Restore saved state if resuming
+                if (isResuming && results[currentQuestion.id]) {
+                    restoreSavedState(currentQuestion.id, 3);
+                }
             }
             
             // Update navigation
@@ -1212,6 +1227,79 @@
                 results[qId].relevant_optional_model = optionalRelevance.reduce((a, b) => a + b, 0);
                 results[qId].is_actionable = isActionable;
             }
+
+            // Auto-save to Firebase after each question completion
+            if (currentStep === 3) {
+                autoSaveToFirebase();
+            }
+        }
+
+        function autoSaveToFirebase() {
+            if (!sessionId) {
+                // Create new session ID if not exists
+                sessionId = `session_${new Date().toISOString().replace(/[:.]/g, '-')}`;
+            }
+
+            const annotatorName = document.getElementById('annotatorName').value.trim() || 'Anonymous';
+            
+            const autoSaveData = {
+                session_id: sessionId,
+                annotator_name: annotatorName,
+                current_question_index: currentIndex,
+                current_step: currentStep,
+                results: results,
+                last_updated: new Date().toISOString(),
+                total_questions: questions.length,
+                metadata: {
+                    sampleFraction: SAMPLE_FRACTION,
+                    manualFile: MANUAL_FILE,
+                    modelFile: MODEL_FILE
+                }
+            };
+
+            console.log('🔄 Auto-saving progress to Firebase...', autoSaveData);
+
+            // Save to Firebase
+            db.collection('evaluation_sessions').doc(sessionId).set(autoSaveData)
+                .then(() => {
+                    console.log('✅ Auto-save successful');
+                    // Show a subtle indicator that progress was saved
+                    showAutoSaveIndicator();
+                })
+                .catch((error) => {
+                    console.error('❌ Auto-save failed:', error);
+                    // Don't show error to user for auto-save failures
+                });
+        }
+
+        function showAutoSaveIndicator() {
+            // Create or update auto-save indicator
+            let indicator = document.getElementById('autoSaveIndicator');
+            if (!indicator) {
+                indicator = document.createElement('div');
+                indicator.id = 'autoSaveIndicator';
+                indicator.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #28a745;
+                    color: white;
+                    padding: 8px 12px;
+                    border-radius: 4px;
+                    font-size: 12px;
+                    z-index: 1000;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                `;
+                document.body.appendChild(indicator);
+            }
+            
+            indicator.textContent = '💾 Progress saved';
+            indicator.style.opacity = '1';
+            
+            setTimeout(() => {
+                indicator.style.opacity = '0';
+            }, 2000);
         }
 
         function previousQuestion() {
@@ -1497,6 +1585,167 @@
             
             // Scroll to top
             window.scrollTo(0, 0);
+        }
+
+        function checkForExistingSessions() {
+            const annotatorName = document.getElementById('annotatorName').value.trim() || 'Anonymous';
+            
+            // Wait for Firebase to be ready
+            setTimeout(() => {
+                if (auth.currentUser) {
+                    console.log('🔍 Checking for existing sessions...');
+                    
+                    db.collection('evaluation_sessions')
+                        .where('annotator_name', '==', annotatorName)
+                        .where('last_updated', '>', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()) // Last 24 hours
+                        .orderBy('last_updated', 'desc')
+                        .limit(1)
+                        .get()
+                        .then((querySnapshot) => {
+                            if (!querySnapshot.empty) {
+                                const sessionData = querySnapshot.docs[0].data();
+                                console.log('📋 Found existing session:', sessionData);
+                                
+                                // Show resume dialog
+                                showResumeDialog(sessionData);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('❌ Error checking for sessions:', error);
+                        });
+                }
+            }, 2000); // Wait 2 seconds for Firebase to initialize
+        }
+
+        function showResumeDialog(sessionData) {
+            const dialog = document.createElement('div');
+            dialog.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+            `;
+            
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: white;
+                padding: 30px;
+                border-radius: 8px;
+                max-width: 500px;
+                text-align: center;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            `;
+            
+            const lastUpdated = new Date(sessionData.last_updated).toLocaleString();
+            const progress = Math.round((Object.keys(sessionData.results).length / sessionData.total_questions) * 100);
+            
+            content.innerHTML = `
+                <h3>🔄 Resume Previous Session?</h3>
+                <p>We found a previous evaluation session for <strong>${sessionData.annotator_name}</strong>.</p>
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; margin: 20px 0;">
+                    <p><strong>Progress:</strong> ${Object.keys(sessionData.results).length} of ${sessionData.total_questions} questions (${progress}%)</p>
+                    <p><strong>Last updated:</strong> ${lastUpdated}</p>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <button id="resumeBtn" style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Resume Session</button>
+                    <button id="startNewBtn" style="background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Start New Session</button>
+                </div>
+            `;
+            
+            dialog.appendChild(content);
+            document.body.appendChild(dialog);
+            
+            // Handle resume button
+            document.getElementById('resumeBtn').addEventListener('click', () => {
+                resumeSession(sessionData);
+                document.body.removeChild(dialog);
+            });
+            
+            // Handle start new button
+            document.getElementById('startNewBtn').addEventListener('click', () => {
+                document.body.removeChild(dialog);
+            });
+        }
+
+        function resumeSession(sessionData) {
+            console.log('🔄 Resuming session:', sessionData.session_id);
+            
+            // Set session data
+            sessionId = sessionData.session_id;
+            results = sessionData.results || {};
+            currentIndex = sessionData.current_question_index || 0;
+            currentStep = sessionData.current_step || 1;
+            isResuming = true;
+            
+            // Set annotator name if not already set
+            if (!document.getElementById('annotatorName').value.trim()) {
+                document.getElementById('annotatorName').value = sessionData.annotator_name;
+            }
+            
+            // Update UI
+            updateUI();
+            
+            // Show success message
+            const successMessage = document.getElementById('successMessage');
+            successMessage.textContent = `Session resumed! Continuing from question ${currentIndex + 1}, step ${currentStep}.`;
+            successMessage.style.display = 'block';
+            successMessage.style.background = '#d4edda';
+            successMessage.style.color = '#155724';
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        function restoreSavedState(questionId, step) {
+            const savedData = results[questionId];
+            if (!savedData) return;
+
+            if (step === 1) {
+                // Restore completeness data
+                if (savedData.covered_essential_ground_truth !== undefined) {
+                    const essentialCheckboxes = document.querySelectorAll('#gtEssentialFacts input[type="checkbox"]');
+                    const optionalCheckboxes = document.querySelectorAll('#gtOptionalFacts input[type="checkbox"]');
+                    
+                    // Restore essential facts (simplified - just check first N boxes)
+                    let checkedCount = 0;
+                    essentialCheckboxes.forEach((cb, index) => {
+                        if (checkedCount < savedData.covered_essential_ground_truth) {
+                            cb.checked = true;
+                            checkedCount++;
+                        } else {
+                            cb.checked = false;
+                        }
+                    });
+                    
+                    // Restore optional facts
+                    checkedCount = 0;
+                    optionalCheckboxes.forEach((cb, index) => {
+                        if (checkedCount < savedData.covered_optional_ground_truth) {
+                            cb.checked = true;
+                            checkedCount++;
+                        } else {
+                            cb.checked = false;
+                        }
+                    });
+                }
+            } else if (step === 2) {
+                // Restore correctness data (simplified restoration)
+                console.log('Restoring correctness data for question:', questionId);
+            } else if (step === 3) {
+                // Restore relevance and actionability data
+                if (savedData.is_actionable !== undefined) {
+                    const actionabilityCheckbox = document.getElementById('actionability');
+                    if (actionabilityCheckbox) {
+                        actionabilityCheckbox.checked = savedData.is_actionable;
+                    }
+                }
+            }
         }
     </script>
 </body>

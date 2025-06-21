@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Configuration Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        .success {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        .error {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+        .warning {
+            border-left-color: #ffc107;
+            background: #fff3cd;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .log {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔥 Firebase Configuration Test</h1>
+    
+    <div class="test-section">
+        <h2>Project Information</h2>
+        <p><strong>Project ID:</strong> ai-evaluation-82fc8</p>
+        <p><strong>API Key:</strong> AIzaSyBVQx7l8alDEWRW9qpxAPrgXiSeNtc6NHc</p>
+        <p><strong>Auth Domain:</strong> ai-evaluation-82fc8.firebaseapp.com</p>
+    </div>
+    
+    <div class="test-section">
+        <h2>Firebase Initialization</h2>
+        <button onclick="testInitialization()">Test Firebase Init</button>
+        <div id="initResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Authentication Test</h2>
+        <button onclick="testAuthentication()">Test Anonymous Auth</button>
+        <div id="authResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Firestore Test</h2>
+        <button onclick="testFirestore()">Test Firestore</button>
+        <div id="firestoreResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Console Log</h2>
+        <div id="consoleLog" class="log"></div>
+        <button onclick="clearLog()">Clear Log</button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBVQx7l8alDEWRW9qpxAPrgXiSeNtc6NHc",
+          authDomain: "ai-evaluation-82fc8.firebaseapp.com",
+          projectId: "ai-evaluation-82fc8",
+          storageBucket: "ai-evaluation-82fc8.appspot.com",
+          messagingSenderId: "5824392171",
+          appId: "1:5824392171:web:dbe5090e30248c5e1547ae",
+          measurementId: "G-HR0NVE9J9L"
+        };
+
+        function log(message) {
+            const logDiv = document.getElementById('consoleLog');
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `[${timestamp}] ${message}\n`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+
+        function clearLog() {
+            document.getElementById('consoleLog').innerHTML = '';
+        }
+
+        function testInitialization() {
+            const resultDiv = document.getElementById('initResult');
+            resultDiv.innerHTML = '<p>Testing...</p>';
+            
+            try {
+                log('🧪 Testing Firebase initialization...');
+                firebase.initializeApp(firebaseConfig);
+                log('✅ Firebase initialized successfully');
+                
+                const auth = firebase.auth();
+                const db = firebase.firestore();
+                
+                log('✅ Auth and Firestore services initialized');
+                
+                resultDiv.innerHTML = '<p class="success">✅ Firebase initialization successful</p>';
+                resultDiv.className = 'test-section success';
+                
+            } catch (error) {
+                log('❌ Firebase initialization failed: ' + error.message);
+                resultDiv.innerHTML = '<p class="error">❌ Firebase initialization failed: ' + error.message + '</p>';
+                resultDiv.className = 'test-section error';
+            }
+        }
+
+        function testAuthentication() {
+            const resultDiv = document.getElementById('authResult');
+            resultDiv.innerHTML = '<p>Testing...</p>';
+            
+            try {
+                const auth = firebase.auth();
+                log('🧪 Testing anonymous authentication...');
+                
+                auth.signInAnonymously()
+                    .then((result) => {
+                        log('✅ Anonymous authentication successful');
+                        log('User ID: ' + result.user.uid);
+                        resultDiv.innerHTML = '<p class="success">✅ Anonymous authentication successful<br>User ID: ' + result.user.uid + '</p>';
+                        resultDiv.className = 'test-section success';
+                    })
+                    .catch((error) => {
+                        log('❌ Anonymous authentication failed: ' + error.message);
+                        log('Error code: ' + error.code);
+                        
+                        let errorMessage = '❌ Authentication failed: ' + error.message;
+                        if (error.code === 'auth/configuration-not-found') {
+                            errorMessage += '<br><br><strong>SOLUTION:</strong> Enable Anonymous Authentication in Firebase Console:<br>';
+                            errorMessage += '1. Go to Authentication > Sign-in method<br>';
+                            errorMessage += '2. Find "Anonymous" and click on it<br>';
+                            errorMessage += '3. Toggle "Enable" to ON<br>';
+                            errorMessage += '4. Click "Save"';
+                        }
+                        
+                        resultDiv.innerHTML = '<p class="error">' + errorMessage + '</p>';
+                        resultDiv.className = 'test-section error';
+                    });
+                    
+            } catch (error) {
+                log('❌ Authentication test failed: ' + error.message);
+                resultDiv.innerHTML = '<p class="error">❌ Authentication test failed: ' + error.message + '</p>';
+                resultDiv.className = 'test-section error';
+            }
+        }
+
+        function testFirestore() {
+            const resultDiv = document.getElementById('firestoreResult');
+            resultDiv.innerHTML = '<p>Testing...</p>';
+            
+            try {
+                const db = firebase.firestore();
+                log('🧪 Testing Firestore connection...');
+                
+                // Test read
+                db.collection('test').doc('connection-test').get()
+                    .then((doc) => {
+                        log('✅ Firestore read test successful');
+                        
+                        // Test write
+                        const testData = {
+                            timestamp: new Date().toISOString(),
+                            test: true,
+                            message: 'Connection test from test page'
+                        };
+                        
+                        return db.collection('test').doc('connection-test').set(testData);
+                    })
+                    .then(() => {
+                        log('✅ Firestore write test successful');
+                        resultDiv.innerHTML = '<p class="success">✅ Firestore read and write tests successful</p>';
+                        resultDiv.className = 'test-section success';
+                    })
+                    .catch((error) => {
+                        log('❌ Firestore test failed: ' + error.message);
+                        log('Error code: ' + error.code);
+                        
+                        let errorMessage = '❌ Firestore test failed: ' + error.message;
+                        if (error.code === 'permission-denied') {
+                            errorMessage += '<br><br><strong>SOLUTION:</strong> Update Firestore security rules to allow authenticated users to read/write.';
+                        }
+                        
+                        resultDiv.innerHTML = '<p class="error">' + errorMessage + '</p>';
+                        resultDiv.className = 'test-section error';
+                    });
+                    
+            } catch (error) {
+                log('❌ Firestore test failed: ' + error.message);
+                resultDiv.innerHTML = '<p class="error">❌ Firestore test failed: ' + error.message + '</p>';
+                resultDiv.className = 'test-section error';
+            }
+        }
+
+        // Auto-run initialization test on page load
+        window.onload = function() {
+            log('🚀 Firebase Configuration Test Page Loaded');
+            setTimeout(testInitialization, 1000);
+        };
+    </script>
+</body>
+</html> 
