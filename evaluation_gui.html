@@ -561,6 +561,10 @@
     <div class="container">
         <div class="header">
             <h1 class="title">Question Answering Evaluation!!</h1>
+            <div style="margin-top: 15px;">
+                <label for="annotatorName" style="font-weight: bold; margin-right: 10px;">Annotator Name:</label>
+                <input type="text" id="annotatorName" placeholder="Enter your name" style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; width: 200px;">
+            </div>
         </div>
 
         <div class="instructions">
@@ -1251,6 +1255,7 @@
 
         function saveResultsToFile() {
             const finalResults = Object.values(results);
+            const annotatorName = document.getElementById('annotatorName').value.trim() || 'Anonymous';
             
             // Save to Firebase Firestore
             const timestamp = new Date().toISOString();
@@ -1264,6 +1269,7 @@
             console.log('=== SAVE PROCESS START ===');
             console.log('Current auth state:', auth.currentUser);
             console.log('Evaluation ID:', evaluationId);
+            console.log('Annotator Name:', annotatorName);
             console.log('Results to save:', finalResults);
             
             // Try to save to Firebase first
@@ -1319,6 +1325,7 @@
                         
                         const dataToSave = {
                             timestamp: timestamp,
+                            annotator_name: annotatorName,
                             totalQuestions: questions.length,
                             results: finalResults,
                             metadata: {
@@ -1347,13 +1354,28 @@
             
             function saveLocally(results, evaluationId) {
                 console.log('🔄 Falling back to local save...');
+                
+                // Create data with annotator name
+                const dataToSave = {
+                    evaluation_id: evaluationId,
+                    timestamp: timestamp,
+                    annotator_name: annotatorName,
+                    total_questions: questions.length,
+                    results: results,
+                    metadata: {
+                        sampleFraction: SAMPLE_FRACTION,
+                        manualFile: MANUAL_FILE,
+                        modelFile: MODEL_FILE
+                    }
+                };
+                
                 // Create a downloadable version as fallback
-                const dataStr = JSON.stringify(results, null, 4);
+                const dataStr = JSON.stringify(dataToSave, null, 4);
                 const dataBlob = new Blob([dataStr], {type: 'application/json'});
                 
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(dataBlob);
-                link.download = `evaluation_results_${evaluationId}.json`;
+                link.download = `evaluation_results_${annotatorName.replace(/[^a-zA-Z0-9]/g, '_')}_${evaluationId}.json`;
                 link.click();
                 
                 // Show thank you page with local save message
@@ -1435,6 +1457,9 @@
             const thankYouPage = document.getElementById('thankYouPage');
             thankYouPage.style.display = 'block';
             
+            // Get annotator name
+            const annotatorName = document.getElementById('annotatorName').value.trim() || 'Anonymous';
+            
             // Set evaluation ID
             document.getElementById('evaluationIdSpan').textContent = evaluationId;
             
@@ -1452,6 +1477,10 @@
             }, 0);
             
             statsGrid.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${annotatorName}</div>
+                    <div class="stat-label">Annotator</div>
+                </div>
                 <div class="stat-card">
                     <div class="stat-number">${totalQuestions}</div>
                     <div class="stat-label">Questions Evaluated</div>
