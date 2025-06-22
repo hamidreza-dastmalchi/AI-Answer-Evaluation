@@ -1,0 +1,1314 @@
+[
+  {
+    "id": 6,
+    "question": "What does the icon with two overlapping screens represent?",
+    "manual_answer": "The icon with two overlapping screens represents the rear touchscreen control feature, which allows you to control the rear touchscreen from the front.",
+    "key_facts": {
+      "essential": [
+        "The icon with two overlapping screens represents the rear touchscreen control feature."
+      ],
+      "optional": [
+        "The rear touchscreen control feature allows you to control the rear touchscreen from the front."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 10,
+    "question": "Where is the USB-C port located in the rear compartment of the center console?",
+    "manual_answer": "The USB-C port in the rear compartment of the center console is located inside the compartment, as shown in the first image.",
+    "key_facts": {
+      "essential": [
+        "The USB-C port is located inside the rear compartment of the center console."
+      ],
+      "optional": [
+        "The location is shown in the first image."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 11,
+    "question": "Under what condition will the wireless phone charger not function due to the vehicle's battery state?",
+    "manual_answer": "The wireless phone charger will not function if the vehicle's high voltage Battery is discharged.",
+    "key_facts": {
+      "essential": [
+        "The wireless phone charger will not function if the vehicle's high voltage Battery is discharged."
+      ],
+      "optional": [],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 14,
+    "question": "What information can be accessed through the shortcut cards on the car status display?",
+    "manual_answer": "The shortcut cards on the car status display provide quick access to Media, tire pressure data, and trip information. You can swipe the cards left or right to customize your card shortcuts. For trip information, the cards can display details such as distance, duration, and average energy usage for the current trip, as well as distance and total and average energy used since the last charge and for additional trips.",
+    "key_facts": {
+      "essential": [
+        "The shortcut cards on the car status display provide quick access to Media.",
+        "The shortcut cards on the car status display provide quick access to tire pressure data.",
+        "The shortcut cards on the car status display provide quick access to trip information."
+      ],
+      "optional": [
+        "You can swipe the cards left or right to customize your card shortcuts.",
+        "For trip information, the cards can display details such as distance, duration, and average energy usage for the current trip.",
+        "The cards can display distance and total and average energy used since the last charge.",
+        "The cards can display distance and total and average energy used for additional trips."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 16,
+    "question": "What does the color of the lines around the image of Model 3 indicate?",
+    "manual_answer": "The color of the lines around the image of Model 3 indicates the proximity of detected objects to the vehicle. White lines represent objects that are farthest away, while red lines indicate objects that are very close and require immediate attention. Yellow and orange lines represent intermediate distances, with yellow being farther than orange.",
+    "key_facts": {
+      "essential": [
+        "The color of the lines around the image of Model 3 indicates the proximity of detected objects to the vehicle.",
+        "White lines represent objects that are farthest away.",
+        "Red lines indicate objects that are very close and require immediate attention.",
+        "Yellow lines represent intermediate distances and are farther than orange.",
+        "Orange lines represent intermediate distances and are closer than yellow."
+      ],
+      "optional": [],
+      "safety_critical": [
+        "Red lines indicate objects that are very close and require immediate attention."
+      ]
+    }
+  },
+  {
+    "id": 18,
+    "question": "Which voice command allows me to sync the climate settings?",
+    "manual_answer": "The voice command to sync the climate settings is 'Sync climate'.",
+    "key_facts": {
+      "essential": [
+        "The voice command to sync the climate settings is 'Sync climate'."
+      ],
+      "optional": [],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 25,
+    "question": "Where is the cabin camera located in the Model 3?",
+    "manual_answer": "The cabin camera in the Model 3 is located above the rear view mirror.",
+    "key_facts": {
+      "essential": [
+        "The cabin camera in the Model 3 is located above the rear view mirror."
+      ],
+      "optional": [],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 34,
+    "question": "How many phone keys can the Tesla Model 3 connect to simultaneously?",
+    "manual_answer": "The Tesla Model 3 can connect to three phone keys simultaneously. If more than three phone keys are detected and you want to authenticate or pair a different phone, you need to move the other connected phone key(s) out of range or turn off its Bluetooth setting.",
+    "key_facts": {
+      "essential": [
+        "The Tesla Model 3 can connect to three phone keys simultaneously."
+      ],
+      "optional": [
+        "If more than three phone keys are detected and you want to authenticate or pair a different phone, you need to move the other connected phone key(s) out of range or turn off its Bluetooth setting."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 37,
+    "question": "How do you remove a key from the Model 3 key list?",
+    "manual_answer": "To remove a key from the Model 3 key list, follow these steps:\n1. On the touchscreen, touch Controls > Locks.\n2. In the key list, find the key you want to delete and touch its associated trash icon.\n3. When prompted, scan an authenticated key on the card reader to confirm the deletion. Once complete, the key list will no longer include the deleted key.\n\nNote: Model 3 requires at least one authenticated key card or key fob at all times. If only one key card remains on the key list, you cannot delete it.",
+    "key_facts": {
+      "essential": [
+        "First, on the touchscreen, touch Controls > Locks.",
+        "Second, in the key list, find the key you want to delete and touch its associated trash icon.",
+        "Third, when prompted, scan an authenticated key on the card reader to confirm the deletion."
+      ],
+      "optional": [
+        "Once complete, the key list will no longer include the deleted key.",
+        "Model 3 requires at least one authenticated key card or key fob at all times.",
+        "If only one key card remains on the key list, you cannot delete it."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 40,
+    "question": "How should you use the exterior door handle to open the door?",
+    "manual_answer": "To open the door using the exterior door handle, use your thumb to push the wide part of the handle. The handle will pivot toward you, allowing you to pull the handle or the edge of the door to open it. The handle retracts automatically. Be cautious to avoid pinching fingers, jewelry, or acrylic nails in the door or handle mechanism, as this may cause damage or injury.",
+    "key_facts": {
+      "essential": [
+        "Use your thumb to push the wide part of the handle.",
+        "The handle will pivot toward you.",
+        "Pull the handle or the edge of the door to open it.",
+        "The handle retracts automatically."
+      ],
+      "optional": [],
+      "safety_critical": [
+        "Be cautious to avoid pinching fingers, jewelry, or acrylic nails in the door or handle mechanism, as this may cause damage or injury."
+      ]
+    }
+  },
+  {
+    "id": 59,
+    "question": "Why is it important to prevent children from playing inside the trunk?",
+    "manual_answer": "It is important to prevent children from playing inside the trunk because an unrestrained child could suffer serious injury or death in a crash. Additionally, a child could suffer heat exhaustion or death if trapped in the vehicle, especially without climate control on.",
+    "key_facts": {
+      "essential": [
+        "An unrestrained child could suffer serious injury or death in a crash.",
+        "A child could suffer heat exhaustion or death if trapped in the vehicle, especially without climate control on."
+      ],
+      "optional": [],
+      "safety_critical": [
+        "An unrestrained child could suffer serious injury or death in a crash.",
+        "A child could suffer heat exhaustion or death if trapped in the vehicle, especially without climate control on."
+      ]
+    }
+  },
+  {
+    "id": 65,
+    "question": "What should I be aware of regarding the rear console when driving on a steep slope?",
+    "manual_answer": "When driving on a steep slope, be aware that the rear console in your Model 3 is self-locking and cannot be lowered. This feature is designed to prevent the console from moving during such conditions.",
+    "key_facts": {
+      "essential": [
+        "The rear console in a Model 3 is self-locking when driving on a steep slope.",
+        "The rear console cannot be lowered when driving on a steep slope."
+      ],
+      "optional": [
+        "The self-locking feature is designed to prevent the console from moving during steep slope conditions."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 79,
+    "question": "How do you adjust the shoulder anchor height for the seat belt in the Model 3?",
+    "manual_answer": "To adjust the shoulder anchor height, press and hold the button on the shoulder anchor to release the locking mechanism. While holding the button, move the shoulder anchor up or down as necessary. Release the button to lock it into position. The image shows the button on the shoulder anchor that needs to be pressed to adjust the height.",
+    "key_facts": {
+      "essential": [
+        "Press and hold the button on the shoulder anchor to release the locking mechanism.",
+        "While holding the button, move the shoulder anchor up or down as necessary.",
+        "Release the button to lock it into position."
+      ],
+      "optional": [
+        "The image shows the button on the shoulder anchor that needs to be pressed to adjust the height."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 87,
+    "question": "How should larger children in booster seats wear the seat belt?",
+    "manual_answer": "Larger children in booster seats should wear the seat belt like an adult. It is important not to extend the seat belt webbing fully to engage the automatic locking retractor (ALR).",
+    "key_facts": {
+      "essential": [
+        "Larger children in booster seats should wear the seat belt like an adult."
+      ],
+      "optional": [],
+      "safety_critical": [
+        "It is important not to extend the seat belt webbing fully to engage the automatic locking retractor (ALR)."
+      ]
+    }
+  },
+  {
+    "id": 93,
+    "question": "What is the recommended seating position for children in a vehicle?",
+    "manual_answer": "Children age 12 and under should ride in the second and third row seats, as they are safer when properly restrained in the rear seating positions than in the front. Infants should be in a rear-facing child safety seat, toddlers in a forward-facing seat, and young children in a booster seat, all appropriate for their age, weight, and size. Never seat a child on a seat with an active airbag in front of it, as this poses a serious risk of injury or death. Always ensure child safety seats are properly secured and follow all manufacturer instructions.",
+    "key_facts": {
+      "essential": [
+        "Children age 12 and under should ride in the second and third row seats.",
+        "Infants should be in a rear-facing child safety seat.",
+        "Toddlers should be in a forward-facing seat.",
+        "Young children should be in a booster seat appropriate for their age, weight, and size."
+      ],
+      "optional": [
+        "Children are safer when properly restrained in the rear seating positions than in the front.",
+        "Always ensure child safety seats are properly secured.",
+        "Follow all manufacturer instructions for child safety seats."
+      ],
+      "safety_critical": [
+        "Never seat a child on a seat with an active airbag in front of it, as this poses a serious risk of injury or death."
+      ]
+    }
+  },
+  {
+    "id": 102,
+    "question": "What precautions should be taken to ensure correct inflation of side airbags?",
+    "manual_answer": "To ensure correct inflation of side airbags, maintain an unobstructed gap between an occupant’s torso and the side of the vehicle. Do not use seat covers, as they can restrict deployment of the seat-mounted side airbags. Additionally, do not attach or place objects on or near the side of the front seats or any airbag cover that could interfere with inflation.",
+    "key_facts": {
+      "essential": [
+        "Maintain an unobstructed gap between an occupant’s torso and the side of the vehicle.",
+        "Do not use seat covers, as they can restrict deployment of the seat-mounted side airbags.",
+        "Do not attach or place objects on or near the side of the front seats or any airbag cover that could interfere with inflation."
+      ],
+      "optional": [],
+      "safety_critical": [
+        "Maintain an unobstructed gap between an occupant’s torso and the side of the vehicle.",
+        "Do not use seat covers, as they can restrict deployment of the seat-mounted side airbags.",
+        "Do not attach or place objects on or near the side of the front seats or any airbag cover that could interfere with inflation."
+      ]
+    }
+  },
+  {
+    "id": 138,
+    "question": "How do I program a HomeLink device in my Model 3?",
+    "manual_answer": "To program a HomeLink device in your Model 3, follow these steps:\n\n1. Park your Model 3 so that the front bumper is in front of the device you want to program.\n\n2. Ensure the device's remote control has a healthy battery. It's recommended to replace the battery before starting.\n\n3. Touch the HomeLink icon at the top of the Controls screen.\n\n4. Touch 'Create HomeLink'.\n\n5. Enter a name for the device on the HomeLink screen, then touch 'Enter' or 'Add New HomeLink'.\n\n6. Choose the mode you wish to use (Standard, D-Mode, or UR-Mode), then touch 'Set Mode'.\n\n7. Touch 'Start' and follow the onscreen instructions. If you see a 'Train the receiver' screen, remember this is time-sensitive. After pressing the Learn/Program/Smart button on the device's remote control, you have about 30 seconds to return to your vehicle, press 'Continue', and then press the trained HomeLink device name twice. Consider having an assistant to help complete this step within 30 seconds.\n\n8. Once your device is programmed, touch 'Save' to complete the programming.\n\n9. Ensure HomeLink works as expected. You may need to repeat the process multiple times before succeeding.\n\nCAUTION: Your device might open or close during programming. Ensure the area is clear of people or objects before starting.",
+    "key_facts": {
+      "essential": [
+        "First, park your Model 3 so that the front bumper is in front of the device you want to program.",
+        "Second, touch the HomeLink icon at the top of the Controls screen.",
+        "Third, touch 'Create HomeLink'.",
+        "Fourth, enter a name for the device on the HomeLink screen, then touch 'Enter' or 'Add New HomeLink'.",
+        "Fifth, choose the mode you wish to use (Standard, D-Mode, or UR-Mode), then touch 'Set Mode'.",
+        "Sixth, touch 'Start' and follow the onscreen instructions.",
+        "Seventh, once your device is programmed, touch 'Save' to complete the programming.",
+        "Eighth, ensure HomeLink works as expected."
+      ],
+      "optional": [
+        "Ensure the device's remote control has a healthy battery.",
+        "It's recommended to replace the battery before starting.",
+        "If you see a 'Train the receiver' screen, remember this is time-sensitive.",
+        "After pressing the Learn/Program/Smart button on the device's remote control, you have about 30 seconds to return to your vehicle, press 'Continue', and then press the trained HomeLink device name twice.",
+        "Consider having an assistant to help complete this step within 30 seconds.",
+        "You may need to repeat the process multiple times before succeeding."
+      ],
+      "safety_critical": [
+        "Ensure the area is clear of people or objects before starting.",
+        "Your device might open or close during programming."
+      ]
+    }
+  },
+  {
+    "id": 139,
+    "question": "What are the conditions for HomeLink to trigger auto-opening of the garage door?",
+    "manual_answer": "For HomeLink to trigger the auto-opening of the garage door, the following conditions must be met: \n1. The 'Auto-open when arriving' checkbox must be selected in the HomeLink settings. \n2. The vehicle must be approaching the garage door within a specified distance set in the HomeLink settings. \n3. The vehicle must be in Drive mode. \n4. HomeLink must be enabled. \nNote: HomeLink does not trigger if the vehicle is already in the area.",
+    "key_facts": {
+      "essential": [
+        "The 'Auto-open when arriving' checkbox must be selected in the HomeLink settings.",
+        "The vehicle must be approaching the garage door within a specified distance set in the HomeLink settings.",
+        "The vehicle must be in Drive mode.",
+        "HomeLink must be enabled."
+      ],
+      "optional": [
+        "HomeLink does not trigger if the vehicle is already in the area."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 150,
+    "question": "What are the different steering weight options available in a Tesla Model 3?",
+    "manual_answer": "The Tesla Model 3 offers three steering weight options that can be adjusted via the touchscreen under Controls > Dynamics > Steering Weight. The options are: \n1. Light - Reduces the effort required to turn the steering wheel, making it easier to drive and park in town.\n2. Standard - Provides the best handling and response in most conditions, according to Tesla.\n3. Heavy - Increases the effort required to turn the steering wheel, making the Model 3 feel more responsive at higher speeds.",
+    "key_facts": {
+      "essential": [
+        "The Tesla Model 3 offers three steering weight options.",
+        "The steering weight options can be adjusted via the touchscreen under Controls > Dynamics > Steering Weight.",
+        "The options are Light, Standard, and Heavy."
+      ],
+      "optional": [
+        "Light reduces the effort required to turn the steering wheel, making it easier to drive and park in town.",
+        "Standard provides the best handling and response in most conditions, according to Tesla.",
+        "Heavy increases the effort required to turn the steering wheel, making the Model 3 feel more responsive at higher speeds."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 151,
+    "question": "What are the functions of the left and right scroll wheels on the Model 3 steering wheel?",
+    "manual_answer": "The left scroll wheel on the Model 3 steering wheel is multifunctional. It can be used to adjust the volume, play/pause media, select the next/previous track, and adjust wiper speed. It also allows for mirror adjustment and can be customized for quick access to specific functions. The right scroll wheel controls Autopilot features, such as initiating Autosteer and setting the maximum speed limit.",
+    "key_facts": {
+      "essential": [
+        "The left scroll wheel on the Model 3 steering wheel can adjust the volume.",
+        "The left scroll wheel can play/pause media.",
+        "The left scroll wheel can select the next/previous track.",
+        "The left scroll wheel can adjust wiper speed.",
+        "The left scroll wheel allows for mirror adjustment.",
+        "The right scroll wheel controls Autopilot features.",
+        "The right scroll wheel can initiate Autosteer.",
+        "The right scroll wheel can set the maximum speed limit."
+      ],
+      "optional": [
+        "The left scroll wheel is multifunctional.",
+        "The left scroll wheel can be customized for quick access to specific functions."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 172,
+    "question": "What is the maximum speed at which Model 3 can be rolled in Tow Mode?",
+    "manual_answer": "In Tow Mode, Model 3 can be rolled slowly, no faster than walking speed, for short distances.",
+    "key_facts": {
+      "essential": [
+        "Model 3 can be rolled in Tow Mode no faster than walking speed."
+      ],
+      "optional": [
+        "Model 3 can be rolled in Tow Mode for short distances."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 175,
+    "question": "What should a driver be aware of when using Adaptive Headlights?",
+    "manual_answer": "When using Adaptive Headlights, drivers should be aware that this feature automatically switches between high and low beam headlights based on detected light in front of the vehicle and adjusts to curves for better visibility at night. It is automatically enabled when Autosteer is engaged, but drivers can switch to low beams by pressing the high beam button on the steering wheel. Importantly, Adaptive Headlights is a convenience feature with limitations, and it is the driver's responsibility to ensure headlights are appropriately adjusted for weather and driving conditions.",
+    "key_facts": {
+      "essential": [
+        "Adaptive Headlights automatically switch between high and low beam headlights based on detected light in front of the vehicle.",
+        "Adaptive Headlights adjust to curves for better visibility at night.",
+        "Adaptive Headlights is automatically enabled when Autosteer is engaged.",
+        "Drivers can switch to low beams by pressing the high beam button on the steering wheel."
+      ],
+      "optional": [
+        "Adaptive Headlights is a convenience feature with limitations.",
+        "It is the driver's responsibility to ensure headlights are appropriately adjusted for weather and driving conditions."
+      ],
+      "safety_critical": [
+        "It is the driver's responsibility to ensure headlights are appropriately adjusted for weather and driving conditions."
+      ]
+    }
+  },
+  {
+    "id": 191,
+    "question": "How can you switch to the Park Assist view when using the Camera app at low speeds?",
+    "manual_answer": "When driving at low speeds with the Camera app displayed on the touchscreen, you can switch to the Park Assist view by touching the button located in the upper left corner of the Camera app screen. Ensure that the cameras are clean from dirt, debris, snow, and ice to maintain functionality.",
+    "key_facts": {
+      "essential": [
+        "Touch the button located in the upper left corner of the Camera app screen to switch to the Park Assist view."
+      ],
+      "optional": [
+        "Ensure that the cameras are clean from dirt, debris, snow, and ice to maintain functionality."
+      ],
+      "safety_critical": [
+        "Ensure that the cameras are clean from dirt, debris, snow, and ice to maintain functionality."
+      ]
+    }
+  },
+  {
+    "id": 201,
+    "question": "What information does the G-Meter display in Track Mode?",
+    "manual_answer": "In Track Mode, the G-Meter on the touchscreen displays real-time peak lateral, acceleration, and deceleration values using a circular meter. It also shows the history of your drive in a shaded area and resets at the start of each driving session.",
+    "key_facts": {
+      "essential": [
+        "The G-Meter displays real-time peak lateral values.",
+        "The G-Meter displays real-time acceleration values.",
+        "The G-Meter displays real-time deceleration values.",
+        "The G-Meter uses a circular meter to display values."
+      ],
+      "optional": [
+        "The G-Meter shows the history of your drive in a shaded area.",
+        "The G-Meter resets at the start of each driving session."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 210,
+    "question": "Where can I find the trip information display in the vehicle?",
+    "manual_answer": "You can find the trip information display on the touchscreen in the cards area on the car status display, or by touching Controls > Trips.",
+    "key_facts": {
+      "essential": [
+        "The trip information display is on the touchscreen in the cards area on the car status display.",
+        "The trip information display can be accessed by touching Controls > Trips."
+      ],
+      "optional": [],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 216,
+    "question": "What is the significance of the cruising speed being highlighted in blue text?",
+    "manual_answer": "The cruising speed being highlighted in blue text indicates that Traffic-Aware Cruise Control is actively maintaining a set speed. This visual cue on the touchscreen confirms that the system is engaged and controlling the vehicle's speed. It is important to note that Traffic-Aware Cruise Control is designed for driving comfort and convenience, and it is not a collision warning or avoidance system. Drivers must remain alert and in control of the vehicle at all times.",
+    "key_facts": {
+      "essential": [
+        "The cruising speed being highlighted in blue text indicates that Traffic-Aware Cruise Control is actively maintaining a set speed.",
+        "This visual cue on the touchscreen confirms that the system is engaged and controlling the vehicle's speed."
+      ],
+      "optional": [
+        "Traffic-Aware Cruise Control is designed for driving comfort and convenience.",
+        "It is not a collision warning or avoidance system."
+      ],
+      "safety_critical": [
+        "Drivers must remain alert and in control of the vehicle at all times."
+      ]
+    }
+  },
+  {
+    "id": 228,
+    "question": "What action should you take if the Model 3 warns you about a potential stop light or stop sign violation while using Autopilot?",
+    "manual_answer": "If the Model 3 warns you about a potential stop light or stop sign violation while using Autopilot, you should TAKE IMMEDIATE CORRECTIVE ACTION. This involves being prepared to press the brake pedal to slow down or stop the vehicle, as the warning system only provides alerts and does not automatically slow down or stop the car.",
+    "key_facts": {
+      "essential": [
+        "Take immediate corrective action if the Model 3 warns you about a potential stop light or stop sign violation while using Autopilot.",
+        "Be prepared to press the brake pedal to slow down or stop the vehicle."
+      ],
+      "optional": [
+        "The warning system only provides alerts and does not automatically slow down or stop the car."
+      ],
+      "safety_critical": [
+        "Take immediate corrective action if the Model 3 warns you about a potential stop light or stop sign violation while using Autopilot.",
+        "Be prepared to press the brake pedal to slow down or stop the vehicle."
+      ]
+    }
+  },
+  {
+    "id": 238,
+    "question": "What is Full Self-Driving (Supervised)?",
+    "manual_answer": "Full Self-Driving (Supervised) is a feature that allows a vehicle to operate autonomously under the supervision of a driver. Before using Full Self-Driving, it is crucial to understand that the driver must remain attentive and ready to take control of the vehicle at any time. While using Full Self-Driving, the driver should monitor the vehicle's performance and be prepared to intervene if necessary. It is important to be aware of the system's limitations and ensure that the environment is suitable for autonomous operation. Canceling Full Self-Driving can be done by taking manual control of the vehicle, which is essential if the system encounters a situation it cannot handle safely.",
+    "key_facts": {
+      "essential": [
+        "Full Self-Driving (Supervised) allows a vehicle to operate autonomously under the supervision of a driver."
+      ],
+      "optional": [
+        "The driver must remain attentive and ready to take control of the vehicle at any time.",
+        "The driver should monitor the vehicle's performance and be prepared to intervene if necessary.",
+        "It is important to be aware of the system's limitations.",
+        "Ensure that the environment is suitable for autonomous operation.",
+        "Canceling Full Self-Driving can be done by taking manual control of the vehicle."
+      ],
+      "safety_critical": [
+        "The driver must remain attentive and ready to take control of the vehicle at any time.",
+        "The driver should monitor the vehicle's performance and be prepared to intervene if necessary.",
+        "Canceling Full Self-Driving can be done by taking manual control of the vehicle, which is essential if the system encounters a situation it cannot handle safely."
+      ]
+    }
+  },
+  {
+    "id": 240,
+    "question": "What happens to the steering wheel icon when Full Self-Driving (Supervised) is engaged?",
+    "manual_answer": "When Full Self-Driving (Supervised) is engaged, the steering wheel icon on the touchscreen turns blue.",
+    "key_facts": {
+      "essential": [
+        "When Full Self-Driving (Supervised) is engaged, the steering wheel icon on the touchscreen turns blue."
+      ],
+      "optional": [],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 243,
+    "question": "How do I activate Full Self-Driving mode?",
+    "manual_answer": "To activate Full Self-Driving (Supervised) mode, first ensure it is enabled by going to Controls > Autopilot > Full Self-Driving (Supervised) and confirming by touching Yes after reading the popup. Once enabled, you can activate it at any speed less than 85 mph by pressing the right scroll button. Ensure that the cameras are unobstructed and calibrated, and that the latest map version is downloaded for optimal performance. Remember, you are responsible for the vehicle's speed at all times, and you can override the system if necessary.",
+    "key_facts": {
+      "essential": [
+        "First, ensure Full Self-Driving (Supervised) mode is enabled by going to Controls > Autopilot > Full Self-Driving (Supervised).",
+        "Confirm by touching Yes after reading the popup.",
+        "Once enabled, activate Full Self-Driving mode by pressing the right scroll button at any speed less than 85 mph."
+      ],
+      "optional": [
+        "Ensure that the cameras are unobstructed and calibrated.",
+        "Ensure that the latest map version is downloaded for optimal performance.",
+        "You are responsible for the vehicle's speed at all times.",
+        "You can override the system if necessary."
+      ],
+      "safety_critical": [
+        "Ensure that the cameras are unobstructed and calibrated.",
+        "You are responsible for the vehicle's speed at all times.",
+        "You can override the system if necessary."
+      ]
+    }
+  },
+  {
+    "id": 256,
+    "question": "What should you do if you want to move Model 3 to a destination away from you using Summon?",
+    "manual_answer": "To move Model 3 to a destination away from you using Summon, ensure your phone is connected to the vehicle and within 279 ft. (85 meters). Use the 'Go to Target' mode in the Tesla mobile app by touching the crosshair icon and dragging the map to set the destination pin. Press and hold the 'Go to Target' button to initiate the movement. Follow the car to stay within the operating range, as Summon will pause if the vehicle moves more than 328 ft. (100 meters) away from your phone and stop if it exceeds 345 ft. (105 meters). Always maintain a clear line of sight to the vehicle and be prepared to stop it by releasing the button if necessary.",
+    "key_facts": {
+      "essential": [
+        "Ensure your phone is connected to the vehicle and within 279 ft. (85 meters).",
+        "Use the 'Go to Target' mode in the Tesla mobile app by touching the crosshair icon.",
+        "Drag the map to set the destination pin.",
+        "Press and hold the 'Go to Target' button to initiate the movement."
+      ],
+      "optional": [
+        "Follow the car to stay within the operating range.",
+        "Summon will pause if the vehicle moves more than 328 ft. (100 meters) away from your phone.",
+        "Summon will stop if it exceeds 345 ft. (105 meters)."
+      ],
+      "safety_critical": [
+        "Always maintain a clear line of sight to the vehicle.",
+        "Be prepared to stop the vehicle by releasing the button if necessary."
+      ]
+    }
+  },
+  {
+    "id": 264,
+    "question": "What should I do if the Full Self-Driving (Supervised) feature does not perform as expected?",
+    "manual_answer": "If the Full Self-Driving (Supervised) feature does not perform as expected, it is crucial to remain attentive and ready to take over control of the vehicle at any time. Ensure that you are familiar with the system's limitations and warnings before using it. If necessary, you can cancel the Full Self-Driving feature by taking manual control of the vehicle, such as by steering, braking, or accelerating. Always prioritize safety and be prepared to intervene to maintain control of the vehicle.",
+    "key_facts": {
+      "essential": [
+        "Remain attentive and ready to take over control of the vehicle at any time.",
+        "You can cancel the Full Self-Driving feature by taking manual control of the vehicle, such as by steering, braking, or accelerating."
+      ],
+      "optional": [
+        "Ensure that you are familiar with the system's limitations and warnings before using it."
+      ],
+      "safety_critical": [
+        "Remain attentive and ready to take over control of the vehicle at any time.",
+        "Always prioritize safety and be prepared to intervene to maintain control of the vehicle."
+      ]
+    }
+  },
+  {
+    "id": 302,
+    "question": "What happens to the exterior side mirrors when the rear defrost is enabled?",
+    "manual_answer": "When the rear defrost is enabled, the exterior side mirrors will also be heated. The heating for the exterior side mirrors will automatically turn off based on the ambient temperature.",
+    "key_facts": {
+      "essential": [
+        "When the rear defrost is enabled, the exterior side mirrors will also be heated."
+      ],
+      "optional": [
+        "The heating for the exterior side mirrors will automatically turn off based on the ambient temperature."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 307,
+    "question": "What is the recommended time to activate climate settings before departure in cold weather?",
+    "manual_answer": "Tesla recommends activating climate settings at least 30-45 minutes before departure in cold weather. Preconditioning times depend on outside temperature and other factors, and the mobile app will notify you once your vehicle has reached the desired preconditioning temperature.",
+    "key_facts": {
+      "essential": [
+        "Tesla recommends activating climate settings at least 30-45 minutes before departure in cold weather."
+      ],
+      "optional": [
+        "Preconditioning times depend on outside temperature and other factors.",
+        "The mobile app will notify you once your vehicle has reached the desired preconditioning temperature."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 338,
+    "question": "How can I ensure that my Model 3 receives the latest map updates?",
+    "manual_answer": "To ensure your Model 3 receives the latest map updates, periodically connect it to a Wi-Fi network. Map updates are automatically sent to your vehicle over Wi-Fi. The touchscreen will display a message when new maps are installed. For the fastest and most reliable updates, keep Wi-Fi turned on and connected whenever possible.",
+    "key_facts": {
+      "essential": [
+        "Periodically connect your Model 3 to a Wi-Fi network.",
+        "Map updates are automatically sent to your vehicle over Wi-Fi."
+      ],
+      "optional": [
+        "The touchscreen will display a message when new maps are installed.",
+        "For the fastest and most reliable updates, keep Wi-Fi turned on and connected whenever possible."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 356,
+    "question": "What are the temperature limits for the high voltage battery in Model 3?",
+    "manual_answer": "The temperature limits for the high voltage battery in Model 3 are to avoid exposing the vehicle to ambient temperatures above 140° F (60° C) or below -22° F (-30° C) for more than 24 hours at a time.",
+    "key_facts": {
+      "essential": [
+        "The high voltage battery in Model 3 should not be exposed to ambient temperatures above 140° F (60° C) for more than 24 hours at a time.",
+        "The high voltage battery in Model 3 should not be exposed to ambient temperatures below -22° F (-30° C) for more than 24 hours at a time."
+      ],
+      "optional": [],
+      "safety_critical": [
+        "The high voltage battery in Model 3 should not be exposed to ambient temperatures above 140° F (60° C) for more than 24 hours at a time.",
+        "The high voltage battery in Model 3 should not be exposed to ambient temperatures below -22° F (-30° C) for more than 24 hours at a time."
+      ]
+    }
+  },
+  {
+    "id": 365,
+    "question": "Why is it recommended to leave Model 3 plugged in when not in use?",
+    "manual_answer": "It is recommended to leave Model 3 plugged in when not in use to maintain the Battery at the optimum level of charge. This practice uses the charging system to keep the Battery warm in cold weather, rather than relying on the Battery itself. Additionally, keeping the vehicle plugged in during hot weather prevents normal range loss and helps maintain the Battery at an optimal temperature. Tesla advises that the vehicle is safe to stay plugged in for any length of time.",
+    "key_facts": {
+      "essential": [
+        "Leaving Model 3 plugged in maintains the Battery at the optimum level of charge.",
+        "The charging system keeps the Battery warm in cold weather.",
+        "Keeping the vehicle plugged in during hot weather prevents normal range loss.",
+        "Keeping the vehicle plugged in helps maintain the Battery at an optimal temperature."
+      ],
+      "optional": [
+        "Tesla advises that the vehicle is safe to stay plugged in for any length of time."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 382,
+    "question": "Why is it important to read the release notes after a software update on my Tesla Model 3?",
+    "manual_answer": "It is important to read the release notes after a software update on your Tesla Model 3 because they contain information about changes or new features, and may include important safety information or operating instructions. Understanding these updates ensures you are aware of any new functionalities or safety measures that could affect the operation of your vehicle.",
+    "key_facts": {
+      "essential": [
+        "Release notes contain information about changes or new features.",
+        "Release notes may include important safety information or operating instructions."
+      ],
+      "optional": [
+        "Understanding updates ensures awareness of new functionalities.",
+        "Understanding updates ensures awareness of safety measures that could affect vehicle operation."
+      ],
+      "safety_critical": [
+        "Release notes may include important safety information or operating instructions."
+      ]
+    }
+  },
+  {
+    "id": 392,
+    "question": "Why should you avoid touching high voltage wiring after a collision?",
+    "manual_answer": "You should avoid touching high voltage wiring after a collision because the high voltage system in your Model 3 has no user-serviceable parts and can pose a risk of injury. High voltage cables are colored orange for easy identification, and touching them can be dangerous. Additionally, in a collision, the high voltage system may be disabled, but it is still important to avoid contact to ensure safety.",
+    "key_facts": {
+      "essential": [
+        "The high voltage system in your Model 3 has no user-serviceable parts.",
+        "High voltage cables are colored orange for easy identification."
+      ],
+      "optional": [
+        "In a collision, the high voltage system may be disabled."
+      ],
+      "safety_critical": [
+        "Touching high voltage wiring after a collision can pose a risk of injury.",
+        "High voltage cables are colored orange for easy identification.",
+        "Avoid contact with high voltage wiring to ensure safety."
+      ]
+    }
+  },
+  {
+    "id": 394,
+    "question": "What does the icon with an exclamation mark inside a horseshoe shape indicate?",
+    "manual_answer": "The icon with an exclamation mark inside a horseshoe shape is the Tire Pressure indicator light, which alerts you if one or more tires is under- or over-inflated.",
+    "key_facts": {
+      "essential": [
+        "The icon with an exclamation mark inside a horseshoe shape is the Tire Pressure indicator light.",
+        "The Tire Pressure indicator light alerts you if one or more tires is under-inflated.",
+        "The Tire Pressure indicator light alerts you if one or more tires is over-inflated."
+      ],
+      "optional": [],
+      "safety_critical": [
+        "The Tire Pressure indicator light alerts you if one or more tires is under-inflated.",
+        "The Tire Pressure indicator light alerts you if one or more tires is over-inflated."
+      ]
+    }
+  },
+  {
+    "id": 424,
+    "question": "What should be avoided when cleaning interior glass and mirrored surfaces?",
+    "manual_answer": "When cleaning interior glass and mirrored surfaces, avoid scraping or using any abrasive cleaning fluid. These actions can damage the reflective surface of the mirror and the heating elements in the rear window.",
+    "key_facts": {
+      "essential": [
+        "Avoid scraping interior glass and mirrored surfaces.",
+        "Avoid using any abrasive cleaning fluid on interior glass and mirrored surfaces."
+      ],
+      "optional": [
+        "Scraping or using abrasive cleaning fluid can damage the reflective surface of the mirror.",
+        "Scraping or using abrasive cleaning fluid can damage the heating elements in the rear window."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 425,
+    "question": "Why is it important to prevent substances from entering an airbag cover?",
+    "manual_answer": "It is important to prevent substances from entering an airbag cover because this could affect the correct operation of the airbag. Ensuring that the airbag functions properly is critical for safety, as it needs to deploy correctly in the event of a collision to provide protection to the vehicle's occupants.",
+    "key_facts": {
+      "essential": [
+        "Preventing substances from entering an airbag cover is important because it could affect the correct operation of the airbag."
+      ],
+      "optional": [
+        "Ensuring that the airbag functions properly is critical for safety.",
+        "The airbag needs to deploy correctly in the event of a collision to provide protection to the vehicle's occupants."
+      ],
+      "safety_critical": [
+        "Preventing substances from entering an airbag cover is important because it could affect the correct operation of the airbag.",
+        "Ensuring that the airbag functions properly is critical for safety.",
+        "The airbag needs to deploy correctly in the event of a collision to provide protection to the vehicle's occupants."
+      ]
+    }
+  },
+  {
+    "id": 450,
+    "question": "How can you locate the Vehicle Identification Number (VIN) on the door pillar?",
+    "manual_answer": "The VIN is printed on the Vehicle Certification label located on the door pillar, visible when the driver's door is open.",
+    "key_facts": {
+      "essential": [
+        "The VIN is printed on the Vehicle Certification label located on the door pillar.",
+        "The VIN is visible when the driver's door is open."
+      ],
+      "optional": [],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 464,
+    "question": "What is the service limit for the Performance rear brake pad thickness excluding the back plate?",
+    "manual_answer": "The service limit for the Performance rear brake pad thickness, excluding the back plate, is 0.071 inches (1.8 mm).",
+    "key_facts": {
+      "essential": [
+        "The service limit for the Performance rear brake pad thickness, excluding the back plate, is 0.071 inches (1.8 mm)."
+      ],
+      "optional": [],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 472,
+    "question": "What is the purpose of the tire and loading glossary in the vehicle manual?",
+    "manual_answer": "The purpose of the tire and loading glossary in the vehicle manual is to provide definitions and explanations of terms related to tire specifications and load carrying capabilities. This includes definitions for normal occupant weight, occupant distribution, passenger car tires, light truck tires, rim dimensions, and load limits on tires. These definitions help vehicle owners understand how to properly load their vehicle and select appropriate tires, ensuring safety and optimal performance.",
+    "key_facts": {
+      "essential": [
+        "The tire and loading glossary in the vehicle manual provides definitions and explanations of terms related to tire specifications and load carrying capabilities.",
+        "The glossary includes definitions for normal occupant weight, occupant distribution, passenger car tires, light truck tires, rim dimensions, and load limits on tires."
+      ],
+      "optional": [
+        "These definitions help vehicle owners understand how to properly load their vehicle and select appropriate tires.",
+        "Understanding these terms ensures safety and optimal performance."
+      ],
+      "safety_critical": [
+        "Understanding these terms ensures safety."
+      ]
+    }
+  },
+  {
+    "id": 481,
+    "question": "How can you expedite a request for Tesla Roadside Assistance?",
+    "manual_answer": "To expedite a request for Tesla Roadside Assistance, you can use the Roadside Assistance option in the Tesla mobile app, if it is available in your region. Ensure you provide the Vehicle Identification Number (VIN), your exact location, and the nature of the problem when contacting them.",
+    "key_facts": {
+      "essential": [
+        "Use the Roadside Assistance option in the Tesla mobile app to expedite a request for Tesla Roadside Assistance."
+      ],
+      "optional": [
+        "Ensure you provide the Vehicle Identification Number (VIN) when contacting them.",
+        "Ensure you provide your exact location when contacting them.",
+        "Ensure you provide the nature of the problem when contacting them."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 482,
+    "question": "What should you do if your Tesla Model 3 runs out of range while driving?",
+    "manual_answer": "If your Tesla Model 3 runs out of range while driving, follow these steps: \n1. Pull over safely and contact Tesla Roadside Assistance at 1-877-79TESLA (1-877-798-3752) or your preferred tow provider. \n2. The tow provider should transport your Model 3 to the nearest charging station and ensure the vehicle is within the charging cable's reach. \n3. Jump start the low voltage system to support the high voltage Battery. \n4. Once the touchscreen powers on, plug the charge cable into Model 3 to begin charging the high voltage Battery. \n5. Disconnect the external power supply from the low voltage battery once charging begins. \nNote: Running out of range is not covered by the warranty, and it is your responsibility to monitor the battery's state. Always ensure you have enough range for your drive.",
+    "key_facts": {
+      "essential": [
+        "First, pull over safely and contact Tesla Roadside Assistance at 1-877-79TESLA (1-877-798-3752) or your preferred tow provider.",
+        "Second, the tow provider should transport your Model 3 to the nearest charging station and ensure the vehicle is within the charging cable's reach.",
+        "Third, jump start the low voltage system to support the high voltage Battery.",
+        "Fourth, once the touchscreen powers on, plug the charge cable into Model 3 to begin charging the high voltage Battery.",
+        "Fifth, disconnect the external power supply from the low voltage battery once charging begins."
+      ],
+      "optional": [
+        "Running out of range is not covered by the warranty.",
+        "It is your responsibility to monitor the battery's state.",
+        "Always ensure you have enough range for your drive."
+      ],
+      "safety_critical": [
+        "First, pull over safely and contact Tesla Roadside Assistance at 1-877-79TESLA (1-877-798-3752) or your preferred tow provider."
+      ]
+    }
+  },
+  {
+    "id": 484,
+    "question": "Where should I connect the black negative cable when jump starting the vehicle?",
+    "manual_answer": "When jump starting the vehicle, connect the external low voltage power supply’s black negative (-) cable to the bolt located next to the brake fluid reservoir. This bolt is used as a grounding location for the external support.",
+    "key_facts": {
+      "essential": [
+        "Connect the external low voltage power supply’s black negative (-) cable to the bolt located next to the brake fluid reservoir."
+      ],
+      "optional": [
+        "This bolt is used as a grounding location for the external support."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 492,
+    "question": "What should I do if Autopilot features are unavailable and the alert persists across multiple drives?",
+    "manual_answer": "If Autopilot features are unavailable and the alert persists across multiple drives, you should schedule service at your earliest convenience. This alert can be set for several reasons, so check for additional alerts that might indicate the cause of the issue. Typically, Autopilot features are restored on your next drive, but if they are not, professional service is recommended.",
+    "key_facts": {
+      "essential": [
+        "Schedule service at your earliest convenience if Autopilot features are unavailable and the alert persists across multiple drives."
+      ],
+      "optional": [
+        "Check for additional alerts that might indicate the cause of the issue.",
+        "Typically, Autopilot features are restored on your next drive."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 508,
+    "question": "What should I do if I receive the alert 'Acceleration and charging performance reduced: BMS_a069'?",
+    "manual_answer": "If you receive the alert 'Acceleration and charging performance reduced: BMS_a069', it indicates that the high voltage battery requires service. It is important to schedule a service appointment with your service provider to address this issue. While the alert is active, you may experience reduced acceleration and charging performance, so it is advisable to drive with caution until the battery is serviced.",
+    "key_facts": {
+      "essential": [
+        "The alert 'Acceleration and charging performance reduced: BMS_a069' indicates that the high voltage battery requires service.",
+        "Schedule a service appointment with your service provider to address this issue."
+      ],
+      "optional": [
+        "While the alert is active, you may experience reduced acceleration and charging performance.",
+        "It is advisable to drive with caution until the battery is serviced."
+      ],
+      "safety_critical": [
+        "It is advisable to drive with caution until the battery is serviced."
+      ]
+    }
+  },
+  {
+    "id": 510,
+    "question": "What does the alert 'Battery charge level low Charge now: BMS_a074' indicate?",
+    "manual_answer": "The alert 'Battery charge level low Charge now: BMS_a074' indicates that your vehicle's high voltage battery does not have enough energy remaining to support driving. This alert typically appears when the battery charge level has been reduced through normal operation. If this alert is present while driving, the vehicle needs to shut down, and it may shut down unexpectedly. If the alert appears when the vehicle is parked, you may be unable to drive. To resolve this, you should charge your vehicle immediately to restore its ability to drive. If the alert occurs during subsequent drives despite a displayed battery charge level of 5% or higher, you should schedule service at your earliest convenience.",
+    "key_facts": {
+      "essential": [
+        "The alert 'Battery charge level low Charge now: BMS_a074' indicates that the vehicle's high voltage battery does not have enough energy remaining to support driving.",
+        "If this alert is present while driving, the vehicle needs to shut down, and it may shut down unexpectedly.",
+        "If the alert appears when the vehicle is parked, you may be unable to drive.",
+        "To resolve this, you should charge your vehicle immediately to restore its ability to drive.",
+        "If the alert occurs during subsequent drives despite a displayed battery charge level of 5% or higher, you should schedule service at your earliest convenience."
+      ],
+      "optional": [
+        "This alert typically appears when the battery charge level has been reduced through normal operation."
+      ],
+      "safety_critical": [
+        "If this alert is present while driving, the vehicle needs to shut down, and it may shut down unexpectedly.",
+        "If the alert appears when the vehicle is parked, you may be unable to drive.",
+        "To resolve this, you should charge your vehicle immediately to restore its ability to drive."
+      ]
+    }
+  },
+  {
+    "id": 515,
+    "question": "Why is it important to have proper grounding for a Wall Connector?",
+    "manual_answer": "Proper grounding for a Wall Connector is crucial because it ensures safety and functionality. Without a ground connection, the Wall Connector may not charge the vehicle, as indicated by the alert for insufficient grounding. Proper grounding prevents current from leaking through unsafe paths, which could lead to ground faults or electrical hazards. It is important to have an electrician inspect the Wall Connector to ensure it is properly grounded at the circuit breaker or power distribution box, and that all connections are correctly made. This helps avoid potential safety risks and ensures the Wall Connector operates correctly.",
+    "key_facts": {
+      "essential": [
+        "Proper grounding for a Wall Connector ensures safety and functionality.",
+        "Without a ground connection, the Wall Connector may not charge the vehicle.",
+        "Proper grounding prevents current from leaking through unsafe paths.",
+        "Proper grounding prevents ground faults or electrical hazards."
+      ],
+      "optional": [
+        "An alert for insufficient grounding may indicate that the Wall Connector is not charging the vehicle.",
+        "It is important to have an electrician inspect the Wall Connector to ensure it is properly grounded at the circuit breaker or power distribution box.",
+        "An electrician should ensure that all connections are correctly made.",
+        "Proper grounding helps avoid potential safety risks.",
+        "Proper grounding ensures the Wall Connector operates correctly."
+      ],
+      "safety_critical": [
+        "Proper grounding prevents current from leaking through unsafe paths.",
+        "Proper grounding prevents ground faults or electrical hazards.",
+        "It is important to have an electrician inspect the Wall Connector to ensure it is properly grounded at the circuit breaker or power distribution box.",
+        "An electrician should ensure that all connections are correctly made.",
+        "Proper grounding helps avoid potential safety risks."
+      ]
+    }
+  },
+  {
+    "id": 521,
+    "question": "What are some possible hardware issues that can cause the Wall Connector to need service?",
+    "manual_answer": "Possible hardware issues that can cause the Wall Connector to need service include: 1. Contactor not working, 2. Self-test of internal ground fault monitoring circuit failed, 3. Thermal sensor disconnected, 4. Other hardware component issues. If these issues persist, it is recommended to have an electrician check the connections and ensure they are properly torqued according to the Wall Connector Installation Manual.",
+    "key_facts": {
+      "essential": [
+        "Contactor not working can cause the Wall Connector to need service.",
+        "Self-test of internal ground fault monitoring circuit failed can cause the Wall Connector to need service.",
+        "Thermal sensor disconnected can cause the Wall Connector to need service.",
+        "Other hardware component issues can cause the Wall Connector to need service."
+      ],
+      "optional": [
+        "If these issues persist, it is recommended to have an electrician check the connections.",
+        "Ensure connections are properly torqued according to the Wall Connector Installation Manual."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 525,
+    "question": "What action is recommended if reducing the vehicle's charge current setting does not resolve the overcurrent issue?",
+    "manual_answer": "If reducing the vehicle's charge current setting does not resolve the overcurrent issue, service is required. It is recommended to consult the installation guide for your Wall Connector for further information.",
+    "key_facts": {
+      "essential": [
+        "If reducing the vehicle's charge current setting does not resolve the overcurrent issue, service is required."
+      ],
+      "optional": [
+        "It is recommended to consult the installation guide for your Wall Connector for further information."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 538,
+    "question": "Why might the outlet or Wall Connector wiring need to be checked when charging?",
+    "manual_answer": "The outlet or Wall Connector wiring might need to be checked when charging because a high temperature detected by the Wall Connector indicates that the building connection to the Wall Connector is getting too warm. This can cause charging to stop to protect the wiring and Wall Connector. The issue is typically with the building wiring, possibly due to a loose connection, and can be resolved by an electrician. It is important to ensure that the plug is fully inserted, the area is not blocked, and there is no nearby heat source. If the problem persists, an electrician should inspect the wiring to ensure all connections are secure and properly torqued.",
+    "key_facts": {
+      "essential": [
+        "A high temperature detected by the Wall Connector indicates that the building connection to the Wall Connector is getting too warm.",
+        "Charging can stop to protect the wiring and Wall Connector.",
+        "The issue is typically with the building wiring, possibly due to a loose connection.",
+        "An electrician can resolve the issue."
+      ],
+      "optional": [
+        "Ensure that the plug is fully inserted.",
+        "Ensure the area is not blocked.",
+        "Ensure there is no nearby heat source.",
+        "If the problem persists, an electrician should inspect the wiring to ensure all connections are secure and properly torqued."
+      ],
+      "safety_critical": [
+        "Charging can stop to protect the wiring and Wall Connector.",
+        "An electrician can resolve the issue.",
+        "Ensure that the plug is fully inserted.",
+        "Ensure the area is not blocked.",
+        "Ensure there is no nearby heat source.",
+        "If the problem persists, an electrician should inspect the wiring to ensure all connections are secure and properly torqued."
+      ]
+    }
+  },
+  {
+    "id": 539,
+    "question": "When is service required if the charge handle is too hot?",
+    "manual_answer": "Service is required if the charge handle remains too hot in normal ambient temperatures (under 100°F or 38°C) after ensuring the connector is fully inserted into the vehicle's charging port, is not covered by anything, and there is no nearby heat source.",
+    "key_facts": {
+      "essential": [
+        "Service is required if the charge handle remains too hot in normal ambient temperatures (under 100°F or 38°C)."
+      ],
+      "optional": [
+        "Ensure the connector is fully inserted into the vehicle's charging port.",
+        "Ensure the connector is not covered by anything.",
+        "Ensure there is no nearby heat source."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 557,
+    "question": "What does the alert 'Unable to charge - More than 1 primary unit' mean?",
+    "manual_answer": "The alert 'Unable to charge - More than 1 primary unit' indicates that there is an issue with the configuration of Wall Connectors in a load sharing network. Specifically, it means that more than one Wall Connector is set as the primary unit, which is incorrect. To resolve this, ensure that only one Wall Connector is configured as the primary unit, and all other Wall Connectors are set to the paired position (position F). It is recommended to have an electrician verify these settings.",
+    "key_facts": {
+      "essential": [
+        "The alert 'Unable to charge - More than 1 primary unit' indicates an issue with the configuration of Wall Connectors in a load sharing network.",
+        "More than one Wall Connector is set as the primary unit, which is incorrect."
+      ],
+      "optional": [
+        "Ensure that only one Wall Connector is configured as the primary unit.",
+        "All other Wall Connectors should be set to the paired position (position F).",
+        "It is recommended to have an electrician verify these settings."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 560,
+    "question": "How many Wall Connectors can be paired with a primary unit to avoid charging issues?",
+    "manual_answer": "To avoid charging issues, ensure no more than 3 Wall Connectors are paired with a primary unit.",
+    "key_facts": {
+      "essential": [
+        "No more than 3 Wall Connectors can be paired with a primary unit."
+      ],
+      "optional": [
+        "To avoid charging issues, ensure no more than 3 Wall Connectors are paired with a primary unit."
+      ],
+      "safety_critical": [
+        "No more than 3 Wall Connectors can be paired with a primary unit."
+      ]
+    }
+  },
+  {
+    "id": 572,
+    "question": "What does the alert code CC_a030 indicate?",
+    "manual_answer": "The alert code CC_a030 indicates an issue with charging due to a vehicle connection problem. The recommended action is to ensure that the charge handle is fully inserted into the charge port.",
+    "key_facts": {
+      "essential": [
+        "The alert code CC_a030 indicates an issue with charging due to a vehicle connection problem."
+      ],
+      "optional": [
+        "The recommended action is to ensure that the charge handle is fully inserted into the charge port."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 579,
+    "question": "What should I inspect if I suspect an obstruction in the charge port inlet?",
+    "manual_answer": "If you suspect an obstruction in the charge port inlet, inspect both the charge port inlet and the charge cable connector for any obstructions such as debris, moisture, or foreign objects. Ensure that any obstruction is removed and any moisture is allowed to dry before attempting to re-insert the cable into the charge port.",
+    "key_facts": {
+      "essential": [
+        "Inspect the charge port inlet for obstructions such as debris, moisture, or foreign objects.",
+        "Inspect the charge cable connector for obstructions such as debris, moisture, or foreign objects."
+      ],
+      "optional": [
+        "Ensure that any obstruction is removed.",
+        "Ensure that any moisture is allowed to dry before attempting to re-insert the cable into the charge port."
+      ],
+      "safety_critical": [
+        "Ensure that any obstruction is removed.",
+        "Ensure that any moisture is allowed to dry before attempting to re-insert the cable into the charge port."
+      ]
+    }
+  },
+  {
+    "id": 584,
+    "question": "What should I do if the charge port does not operate as expected due to a sensor fault?",
+    "manual_answer": "If the charge port does not operate as expected due to a sensor fault, try closing the charge port door and then opening it again. If the issue persists, you can use alternative methods to open the charge port door, such as using the vehicle touchscreen, the Tesla Mobile App, pressing the charge handle button on any Tesla charge cable, or holding and pressing the trunk button on your key fob.",
+    "key_facts": {
+      "essential": [
+        "Try closing the charge port door and then opening it again."
+      ],
+      "optional": [
+        "Use the vehicle touchscreen to open the charge port door.",
+        "Use the Tesla Mobile App to open the charge port door.",
+        "Press the charge handle button on any Tesla charge cable to open the charge port door.",
+        "Hold and press the trunk button on your key fob to open the charge port door."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 602,
+    "question": "What should I do if the charge port latch is frozen?",
+    "manual_answer": "If the charge port latch is frozen, try using the Defrost Car button in the Tesla Mobile App to thaw any ice on the charge port latch. This process may take approximately 30 to 45 minutes. Ensure that the charge cable is fully inserted into the charge port inlet to remove any strain on the cable. If the cable still cannot be removed, you can try turning on the rear defrost via your vehicle's touchscreen, as some vehicles have a charge port inlet heater that activates with the rear defrost. If these methods do not work, you can manually release the charge cable by using the charge port manual release cable located in the rear trunk. Make sure the vehicle is not actively charging before attempting this. Open the rear trunk, locate the release cable on the left-hand side, and pull it downwards to unlatch the charge cable.",
+    "key_facts": {
+      "essential": [
+        "Try using the Defrost Car button in the Tesla Mobile App to thaw any ice on the charge port latch.",
+        "This process may take approximately 30 to 45 minutes.",
+        "Ensure that the charge cable is fully inserted into the charge port inlet to remove any strain on the cable.",
+        "If the cable still cannot be removed, try turning on the rear defrost via your vehicle's touchscreen.",
+        "Some vehicles have a charge port inlet heater that activates with the rear defrost.",
+        "If these methods do not work, manually release the charge cable by using the charge port manual release cable located in the rear trunk.",
+        "Open the rear trunk, locate the release cable on the left-hand side, and pull it downwards to unlatch the charge cable."
+      ],
+      "optional": [
+        "This process may take approximately 30 to 45 minutes.",
+        "Some vehicles have a charge port inlet heater that activates with the rear defrost."
+      ],
+      "safety_critical": [
+        "Make sure the vehicle is not actively charging before attempting to manually release the charge cable."
+      ]
+    }
+  },
+  {
+    "id": 603,
+    "question": "What does a solid amber charge port light indicate when attempting to DC Fast Charge?",
+    "manual_answer": "A solid amber charge port light when attempting to DC Fast Charge indicates that the charge port latch is unable to secure the charge cable in the charge port inlet. This means that DC Fast Charging or Supercharging is unavailable. To resolve this, try re-inserting the charge cable fully into the charge port inlet. If the vehicle begins charging and the charge port light pulses green, the issue may have been that the charge cable was not fully inserted before. If the problem persists, check for obstructions or moisture in the charge port inlet and ensure the charge port latch manual release cable has not been pulled.",
+    "key_facts": {
+      "essential": [
+        "A solid amber charge port light when attempting to DC Fast Charge indicates that the charge port latch is unable to secure the charge cable in the charge port inlet.",
+        "This means that DC Fast Charging or Supercharging is unavailable."
+      ],
+      "optional": [
+        "Try re-inserting the charge cable fully into the charge port inlet.",
+        "If the vehicle begins charging and the charge port light pulses green, the issue may have been that the charge cable was not fully inserted before.",
+        "Check for obstructions or moisture in the charge port inlet.",
+        "Ensure the charge port latch manual release cable has not been pulled."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 626,
+    "question": "What should I do if the rear tire tread depth is low?",
+    "manual_answer": "If the rear tire tread depth is low, you should schedule a service to inspect the tires for rotation or replacement. It is recommended to rotate the tires to balance wear evenly, especially if the tread depth difference between any front and rear tire exceeds 1.5mm or if the vehicle has been driven more than 6,250 miles since the last rotation. If the tread depth is at an unsafe level, replacement may be necessary. Ensure that the tread depth is above 4/32 in. (3 mm) to avoid hydroplaning risks. After service, update your vehicle’s tire configuration to optimize settings and clear the alert.",
+    "key_facts": {
+      "essential": [
+        "Schedule a service to inspect the tires for rotation or replacement.",
+        "Rotate the tires if the tread depth difference between any front and rear tire exceeds 1.5mm.",
+        "Rotate the tires if the vehicle has been driven more than 6,250 miles since the last rotation.",
+        "Replace the tires if the tread depth is at an unsafe level."
+      ],
+      "optional": [
+        "Ensure that the tread depth is above 4/32 in. (3 mm) to avoid hydroplaning risks.",
+        "After service, update your vehicle’s tire configuration to optimize settings and clear the alert."
+      ],
+      "safety_critical": [
+        "Ensure that the tread depth is above 4/32 in. (3 mm) to avoid hydroplaning risks."
+      ]
+    }
+  },
+  {
+    "id": 630,
+    "question": "What should I do if I see the alert 'Vehicle speed limited - Proceed with caution'?",
+    "manual_answer": "If you see the alert 'Vehicle speed limited - Proceed with caution', it means that your vehicle's speed is limited to 90 mph (144 km/h) due to an issue with the Adaptive Suspension Damping system. This system is unable to provide real-time adjustments to optimize ride and handling, resulting in a potentially softer ride. If this alert persists throughout subsequent drives, you should schedule service at your earliest convenience. Your vehicle is safe to drive in the meantime, but proceed with caution. This alert is also accompanied by a red indicator light on the touchscreen.",
+    "key_facts": {
+      "essential": [
+        "The alert 'Vehicle speed limited - Proceed with caution' means the vehicle's speed is limited to 90 mph (144 km/h).",
+        "The issue is with the Adaptive Suspension Damping system.",
+        "If the alert persists, schedule service at your earliest convenience."
+      ],
+      "optional": [
+        "The Adaptive Suspension Damping system is unable to provide real-time adjustments to optimize ride and handling.",
+        "The issue results in a potentially softer ride.",
+        "The alert is accompanied by a red indicator light on the touchscreen."
+      ],
+      "safety_critical": [
+        "Your vehicle is safe to drive in the meantime, but proceed with caution."
+      ]
+    }
+  },
+  {
+    "id": 649,
+    "question": "What does the 'Charge rate reduced - Unexpected voltage drop' alert mean?",
+    "manual_answer": "The 'Charge rate reduced - Unexpected voltage drop' alert indicates that the charging speed of your vehicle has been reduced because the onboard charger detected a significant voltage drop during charging. This can be caused by issues with the building wiring, the wall outlet, or the use of an extension cord that cannot support the required charge current. It may also occur if other high-power devices are used on the same circuit while charging. To address this, you should have an electrician inspect the electrical installation, including any charging equipment and connections to the building wiring. Consider whether the charge current should be lowered or if the installation needs upgrading. This alert typically relates to external charging equipment and power sources, not an issue with the vehicle itself.",
+    "key_facts": {
+      "essential": [
+        "The 'Charge rate reduced - Unexpected voltage drop' alert indicates that the charging speed of your vehicle has been reduced because the onboard charger detected a significant voltage drop during charging."
+      ],
+      "optional": [
+        "This can be caused by issues with the building wiring, the wall outlet, or the use of an extension cord that cannot support the required charge current.",
+        "It may also occur if other high-power devices are used on the same circuit while charging.",
+        "Consider whether the charge current should be lowered or if the installation needs upgrading.",
+        "This alert typically relates to external charging equipment and power sources, not an issue with the vehicle itself."
+      ],
+      "safety_critical": [
+        "You should have an electrician inspect the electrical installation, including any charging equipment and connections to the building wiring."
+      ]
+    }
+  },
+  {
+    "id": 681,
+    "question": "What should I check if the Mobile Connector continues to overheat in normal temperatures?",
+    "manual_answer": "If the Mobile Connector continues to overheat in normal ambient temperatures (under 100°F or 38°C), ensure that the Mobile Connector is not covered by anything and that there is no heat source nearby. If the problem persists, service is required. Additionally, you can try charging your vehicle using a Tesla Supercharger or Destination Charging location.",
+    "key_facts": {
+      "essential": [
+        "Ensure that the Mobile Connector is not covered by anything.",
+        "Ensure that there is no heat source nearby the Mobile Connector.",
+        "If the problem persists, service is required."
+      ],
+      "optional": [
+        "Try charging your vehicle using a Tesla Supercharger or Destination Charging location."
+      ],
+      "safety_critical": [
+        "Ensure that the Mobile Connector is not covered by anything.",
+        "Ensure that there is no heat source nearby the Mobile Connector."
+      ]
+    }
+  },
+  {
+    "id": 690,
+    "question": "What should I do if I encounter a charging equipment communication error with code UMC_a012?",
+    "manual_answer": "If you encounter a charging equipment communication error with code UMC_a012, try again or use different equipment.",
+    "key_facts": {
+      "essential": [
+        "If you encounter a charging equipment communication error with code UMC_a012, try again.",
+        "Use different equipment if the error persists."
+      ],
+      "optional": [],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 692,
+    "question": "What should I do if I encounter a charging equipment communication error?",
+    "manual_answer": "If you encounter a charging equipment communication error, try again or use different equipment. This applies to errors such as UMC_a013, CP_a043, and UMC_a012.",
+    "key_facts": {
+      "essential": [
+        "Try again if you encounter a charging equipment communication error.",
+        "Use different equipment if you encounter a charging equipment communication error."
+      ],
+      "optional": [
+        "This applies to errors such as UMC_a013, CP_a043, and UMC_a012."
+      ],
+      "safety_critical": []
+    }
+  },
+  {
+    "id": 705,
+    "question": "What should I do if the Mobile Connector to adapter connection is hot and the maximum charge rate is reduced?",
+    "manual_answer": "If the Mobile Connector to adapter connection is hot and the maximum charge rate is reduced, follow these steps:\n1. Ensure the wall plug adapter is fully connected to the Mobile Connector control box.\n2. Unplug from the power source and inspect the connection for any obstructions or moisture. Remove any debris and allow moisture to dry.\n3. Re-insert the wall plug adapter into the Mobile Connector and connect to the power source.\n4. Ensure the wall plug adapter is not covered and there is no nearby heat source.\n5. If the issue persists in normal ambient temperatures (under 100°F or 38°C) and occurs during multiple charging attempts, schedule service.\n6. Alternatively, try charging your vehicle using a Tesla Supercharger or Destination Charging location.",
+    "key_facts": {
+      "essential": [
+        "First, ensure the wall plug adapter is fully connected to the Mobile Connector control box.",
+        "Second, unplug from the power source and inspect the connection for any obstructions or moisture.",
+        "Third, remove any debris and allow moisture to dry.",
+        "Fourth, re-insert the wall plug adapter into the Mobile Connector and connect to the power source.",
+        "Fifth, ensure the wall plug adapter is not covered and there is no nearby heat source.",
+        "Sixth, if the issue persists in normal ambient temperatures (under 100°F or 38°C) and occurs during multiple charging attempts, schedule service.",
+        "Alternatively, try charging your vehicle using a Tesla Supercharger or Destination Charging location."
+      ],
+      "optional": [],
+      "safety_critical": [
+        "Unplug from the power source and inspect the connection for any obstructions or moisture.",
+        "Remove any debris and allow moisture to dry.",
+        "Ensure the wall plug adapter is not covered and there is no nearby heat source."
+      ]
+    }
+  },
+  {
+    "id": 708,
+    "question": "What should I do if my vehicle may shut down unexpectedly due to the VCFRONT_a182 alert?",
+    "manual_answer": "If your vehicle displays the VCFRONT_a182 alert indicating that the electrical system power is reduced and the vehicle may shut down unexpectedly, it is crucial to take immediate action. Safely pull over to the side of the road as soon as possible to avoid any potential hazards. Ensure that you are in a safe location before turning off the vehicle. It is recommended to contact a professional technician or your vehicle's service center to diagnose and resolve the issue before continuing to drive.",
+    "key_facts": {
+      "essential": [
+        "Safely pull over to the side of the road as soon as possible.",
+        "Ensure that you are in a safe location before turning off the vehicle.",
+        "Contact a professional technician or your vehicle's service center to diagnose and resolve the issue before continuing to drive."
+      ],
+      "optional": [
+        "The vehicle displays the VCFRONT_a182 alert indicating that the electrical system power is reduced and the vehicle may shut down unexpectedly."
+      ],
+      "safety_critical": [
+        "Safely pull over to the side of the road as soon as possible.",
+        "Ensure that you are in a safe location before turning off the vehicle."
+      ]
+    }
+  },
+  {
+    "id": 709,
+    "question": "What does the alert 'Schedule service to replace low voltage battery' mean?",
+    "manual_answer": "The alert 'Schedule service to replace low voltage battery' indicates that the low voltage battery in your vehicle is showing degraded performance and needs to be replaced. Until the battery is replaced, vehicle software updates will not complete. It is recommended to have the battery replaced at your earliest convenience, either through the Tesla Mobile App or an independent service provider. If the battery does not have enough power to turn on your vehicle or open the doors, you should follow the jump-starting instructions. Additionally, if the low voltage battery is unable to support all vehicle features, it may lead to unexpected vehicle shutdowns or the inability to restart the vehicle. In such cases, it is crucial to schedule service immediately.",
+    "key_facts": {
+      "essential": [
+        "The alert 'Schedule service to replace low voltage battery' indicates that the low voltage battery in your vehicle is showing degraded performance and needs to be replaced.",
+        "Until the battery is replaced, vehicle software updates will not complete."
+      ],
+      "optional": [
+        "It is recommended to have the battery replaced at your earliest convenience, either through the Tesla Mobile App or an independent service provider."
+      ],
+      "safety_critical": [
+        "If the battery does not have enough power to turn on your vehicle or open the doors, you should follow the jump-starting instructions.",
+        "If the low voltage battery is unable to support all vehicle features, it may lead to unexpected vehicle shutdowns or the inability to restart the vehicle.",
+        "In such cases, it is crucial to schedule service immediately."
+      ]
+    }
+  },
+  {
+    "id": 721,
+    "question": "What are the potential consequences if I do not pull over safely when my vehicle is preparing to shut down?",
+    "manual_answer": "If you do not pull over safely when your vehicle is preparing to shut down, the vehicle may shut down unexpectedly. This could result in the vehicle not being able to restart once parked. Additionally, the vehicle may lose all electrical power, which would disable many vehicle functions. In such a case, you can still use the manual door releases to exit the vehicle. It is crucial to pull over safely at your earliest opportunity to avoid these risks.",
+    "key_facts": {
+      "essential": [
+        "If you do not pull over safely when your vehicle is preparing to shut down, the vehicle may shut down unexpectedly.",
+        "The vehicle may not be able to restart once parked.",
+        "The vehicle may lose all electrical power, which would disable many vehicle functions."
+      ],
+      "optional": [
+        "You can still use the manual door releases to exit the vehicle."
+      ],
+      "safety_critical": [
+        "It is crucial to pull over safely at your earliest opportunity to avoid these risks."
+      ]
+    }
+  },
+  {
+    "id": 731,
+    "question": "What should you do if the tire pressure alert appears in cold weather?",
+    "manual_answer": "If the tire pressure alert appears in cold weather, you should add air to maintain the recommended cold tire pressure. This is because the air in your tires naturally contracts in cold weather, decreasing tire pressures. Even if the alert clears as you drive and the tires warm up, you should still refill the tires with air once they have cooled. The alert will clear once the Tire Pressure Monitoring System detects that each tire is inflated to the recommended cold pressure. If the alert persists for the same tire, have it inspected for a slow leak.",
+    "key_facts": {
+      "essential": [
+        "Add air to maintain the recommended cold tire pressure if the tire pressure alert appears in cold weather.",
+        "Refill the tires with air once they have cooled, even if the alert clears as you drive and the tires warm up.",
+        "The alert will clear once the Tire Pressure Monitoring System detects that each tire is inflated to the recommended cold pressure."
+      ],
+      "optional": [
+        "The air in your tires naturally contracts in cold weather, decreasing tire pressures."
+      ],
+      "safety_critical": [
+        "If the alert persists for the same tire, have it inspected for a slow leak."
+      ]
+    }
+  },
+  {
+    "id": 746,
+    "question": "What information does Model 3 capture when I use voice commands to report a bug?",
+    "manual_answer": "When you use voice commands to report a bug in your Model 3, the vehicle captures a snapshot of its systems, which includes your current location, vehicle diagnostic data, and screen captures of the touchscreen. This information is periodically reviewed by Tesla to improve the Model 3.",
+    "key_facts": {
+      "essential": [
+        "The vehicle captures a snapshot of its systems.",
+        "The snapshot includes your current location.",
+        "The snapshot includes vehicle diagnostic data.",
+        "The snapshot includes screen captures of the touchscreen."
+      ],
+      "optional": [
+        "This information is periodically reviewed by Tesla to improve the Model 3."
+      ],
+      "safety_critical": []
+    }
+  }
+]
