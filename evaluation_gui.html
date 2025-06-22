@@ -901,10 +901,10 @@
         let isResuming = false; // Flag to track if we're resuming a session
 
         // Configuration
-        const MANUAL_FILE = 'key points/manual_answer_key_facts_10percent.json';
-        const MODEL_FILE = 'key points/model_answer_key_facts_gemini_rag_10percent.json';
+        const MANUAL_FILE = 'key points/manual_answer_key_facts.json';
+        const MODEL_FILE = 'key points/model_answer_key_facts_gemini_rag.json';
         const OUTPUT_FILE = 'evaluation_results.json';
-        const SAMPLE_FRACTION = 0.01;
+        const SAMPLE_FRACTION = 1.0; // Select all questions
 
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
@@ -1020,17 +1020,14 @@
             // Get all question IDs
             const allQuestionIds = Object.keys(manualData);
             
-            // Calculate how many questions to sample (10%)
+            // Calculate how many questions to select
             const totalQuestions = allQuestionIds.length;
             const sampleSize = Math.max(1, Math.floor(totalQuestions * sampleFraction));
             
-            // Use a fixed seed for consistent sampling
-            const fixedSeed = 42; // Fixed seed for reproducible results
-            const shuffled = shuffleArrayWithSeed(allQuestionIds, fixedSeed);
-            const sampledIds = shuffled.slice(0, sampleSize);
+            // Select questions without shuffling
+            const sampledIds = allQuestionIds.slice(0, sampleSize);
             
-            console.log(`Sampled ${sampleSize} questions out of ${totalQuestions} total questions (${(sampleFraction * 100).toFixed(1)}%)`);
-            console.log(`Using fixed seed: ${fixedSeed} for consistent selection`);
+            console.log(`Selected ${sampleSize} of ${totalQuestions} questions (${(sampleFraction * 100).toFixed(1)}%) without shuffling.`);
             
             // Create question objects from sampled data
             return sampledIds.map(id => {
@@ -1053,28 +1050,6 @@
                     }
                 };
             });
-        }
-
-        function shuffleArrayWithSeed(array, seed) {
-            // Simple seeded random number generator
-            let m = 0x80000000;
-            let a = 1103515245;
-            let c = 12345;
-            let state = seed ? seed : Math.floor(Math.random() * (m - 1));
-            
-            const random = () => {
-                state = (a * state + c) % m;
-                return state / (m - 1);
-            };
-            
-            // Fisher-Yates shuffle with seeded random
-            const shuffled = [...array];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-            
-            return shuffled;
         }
 
         function updateUI() {
