@@ -1386,11 +1386,6 @@
                 results[qId] = {
                     question_id: qId,
                     question_text: currentQuestion.question,
-                    total_essential_ground_truth: currentQuestion.key_facts_manual.essential.length,
-                    total_optional_ground_truth: currentQuestion.key_facts_manual.optional.length,
-                    total_safety_critical_ground_truth: currentQuestion.key_facts_manual.safety_critical.length,
-                    total_essential_model: currentQuestion.key_facts_model.essential.length,
-                    total_optional_model: currentQuestion.key_facts_model.optional.length
                 };
             }
 
@@ -1398,67 +1393,69 @@
             if (currentStep === 1) {
                 // Collect completeness data
                 const gtEssentialSelections = Array.from(document.querySelectorAll('#gtEssentialFacts input[type="checkbox"]'))
-                    .map(cb => cb.checked ? 1 : 0);
+                    .map(cb => cb.checked);
                 const gtOptionalSelections = Array.from(document.querySelectorAll('#gtOptionalFacts input[type="checkbox"]'))
-                    .map(cb => cb.checked ? 1 : 0);
+                    .map(cb => cb.checked);
 
-                results[qId].covered_essential_ground_truth = gtEssentialSelections.reduce((a, b) => a + b, 0);
-                results[qId].covered_optional_ground_truth = gtOptionalSelections.reduce((a, b) => a + b, 0);
-                results[qId].covered_safety_critical_ground_truth = 0; // Would need to implement safety critical logic
+                const coveredEssential = gtEssentialSelections.filter(c => c).length;
+                const totalEssentialGT = currentQuestion.key_facts_manual.essential.length;
+                results[qId].essential_covered = `${coveredEssential}/${totalEssentialGT}`;
+
+                const coveredOptional = gtOptionalSelections.filter(c => c).length;
+                const totalOptionalGT = currentQuestion.key_facts_manual.optional.length;
+                results[qId].all_covered = `${coveredEssential + coveredOptional}/${totalEssentialGT + totalOptionalGT}`;
+
+                const totalSafetyGT = currentQuestion.key_facts_manual.safety_critical.length;
+                results[qId].safety_covered = `0/${totalSafetyGT}`; // Safety critical coverage not implemented yet
 
             } else if (currentStep === 2) {
                 // Collect correctness data
-                const essentialCorrectness = {};
-                const optionalCorrectness = {};
-                
-                // Process essential facts correctness
+                const essentialCorrectness = [];
                 currentQuestion.key_facts_model.essential.forEach((fact, index) => {
-                    const notMentionedValue = document.querySelector(`input[name="correctness_essential_${index}_not_mentioned"]`).value;
-                    const isNotMentioned = notMentionedValue === 'true';
-                    
-                    if (isNotMentioned) {
-                        essentialCorrectness[index] = 'Not Mentioned';
-                    } else {
-                        const correctChecked = document.querySelector(`input[name="correctness_essential_${index}_correct"]`).checked;
-                        
-                        if (correctChecked) essentialCorrectness[index] = 'Accurate';
-                        else essentialCorrectness[index] = 'Inaccurate';
-                    }
-                });
-                
-                // Process optional facts correctness
-                currentQuestion.key_facts_model.optional.forEach((fact, index) => {
-                    const notMentionedValue = document.querySelector(`input[name="correctness_optional_${index}_not_mentioned"]`).value;
-                    const isNotMentioned = notMentionedValue === 'true';
-                    
-                    if (isNotMentioned) {
-                        optionalCorrectness[index] = 'Not Mentioned';
-                    } else {
-                        const correctChecked = document.querySelector(`input[name="correctness_optional_${index}_correct"]`).checked;
-                        
-                        if (correctChecked) optionalCorrectness[index] = 'Accurate';
-                        else optionalCorrectness[index] = 'Inaccurate';
+                    const notMentioned = document.querySelector(`input[name="correctness_essential_${index}_not_mentioned"]`).value === 'true';
+                    if (!notMentioned) {
+                        const isCorrect = document.querySelector(`input[name="correctness_essential_${index}_correct"]`).checked;
+                        if (isCorrect) {
+                            essentialCorrectness.push(true);
+                        }
                     }
                 });
 
-                results[qId].accurate_essential_model = Object.values(essentialCorrectness).filter(v => v === 'Accurate').length;
-                results[qId].inaccurate_essential_model = Object.values(essentialCorrectness).filter(v => v === 'Inaccurate').length;
-                results[qId].not_mentioned_essential_model = Object.values(essentialCorrectness).filter(v => v === 'Not Mentioned').length;
-                results[qId].accurate_optional_model = Object.values(optionalCorrectness).filter(v => v === 'Accurate').length;
-                results[qId].inaccurate_optional_model = Object.values(optionalCorrectness).filter(v => v === 'Inaccurate').length;
-                results[qId].not_mentioned_optional_model = Object.values(optionalCorrectness).filter(v => v === 'Not Mentioned').length;
+                const optionalCorrectness = [];
+                currentQuestion.key_facts_model.optional.forEach((fact, index) => {
+                    const notMentioned = document.querySelector(`input[name="correctness_optional_${index}_not_mentioned"]`).value === 'true';
+                    if (!notMentioned) {
+                        const isCorrect = document.querySelector(`input[name="correctness_optional_${index}_correct"]`).checked;
+                        if (isCorrect) {
+                           optionalCorrectness.push(true);
+                        }
+                    }
+                });
+
+                const accurateEssential = essentialCorrectness.length;
+                const totalEssentialModel = currentQuestion.key_facts_model.essential.length;
+                results[qId].mentioned_correct_essential = `${accurateEssential}/${totalEssentialModel}`;
+
+                const accurateOptional = optionalCorrectness.length;
+                const totalOptionalModel = currentQuestion.key_facts_model.optional.length;
+                results[qId].mentioned_correct_all = `${accurateEssential + accurateOptional}/${totalEssentialModel + totalOptionalModel}`;
 
             } else if (currentStep === 3) {
                 // Collect relevance and actionability data
                 const essentialRelevance = Array.from(document.querySelectorAll('#relevanceFacts input[id^="relevance_relevant_essential_"]'))
-                    .map(cb => cb.checked ? 1 : 0);
+                    .map(cb => cb.checked);
                 const optionalRelevance = Array.from(document.querySelectorAll('#relevanceFacts input[id^="relevance_relevant_optional_"]'))
-                    .map(cb => cb.checked ? 1 : 0);
+                    .map(cb => cb.checked);
                 const isActionable = document.getElementById('actionability').checked;
 
-                results[qId].relevant_essential_model = essentialRelevance.reduce((a, b) => a + b, 0);
-                results[qId].relevant_optional_model = optionalRelevance.reduce((a, b) => a + b, 0);
-                results[qId].is_actionable = isActionable;
+                const relevantEssential = essentialRelevance.filter(c => c).length;
+                const totalEssentialModel = currentQuestion.key_facts_model.essential.length;
+
+                const relevantOptional = optionalRelevance.filter(c => c).length;
+                const totalOptionalModel = currentQuestion.key_facts_model.optional.length;
+
+                results[qId].relevance = `${relevantEssential + relevantOptional}/${totalEssentialModel + totalOptionalModel}`;
+                results[qId].is_actionable = isActionable ? 1 : 0;
             }
 
             // Auto-save to Firebase after each question completion
@@ -2008,7 +2005,7 @@
                 if (savedData.is_actionable !== undefined) {
                     const actionabilityCheckbox = document.getElementById('actionability');
                     if (actionabilityCheckbox) {
-                        actionabilityCheckbox.checked = savedData.is_actionable;
+                        actionabilityCheckbox.checked = savedData.is_actionable === 1;
                     }
                 }
             }
