@@ -1040,8 +1040,8 @@
                 return {
                     id: id,
                     question: manual.question || model.question || `Question ${id}`,
-                    manual_answer: manual.answer || '',
-                    model_answer: model.answer || '',
+                    manual_answer: manual.manual_answer || manual.answer || '',
+                    model_answer: model.model_answer || model.answer || '',
                     key_facts_manual: {
                         essential: manual.key_facts?.essential || [],
                         optional: manual.key_facts?.optional || [],
@@ -1229,7 +1229,7 @@
             gtEssentialDiv.innerHTML = currentQuestion.key_facts_manual.essential.map((fact, index) => `
                 <div class="fact-item">
                     <input type="checkbox" id="gt_essential_${index}" class="fact-checkbox">
-                    <div class="fact-text green">${index + 1}. ${fact}</div>
+                    <div class="fact-text">${index + 1}. ${fact}</div>
                 </div>
             `).join('');
 
@@ -1238,7 +1238,7 @@
             gtOptionalDiv.innerHTML = currentQuestion.key_facts_manual.optional.map((fact, index) => `
                 <div class="fact-item">
                     <input type="checkbox" id="gt_optional_${index}" class="fact-checkbox">
-                    <div class="fact-text green">${index + 1}. ${fact}</div>
+                    <div class="fact-text">${index + 1}. ${fact}</div>
                 </div>
             `).join('');
         }
@@ -1250,7 +1250,7 @@
             const modelEssentialDiv = document.getElementById('modelEssentialFacts');
             modelEssentialDiv.innerHTML = currentQuestion.key_facts_model.essential.map((fact, index) => `
                 <div class="fact-item">
-                    <div class="fact-text green">${index + 1}. ${fact}</div>
+                    <div class="fact-text">${index + 1}. ${fact}</div>
                 </div>
             `).join('');
 
@@ -1258,7 +1258,7 @@
             const modelOptionalDiv = document.getElementById('modelOptionalFacts');
             modelOptionalDiv.innerHTML = currentQuestion.key_facts_model.optional.map((fact, index) => `
                 <div class="fact-item">
-                    <div class="fact-text green">${index + 1}. ${fact}</div>
+                    <div class="fact-text">${index + 1}. ${fact}</div>
                 </div>
             `).join('');
         }
@@ -1271,12 +1271,12 @@
             gtCorrectnessDiv.innerHTML = [
                 ...currentQuestion.key_facts_manual.essential.map((fact, index) => `
                     <div class="fact-item">
-                        <div class="fact-text green">${index + 1}. ${fact}</div>
+                        <div class="fact-text">${index + 1}. ${fact}</div>
                     </div>
                 `),
                 ...currentQuestion.key_facts_manual.optional.map((fact, index) => `
                     <div class="fact-item">
-                        <div class="fact-text green">${index + 1}. ${fact}</div>
+                        <div class="fact-text">${index + 1}. ${fact}</div>
                     </div>
                 `)
             ].join('');
@@ -1287,7 +1287,7 @@
                 ...currentQuestion.key_facts_model.essential.map((fact, index) => `
                     <div class="fact-item" id="eval_row_essential_${index}">
                         <input type="checkbox" name="correctness_essential_${index}_correct" class="fact-checkbox" onchange="handleNotMentionedChange('essential', ${index})">
-                        <div class="fact-text green">${index + 1}. ${fact}</div>
+                        <div class="fact-text">${index + 1}. ${fact}</div>
                         <button type="button" class="not-mentioned-btn" id="not_mentioned_btn_essential_${index}" onclick="toggleNotMentioned('essential', ${index})">
                             Not Mentioned
                         </button>
@@ -1297,7 +1297,7 @@
                 ...currentQuestion.key_facts_model.optional.map((fact, index) => `
                     <div class="fact-item" id="eval_row_optional_${index}">
                         <input type="checkbox" name="correctness_optional_${index}_correct" class="fact-checkbox" onchange="handleNotMentionedChange('optional', ${index})">
-                        <div class="fact-text green">${index + 1}. ${fact}</div>
+                        <div class="fact-text">${index + 1}. ${fact}</div>
                         <button type="button" class="not-mentioned-btn" id="not_mentioned_btn_optional_${index}" onclick="toggleNotMentioned('optional', ${index})">
                             Not Mentioned
                         </button>
@@ -1315,13 +1315,13 @@
                 ...currentQuestion.key_facts_model.essential.map((fact, index) => `
                     <div class="fact-item">
                         <input type="checkbox" id="relevance_relevant_essential_${index}" class="fact-checkbox">
-                        <div class="fact-text green">${index + 1}. ${fact}</div>
+                        <div class="fact-text">${index + 1}. ${fact}</div>
                     </div>
                 `),
                 ...currentQuestion.key_facts_model.optional.map((fact, index) => `
                     <div class="fact-item">
                         <input type="checkbox" id="relevance_relevant_optional_${index}" class="fact-checkbox">
-                        <div class="fact-text green">${index + 1}. ${fact}</div>
+                        <div class="fact-text">${index + 1}. ${fact}</div>
                     </div>
                 `)
             ].join('');
