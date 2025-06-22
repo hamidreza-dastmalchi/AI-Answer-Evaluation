@@ -1090,7 +1090,7 @@
             if (currentStep === 1) {
                 stepContent = `
                     <div class="question-header">
-                        <h2>Question ${currentIndex + 1}/${questions.length} - Step 1/3</h2>
+                        <h2>Question ${currentIndex + 1}/${questions.length}</h2>
                     </div>
 
                     <!-- Step 1: Completeness -->
@@ -1140,7 +1140,7 @@
             } else if (currentStep === 2) {
                 stepContent = `
                     <div class="question-header">
-                        <h2>Question ${currentIndex + 1}/${questions.length} - Step 2/3</h2>
+                        <h2>Question ${currentIndex + 1}/${questions.length}</h2>
                     </div>
 
                     <!-- Step 2: Correctness -->
@@ -1166,7 +1166,7 @@
             } else if (currentStep === 3) {
                 stepContent = `
                     <div class="question-header">
-                        <h2>Question ${currentIndex + 1}/${questions.length} - Step 3/3</h2>
+                        <h2>Question ${currentIndex + 1}/${questions.length}</h2>
                     </div>
 
                     <!-- Step 3: Evaluate Relevance and Actionability -->
@@ -1357,7 +1357,7 @@
             const progress = (currentProgress / totalSteps) * 100;
             
             progressFill.style.width = progress + '%';
-            progressText.textContent = `Question ${currentIndex + 1}/${questions.length} - Step ${currentStep}/3`;
+            progressText.textContent = `Question ${currentIndex + 1}/${questions.length}`;
 
             // Disable finish button until all questions are completed
             const allQuestionsCompleted = checkAllQuestionsCompleted();
