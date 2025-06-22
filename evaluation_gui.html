@@ -1151,12 +1151,30 @@
                         
                         <div class="two-column">
                             <div class="column">
+                                <div class="expandable">
+                                    <div class="expandable-header" onclick="toggleExpandable('gtAnswer')">
+                                        Show Full Ground Truth Answer
+                                        <span>▼</span>
+                                    </div>
+                                    <div class="expandable-content" id="gtAnswer">
+                                        ${currentQuestion.manual_answer}
+                                    </div>
+                                </div>
                                 <h4>Ground Truth Key Facts (for reference)</h4>
                                 <p><em>&nbsp;</em></p>
                                 <div id="gtCorrectnessFacts"></div>
                             </div>
                             
                             <div class="column">
+                                <div class="expandable">
+                                    <div class="expandable-header" onclick="toggleExpandable('modelAnswer')">
+                                        Show Full Assistant Answer
+                                        <span>▼</span>
+                                    </div>
+                                    <div class="expandable-content" id="modelAnswer">
+                                        ${currentQuestion.model_answer}
+                                    </div>
+                                </div>
                                 <h4>AI Assistant's Key Facts</h4>
                                 <p><em>Check box if fact is correct, or click "Not Mentioned" if the fact was not stated in GT.</em></p>
                                 <div id="modelCorrectnessFacts"></div>
