@@ -808,14 +808,8 @@
             </div>
         </div>
 
-        <div class="instructions">
-            <h3>Welcome to the AI Answer Evaluation Tool!</h3>
-            <p>This tool breaks down evaluation into three steps:</p>
-            <ul>
-                <li><strong>Key Fact Coverage (completeness and risk awareness):</strong> Evaluate which ground truth key facts are covered by the AI assistant's response</li>
-                <li><strong>Key Fact Correctness:</strong> Assess whether the AI assistant's stated facts are correct, incorrect, or not mentioned</li>
-                <li><strong>Relevance and Actionability:</strong> Determine which facts are relevant to the question and whether the overall response is actionable</li>
-            </ul>
+        <div class="instructions" id="instructionsSection">
+            <!-- Instructions will be dynamically updated based on current step -->
         </div>
 
         <div class="main-content" id="mainContent">
@@ -1061,6 +1055,9 @@
             const currentQuestion = questions[currentIndex];
             const mainContent = document.getElementById('mainContent');
             
+            // Update instructions based on current step
+            updateInstructions();
+            
             let stepContent = '';
             
             if (currentStep === 1) {
@@ -1211,6 +1208,85 @@
             
             // Update navigation
             updateNavigation();
+        }
+
+        function updateInstructions() {
+            const instructionsSection = document.getElementById('instructionsSection');
+            
+            if (currentStep === 1) {
+                instructionsSection.innerHTML = `
+                    <h3>Step 1: Key Fact Coverage Evaluation</h3>
+                    <p><strong>Objective:</strong> Evaluate the completeness and risk awareness of the AI assistant's response.</p>
+                    
+                    <div style="background: rgba(255,255,255,0.4); padding: 20px; border-radius: 10px; margin: 20px 0; backdrop-filter: blur(10px);">
+                        <h4 style="color: #1565c0; margin-bottom: 15px;">📋 How to Evaluate:</h4>
+                        <ol style="margin-left: 20px;">
+                            <li><strong>Review Ground Truth Key Facts:</strong> Examine all the key facts from the car manual (ground truth) that should be covered.</li>
+                            <li><strong>Compare with AI Assistant Response:</strong> Check which ground truth key facts are actually mentioned or covered in the AI assistant's response.</li>
+                            <li><strong>Mark Coverage:</strong> Tick the checkbox for each ground truth key fact that is covered by the AI assistant.</li>
+                            <li><strong>Consider Safety Awareness:</strong> Some key facts are safety-critical. We'll calculate how many safety-related points are covered to assess risk awareness.</li>
+                        </ol>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.4); padding: 20px; border-radius: 10px; margin: 20px 0; backdrop-filter: blur(10px);">
+                        <h4 style="color: #1565c0; margin-bottom: 15px;">⚠️ Special Cases:</h4>
+                        <p>If the AI assistant responds with "I don't have enough information" or "The context doesn't provide information to answer this question," then <strong>none</strong> of the ground truth key facts should be checked, as the AI assistant is not providing any coverage.</p>
+                    </div>
+                `;
+            } else if (currentStep === 2) {
+                instructionsSection.innerHTML = `
+                    <h3>Step 2: Key Fact Correctness Evaluation</h3>
+                    <p><strong>Objective:</strong> Assess the accuracy of the AI assistant's stated facts by cross-referencing with ground truth.</p>
+                    
+                    <div style="background: rgba(255,255,255,0.4); padding: 20px; border-radius: 10px; margin: 20px 0; backdrop-filter: blur(10px);">
+                        <h4 style="color: #1565c0; margin-bottom: 15px;">✅ How to Evaluate:</h4>
+                        <ol style="margin-left: 20px;">
+                            <li><strong>Review AI Assistant Key Facts:</strong> Examine each key fact stated by the AI assistant.</li>
+                            <li><strong>Cross-reference with Ground Truth:</strong> Check if each AI assistant key fact appears in the ground truth key facts.</li>
+                            <li><strong>Mark Correctness:</strong>
+                                <ul style="margin-left: 20px; margin-top: 10px;">
+                                    <li><strong>✅ Correct:</strong> If the fact is present in ground truth and accurate, check the box.</li>
+                                    <li><strong>❌ Incorrect:</strong> If the fact is mentioned but wrong, leave the box unchecked.</li>
+                                    <li><strong>🚫 Not Mentioned:</strong> If the fact is not in ground truth, click "Not Mentioned" button.</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.4); padding: 20px; border-radius: 10px; margin: 20px 0; backdrop-filter: blur(10px);">
+                        <h4 style="color: #1565c0; margin-bottom: 15px;">⚠️ Special Cases:</h4>
+                        <p>If the AI assistant responds with "I don't have enough information" or similar, then all key facts should be marked as "Not Mentioned" since the AI assistant is not making any factual claims.</p>
+                    </div>
+                `;
+            } else if (currentStep === 3) {
+                instructionsSection.innerHTML = `
+                    <h3>Step 3: Relevance and Actionability Evaluation</h3>
+                    <p><strong>Objective:</strong> Determine the relevance of AI assistant facts to the question and assess overall actionability.</p>
+                    
+                    <div style="background: rgba(255,255,255,0.4); padding: 20px; border-radius: 10px; margin: 20px 0; backdrop-filter: blur(10px);">
+                        <h4 style="color: #1565c0; margin-bottom: 15px;">🎯 Relevance Evaluation:</h4>
+                        <p>For each AI assistant key fact, determine if it is relevant to answering the user's question:</p>
+                        <ul style="margin-left: 20px;">
+                            <li><strong>✅ Relevant:</strong> Check the box if the fact directly addresses the question or provides useful context.</li>
+                            <li><strong>❌ Irrelevant:</strong> Leave unchecked if the fact is off-topic or doesn't contribute to answering the question.</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.4); padding: 20px; border-radius: 10px; margin: 20px 0; backdrop-filter: blur(10px);">
+                        <h4 style="color: #1565c0; margin-bottom: 15px;">⚡ Actionability Evaluation:</h4>
+                        <p>Determine if the overall response enables the user to take concrete action:</p>
+                        <ul style="margin-left: 20px;">
+                            <li><strong>✅ Actionable:</strong> Check the box if the response provides clear next steps, specific instructions, or meaningful guidance that helps the user complete a task or advance their understanding.</li>
+                            <li><strong>❌ Not Actionable:</strong> Leave unchecked if the response is purely informational without practical guidance or if it's too vague to act upon.</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.4); padding: 20px; border-radius: 10px; margin: 20px 0; backdrop-filter: blur(10px);">
+                        <h4 style="color: #1565c0; margin-bottom: 15px;">⚠️ Special Cases:</h4>
+                        <p>If the AI assistant responds with "I don't have enough information" or similar, then the response is typically <strong>not actionable</strong> since it doesn't provide any guidance or information to help the user.</p>
+                    </div>
+                `;
+            }
         }
 
         function deduplicateKeyFacts(keyFacts) {
