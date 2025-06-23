@@ -1323,55 +1323,57 @@
 
         function renderCorrectnessFacts() {
             const currentQuestion = questions[currentIndex];
-            // Safety critical fallback
-            const safetyCritical = currentQuestion.key_facts_model.safety_critical || [];
+            const dedupedManual = getDedupedKeyPoints(currentQuestion.key_facts_manual);
+            const dedupedModel = getDedupedKeyPoints(currentQuestion.key_facts_model);
             // Ground truth facts for reference
+            let idx = 1;
             const gtCorrectnessDiv = document.getElementById('gtCorrectnessFacts');
             gtCorrectnessDiv.innerHTML = [
-                ...currentQuestion.key_facts_manual.essential.map((fact, index) => `
+                ...(currentQuestion.key_facts_manual.essential || []).filter(fact => !dedupedManual.safety_critical.includes(fact)).map((fact) => `
                     <div class="fact-item">
-                        <div class="fact-text">${index + 1}. ${fact}</div>
+                        <div class="fact-text">${idx++}. ${fact}</div>
                     </div>
                 `),
-                ...currentQuestion.key_facts_manual.optional.map((fact, index) => `
+                ...(currentQuestion.key_facts_manual.optional || []).filter(fact => !dedupedManual.safety_critical.includes(fact)).map((fact) => `
                     <div class="fact-item">
-                        <div class="fact-text">${index + 1}. ${fact}</div>
+                        <div class="fact-text">${idx++}. ${fact}</div>
                     </div>
                 `),
-                ...currentQuestion.key_facts_manual.safety_critical.map((fact, index) => `
+                ...dedupedManual.safety_critical.filter(fact => !((currentQuestion.key_facts_manual.essential || []).includes(fact) || (currentQuestion.key_facts_manual.optional || []).includes(fact))).map((fact) => `
                     <div class="fact-item">
-                        <div class="fact-text">${index + 1}. ${fact}</div>
+                        <div class="fact-text">${idx++}. ${fact}</div>
                     </div>
                 `)
             ].join('');
 
             // Model facts with evaluation options using checkboxes
+            let midx = 1;
             const modelCorrectnessDiv = document.getElementById('modelCorrectnessFacts');
             modelCorrectnessDiv.innerHTML = [
-                ...currentQuestion.key_facts_model.essential.map((fact, index) => `
+                ...(currentQuestion.key_facts_model.essential || []).filter(fact => !dedupedModel.safety_critical.includes(fact)).map((fact, index) => `
                     <div class="fact-item" id="eval_row_essential_${index}">
                         <input type="checkbox" name="correctness_essential_${index}_correct" class="fact-checkbox" onchange="handleNotMentionedChange('essential', ${index})">
-                        <div class="fact-text">${index + 1}. ${fact}</div>
+                        <div class="fact-text">${midx++}. ${fact}</div>
                         <button type="button" class="not-mentioned-btn" id="not_mentioned_btn_essential_${index}" onclick="toggleNotMentioned('essential', ${index})">
                             Not Mentioned
                         </button>
                         <input type="hidden" name="correctness_essential_${index}_not_mentioned" value="false">
                     </div>
                 `),
-                ...currentQuestion.key_facts_model.optional.map((fact, index) => `
+                ...(currentQuestion.key_facts_model.optional || []).filter(fact => !dedupedModel.safety_critical.includes(fact)).map((fact, index) => `
                     <div class="fact-item" id="eval_row_optional_${index}">
                         <input type="checkbox" name="correctness_optional_${index}_correct" class="fact-checkbox" onchange="handleNotMentionedChange('optional', ${index})">
-                        <div class="fact-text">${index + 1}. ${fact}</div>
+                        <div class="fact-text">${midx++}. ${fact}</div>
                         <button type="button" class="not-mentioned-btn" id="not_mentioned_btn_optional_${index}" onclick="toggleNotMentioned('optional', ${index})">
                             Not Mentioned
                         </button>
                         <input type="hidden" name="correctness_optional_${index}_not_mentioned" value="false">
                     </div>
                 `),
-                ...safetyCritical.map((fact, index) => `
+                ...dedupedModel.safety_critical.filter(fact => !((currentQuestion.key_facts_model.essential || []).includes(fact) || (currentQuestion.key_facts_model.optional || []).includes(fact))).map((fact, index) => `
                     <div class="fact-item" id="eval_row_safety_${index}">
                         <input type="checkbox" name="correctness_safety_${index}_correct" class="fact-checkbox" onchange="handleNotMentionedChange('safety', ${index})">
-                        <div class="fact-text">${index + 1}. ${fact}</div>
+                        <div class="fact-text">${midx++}. ${fact}</div>
                         <button type="button" class="not-mentioned-btn" id="not_mentioned_btn_safety_${index}" onclick="toggleNotMentioned('safety', ${index})">
                             Not Mentioned
                         </button>
@@ -1383,25 +1385,26 @@
 
         function renderRelevanceAndActionabilityFacts() {
             const currentQuestion = questions[currentIndex];
-            const safetyCritical = currentQuestion.key_facts_model.safety_critical || [];
+            const dedupedModel = getDedupedKeyPoints(currentQuestion.key_facts_model);
+            let idx = 1;
             const modelRelevanceDiv = document.getElementById('relevanceFacts');
             modelRelevanceDiv.innerHTML = [
-                ...currentQuestion.key_facts_model.essential.map((fact, index) => `
+                ...(currentQuestion.key_facts_model.essential || []).filter(fact => !dedupedModel.safety_critical.includes(fact)).map((fact) => `
                     <div class="fact-item">
-                        <input type="checkbox" id="relevance_relevant_essential_${index}" class="fact-checkbox">
-                        <div class="fact-text">${index + 1}. ${fact}</div>
+                        <input type="checkbox" id="relevance_relevant_essential_${idx}" class="fact-checkbox">
+                        <div class="fact-text">${idx++}. ${fact}</div>
                     </div>
                 `),
-                ...currentQuestion.key_facts_model.optional.map((fact, index) => `
+                ...(currentQuestion.key_facts_model.optional || []).filter(fact => !dedupedModel.safety_critical.includes(fact)).map((fact) => `
                     <div class="fact-item">
-                        <input type="checkbox" id="relevance_relevant_optional_${index}" class="fact-checkbox">
-                        <div class="fact-text">${index + 1}. ${fact}</div>
+                        <input type="checkbox" id="relevance_relevant_optional_${idx}" class="fact-checkbox">
+                        <div class="fact-text">${idx++}. ${fact}</div>
                     </div>
                 `),
-                ...safetyCritical.map((fact, index) => `
+                ...dedupedModel.safety_critical.filter(fact => !((currentQuestion.key_facts_model.essential || []).includes(fact) || (currentQuestion.key_facts_model.optional || []).includes(fact))).map((fact) => `
                     <div class="fact-item">
-                        <input type="checkbox" id="relevance_relevant_safety_${index}" class="fact-checkbox">
-                        <div class="fact-text">${index + 1}. ${fact}</div>
+                        <input type="checkbox" id="relevance_relevant_safety_${idx}" class="fact-checkbox">
+                        <div class="fact-text">${idx++}. ${fact}</div>
                     </div>
                 `)
             ].join('');
