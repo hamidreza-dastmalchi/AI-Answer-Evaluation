@@ -1,0 +1,25 @@
+[
+  {
+    "id": 6,
+    "question": "What does the icon with two overlapping screens represent?",
+    "manual_answer": "The icon with two overlapping screens represents the rear touchscreen control feature, which allows you to control the rear touchscreen from the front.",
+    "key_facts": {
+      "essential": [
+        "essential 1",
+        "essential 2",
+        "essential 3"
+      ],
+      "optional": [
+        "optional 1",
+        "optional 2",
+        "optional 3"
+      ],
+      "safety_critical": [
+        "essential 2",
+        "safety 2",
+        "safety 3",
+        "optional 3"
+      ]
+    }
+  }
+]
