@@ -6,11 +6,13 @@
     "key_facts": {
       "essential": [
         "essential 1",
-        "essential 3"
+        "essential 3_1",
+        "essential 3_2_not relevant"
       ],
       "optional": [
         "optional 1",
-        "optional 2"
+        "optional 2_1",
+        "optional 2_2_not relevant"
       ],
       "safety_critical": [
         "safety 2"
