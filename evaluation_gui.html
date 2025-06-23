@@ -813,7 +813,7 @@
             <p>This tool breaks down evaluation into three steps:</p>
             <ul>
                 <li><strong>Key Fact Coverage (completeness and risk awareness):</strong> Evaluate which ground truth key facts are covered by the AI assistant's response</li>
-                <li><strong>Key Fact Correctness:</strong> Assess whether the AI assistant's stated facts are accurate, inaccurate, or not mentioned</li>
+                <li><strong>Key Fact Correctness:</strong> Assess whether the AI assistant's stated facts are correct, incorrect, or not mentioned</li>
                 <li><strong>Relevance and Actionability:</strong> Determine which facts are relevant to the question and whether the overall response is actionable</li>
             </ul>
         </div>
@@ -1233,11 +1233,26 @@
                     <div class="fact-text">${index + 1}. ${fact}</div>
                 </div>
             `).join('');
+
+            // Safety critical facts
+            let gtSafetyDiv = document.getElementById('gtSafetyFacts');
+            if (!gtSafetyDiv) {
+                gtSafetyDiv = document.createElement('div');
+                gtSafetyDiv.id = 'gtSafetyFacts';
+                gtOptionalDiv.parentNode.appendChild(gtSafetyDiv);
+            }
+            gtSafetyDiv.innerHTML = currentQuestion.key_facts_manual.safety_critical.map((fact, index) => `
+                <div class="fact-item">
+                    <input type="checkbox" id="gt_safety_${index}" class="fact-checkbox">
+                    <div class="fact-text">${index + 1}. ${fact}</div>
+                </div>
+            `).join('');
         }
 
         function renderModelFacts() {
             const currentQuestion = questions[currentIndex];
-            
+            // Safety critical fallback
+            const safetyCritical = currentQuestion.key_facts_model.safety_critical || [];
             // Essential facts
             const modelEssentialDiv = document.getElementById('modelEssentialFacts');
             modelEssentialDiv.innerHTML = currentQuestion.key_facts_model.essential.map((fact, index) => `
@@ -1253,11 +1268,25 @@
                     <div class="fact-text">${index + 1}. ${fact}</div>
                 </div>
             `).join('');
+
+            // Safety critical facts
+            let modelSafetyDiv = document.getElementById('modelSafetyFacts');
+            if (!modelSafetyDiv) {
+                modelSafetyDiv = document.createElement('div');
+                modelSafetyDiv.id = 'modelSafetyFacts';
+                modelOptionalDiv.parentNode.appendChild(modelSafetyDiv);
+            }
+            modelSafetyDiv.innerHTML = safetyCritical.map((fact, index) => `
+                <div class="fact-item">
+                    <div class="fact-text">${index + 1}. ${fact}</div>
+                </div>
+            `).join('');
         }
 
         function renderCorrectnessFacts() {
             const currentQuestion = questions[currentIndex];
-            
+            // Safety critical fallback
+            const safetyCritical = currentQuestion.key_facts_model.safety_critical || [];
             // Ground truth facts for reference
             const gtCorrectnessDiv = document.getElementById('gtCorrectnessFacts');
             gtCorrectnessDiv.innerHTML = [
@@ -1267,6 +1296,11 @@
                     </div>
                 `),
                 ...currentQuestion.key_facts_manual.optional.map((fact, index) => `
+                    <div class="fact-item">
+                        <div class="fact-text">${index + 1}. ${fact}</div>
+                    </div>
+                `),
+                ...currentQuestion.key_facts_manual.safety_critical.map((fact, index) => `
                     <div class="fact-item">
                         <div class="fact-text">${index + 1}. ${fact}</div>
                     </div>
@@ -1295,13 +1329,23 @@
                         </button>
                         <input type="hidden" name="correctness_optional_${index}_not_mentioned" value="false">
                     </div>
+                `),
+                ...safetyCritical.map((fact, index) => `
+                    <div class="fact-item" id="eval_row_safety_${index}">
+                        <input type="checkbox" name="correctness_safety_${index}_correct" class="fact-checkbox" onchange="handleNotMentionedChange('safety', ${index})">
+                        <div class="fact-text">${index + 1}. ${fact}</div>
+                        <button type="button" class="not-mentioned-btn" id="not_mentioned_btn_safety_${index}" onclick="toggleNotMentioned('safety', ${index})">
+                            Not Mentioned
+                        </button>
+                        <input type="hidden" name="correctness_safety_${index}_not_mentioned" value="false">
+                    </div>
                 `)
             ].join('');
         }
 
         function renderRelevanceAndActionabilityFacts() {
             const currentQuestion = questions[currentIndex];
-            
+            const safetyCritical = currentQuestion.key_facts_model.safety_critical || [];
             const modelRelevanceDiv = document.getElementById('relevanceFacts');
             modelRelevanceDiv.innerHTML = [
                 ...currentQuestion.key_facts_model.essential.map((fact, index) => `
@@ -1313,6 +1357,12 @@
                 ...currentQuestion.key_facts_model.optional.map((fact, index) => `
                     <div class="fact-item">
                         <input type="checkbox" id="relevance_relevant_optional_${index}" class="fact-checkbox">
+                        <div class="fact-text">${index + 1}. ${fact}</div>
+                    </div>
+                `),
+                ...safetyCritical.map((fact, index) => `
+                    <div class="fact-item">
+                        <input type="checkbox" id="relevance_relevant_safety_${index}" class="fact-checkbox">
                         <div class="fact-text">${index + 1}. ${fact}</div>
                     </div>
                 `)
@@ -1396,6 +1446,8 @@
                     .map(cb => cb.checked);
                 const gtOptionalSelections = Array.from(document.querySelectorAll('#gtOptionalFacts input[type="checkbox"]'))
                     .map(cb => cb.checked);
+                const gtSafetySelections = Array.from(document.querySelectorAll('#gtSafetyFacts input[type="checkbox"]'))
+                    .map(cb => cb.checked);
 
                 const coveredEssential = gtEssentialSelections.filter(c => c).length;
                 const totalEssentialGT = currentQuestion.key_facts_manual.essential.length;
@@ -1403,10 +1455,10 @@
 
                 const coveredOptional = gtOptionalSelections.filter(c => c).length;
                 const totalOptionalGT = currentQuestion.key_facts_manual.optional.length;
-                results[qId].all_covered = `${coveredEssential + coveredOptional}/${totalEssentialGT + totalOptionalGT}`;
-
+                const coveredSafety = gtSafetySelections.filter(c => c).length;
                 const totalSafetyGT = currentQuestion.key_facts_manual.safety_critical.length;
-                results[qId].safety_covered = `0/${totalSafetyGT}`; // Safety critical coverage not implemented yet
+                results[qId].all_covered = `${coveredEssential + coveredOptional + coveredSafety}/${totalEssentialGT + totalOptionalGT + totalSafetyGT}`;
+                results[qId].safety_covered = `${coveredSafety}/${totalSafetyGT}`;
 
             } else if (currentStep === 2) {
                 // Collect correctness data
@@ -1432,13 +1484,27 @@
                     }
                 });
 
+                // Safety critical correctness
+                const safetyCritical = currentQuestion.key_facts_model.safety_critical || [];
+                const safetyCorrectness = [];
+                safetyCritical.forEach((fact, index) => {
+                    const notMentioned = document.querySelector(`input[name="correctness_safety_${index}_not_mentioned"]`)?.value === 'true';
+                    if (!notMentioned) {
+                        const isCorrect = document.querySelector(`input[name="correctness_safety_${index}_correct"]`)?.checked;
+                        if (isCorrect) {
+                            safetyCorrectness.push(true);
+                        }
+                    }
+                });
+
                 const accurateEssential = essentialCorrectness.length;
                 const totalEssentialModel = currentQuestion.key_facts_model.essential.length;
-                results[qId].mentioned_correct_essential = `${accurateEssential}/${totalEssentialModel}`;
-
                 const accurateOptional = optionalCorrectness.length;
                 const totalOptionalModel = currentQuestion.key_facts_model.optional.length;
-                results[qId].mentioned_correct_all = `${accurateEssential + accurateOptional}/${totalEssentialModel + totalOptionalModel}`;
+                const accurateSafety = safetyCorrectness.length;
+                const totalSafetyModel = safetyCritical.length;
+                results[qId].mentioned_correct_essential = `${accurateEssential}/${totalEssentialModel}`;
+                results[qId].mentioned_correct_all = `${accurateEssential + accurateOptional + accurateSafety}/${totalEssentialModel + totalOptionalModel + totalSafetyModel}`;
 
             } else if (currentStep === 3) {
                 // Collect relevance and actionability data
@@ -1446,15 +1512,18 @@
                     .map(cb => cb.checked);
                 const optionalRelevance = Array.from(document.querySelectorAll('#relevanceFacts input[id^="relevance_relevant_optional_"]'))
                     .map(cb => cb.checked);
+                const safetyRelevance = Array.from(document.querySelectorAll('#relevanceFacts input[id^="relevance_relevant_safety_"]'))
+                    .map(cb => cb.checked);
                 const isActionable = document.getElementById('actionability').checked;
 
                 const relevantEssential = essentialRelevance.filter(c => c).length;
                 const totalEssentialModel = currentQuestion.key_facts_model.essential.length;
-
                 const relevantOptional = optionalRelevance.filter(c => c).length;
                 const totalOptionalModel = currentQuestion.key_facts_model.optional.length;
+                const relevantSafety = safetyRelevance.filter(c => c).length;
+                const totalSafetyModel = (currentQuestion.key_facts_model.safety_critical || []).length;
 
-                results[qId].relevance = `${relevantEssential + relevantOptional}/${totalEssentialModel + totalOptionalModel}`;
+                results[qId].relevance = `${relevantEssential + relevantOptional + relevantSafety}/${totalEssentialModel + totalOptionalModel + totalSafetyModel}`;
                 results[qId].is_actionable = isActionable ? 1 : 0;
             }
 
