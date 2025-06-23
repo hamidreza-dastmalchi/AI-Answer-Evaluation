@@ -1227,11 +1227,6 @@
                             <li><strong>Consider Safety Awareness:</strong> Some key facts are safety-critical. We'll calculate how many safety-related points are covered to assess risk awareness.</li>
                         </ol>
                     </div>
-                    
-                    <div style="background: rgba(255,255,255,0.4); padding: 20px; border-radius: 10px; margin: 20px 0; backdrop-filter: blur(10px);">
-                        <h4 style="color: #1565c0; margin-bottom: 15px;">⚠️ Special Cases:</h4>
-                        <p>If the AI assistant responds with "I don't have enough information" or "The context doesn't provide information to answer this question," then <strong>none</strong> of the ground truth key facts should be checked, as the AI assistant is not providing any coverage.</p>
-                    </div>
                 `;
             } else if (currentStep === 2) {
                 instructionsSection.innerHTML = `
@@ -1251,11 +1246,6 @@
                                 </ul>
                             </li>
                         </ol>
-                    </div>
-                    
-                    <div style="background: rgba(255,255,255,0.4); padding: 20px; border-radius: 10px; margin: 20px 0; backdrop-filter: blur(10px);">
-                        <h4 style="color: #1565c0; margin-bottom: 15px;">⚠️ Special Cases:</h4>
-                        <p>If the AI assistant responds with "I don't have enough information" or similar, then all key facts should be marked as "Not Mentioned" since the AI assistant is not making any factual claims.</p>
                     </div>
                 `;
             } else if (currentStep === 3) {
@@ -1279,11 +1269,6 @@
                             <li><strong>✅ Actionable:</strong> Check the box if the response provides clear next steps, specific instructions, or meaningful guidance that helps the user complete a task or advance their understanding.</li>
                             <li><strong>❌ Not Actionable:</strong> Leave unchecked if the response is purely informational without practical guidance or if it's too vague to act upon.</li>
                         </ul>
-                    </div>
-                    
-                    <div style="background: rgba(255,255,255,0.4); padding: 20px; border-radius: 10px; margin: 20px 0; backdrop-filter: blur(10px);">
-                        <h4 style="color: #1565c0; margin-bottom: 15px;">⚠️ Special Cases:</h4>
-                        <p>If the AI assistant responds with "I don't have enough information" or similar, then the response is typically <strong>not actionable</strong> since it doesn't provide any guidance or information to help the user.</p>
                     </div>
                 `;
             }
