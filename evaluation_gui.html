@@ -1253,20 +1253,21 @@
         function renderGroundTruthFacts() {
             const currentQuestion = questions[currentIndex];
             const deduped = getDedupedKeyPoints(currentQuestion.key_facts_manual);
+            let idx = 1;
             // Essential facts
             const gtEssentialDiv = document.getElementById('gtEssentialFacts');
-            gtEssentialDiv.innerHTML = (currentQuestion.key_facts_manual.essential || []).map((fact, index) => `
+            gtEssentialDiv.innerHTML = (currentQuestion.key_facts_manual.essential || []).filter(fact => !deduped.safety_critical.includes(fact)).map((fact) => `
                 <div class="fact-item">
-                    <input type="checkbox" id="gt_essential_${index}" class="fact-checkbox">
-                    <div class="fact-text">${index + 1}. ${fact}</div>
+                    <input type="checkbox" id="gt_essential_${idx}" class="fact-checkbox">
+                    <div class="fact-text">${idx++}. ${fact}</div>
                 </div>
             `).join('');
             // Optional facts
             const gtOptionalDiv = document.getElementById('gtOptionalFacts');
-            gtOptionalDiv.innerHTML = (currentQuestion.key_facts_manual.optional || []).map((fact, index) => `
+            gtOptionalDiv.innerHTML = (currentQuestion.key_facts_manual.optional || []).filter(fact => !deduped.safety_critical.includes(fact)).map((fact) => `
                 <div class="fact-item">
-                    <input type="checkbox" id="gt_optional_${index}" class="fact-checkbox">
-                    <div class="fact-text">${index + 1}. ${fact}</div>
+                    <input type="checkbox" id="gt_optional_${idx}" class="fact-checkbox">
+                    <div class="fact-text">${idx++}. ${fact}</div>
                 </div>
             `).join('');
             // Safety critical facts (only those not in essential/optional)
@@ -1278,10 +1279,10 @@
             }
             gtSafetyDiv.innerHTML = deduped.safety_critical
                 .filter(fact => !((currentQuestion.key_facts_manual.essential || []).includes(fact) || (currentQuestion.key_facts_manual.optional || []).includes(fact)))
-                .map((fact, index) => `
+                .map((fact) => `
                     <div class="fact-item">
-                        <input type="checkbox" id="gt_safety_${index}" class="fact-checkbox">
-                        <div class="fact-text">${index + 1}. ${fact}</div>
+                        <input type="checkbox" id="gt_safety_${idx}" class="fact-checkbox">
+                        <div class="fact-text">${idx++}. ${fact}</div>
                     </div>
                 `).join('');
         }
