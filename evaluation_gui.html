@@ -1240,8 +1240,19 @@
             return nonDupSafety;
         }
 
+        function getDedupedKeyPoints(manual) {
+            // Remove any safety critical key point from essential/optional for display
+            const safetySet = new Set(manual.safety_critical || []);
+            return {
+                essential: (manual.essential || []).filter(fact => !safetySet.has(fact)),
+                optional: (manual.optional || []).filter(fact => !safetySet.has(fact)),
+                safety_critical: (manual.safety_critical || [])
+            };
+        }
+
         function renderGroundTruthFacts() {
             const currentQuestion = questions[currentIndex];
+            const deduped = getDedupedKeyPoints(currentQuestion.key_facts_manual);
             // Essential facts
             const gtEssentialDiv = document.getElementById('gtEssentialFacts');
             gtEssentialDiv.innerHTML = (currentQuestion.key_facts_manual.essential || []).map((fact, index) => `
@@ -1258,7 +1269,21 @@
                     <div class="fact-text">${index + 1}. ${fact}</div>
                 </div>
             `).join('');
-            // No safety section
+            // Safety critical facts (only those not in essential/optional)
+            let gtSafetyDiv = document.getElementById('gtSafetyFacts');
+            if (!gtSafetyDiv) {
+                gtSafetyDiv = document.createElement('div');
+                gtSafetyDiv.id = 'gtSafetyFacts';
+                gtOptionalDiv.parentNode.appendChild(gtSafetyDiv);
+            }
+            gtSafetyDiv.innerHTML = deduped.safety_critical
+                .filter(fact => !((currentQuestion.key_facts_manual.essential || []).includes(fact) || (currentQuestion.key_facts_manual.optional || []).includes(fact)))
+                .map((fact, index) => `
+                    <div class="fact-item">
+                        <input type="checkbox" id="gt_safety_${index}" class="fact-checkbox">
+                        <div class="fact-text">${index + 1}. ${fact}</div>
+                    </div>
+                `).join('');
         }
 
         function renderModelFacts() {
