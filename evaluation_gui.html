@@ -1289,21 +1289,36 @@
 
         function renderModelFacts() {
             const currentQuestion = questions[currentIndex];
+            const deduped = getDedupedKeyPoints(currentQuestion.key_facts_model);
+            let idx = 1;
             // Essential facts
             const modelEssentialDiv = document.getElementById('modelEssentialFacts');
-            modelEssentialDiv.innerHTML = (currentQuestion.key_facts_model.essential || []).map((fact, index) => `
+            modelEssentialDiv.innerHTML = (currentQuestion.key_facts_model.essential || []).filter(fact => !deduped.safety_critical.includes(fact)).map((fact) => `
                 <div class="fact-item">
-                    <div class="fact-text">${index + 1}. ${fact}</div>
+                    <div class="fact-text">${idx++}. ${fact}</div>
                 </div>
             `).join('');
             // Optional facts
             const modelOptionalDiv = document.getElementById('modelOptionalFacts');
-            modelOptionalDiv.innerHTML = (currentQuestion.key_facts_model.optional || []).map((fact, index) => `
+            modelOptionalDiv.innerHTML = (currentQuestion.key_facts_model.optional || []).filter(fact => !deduped.safety_critical.includes(fact)).map((fact) => `
                 <div class="fact-item">
-                    <div class="fact-text">${index + 1}. ${fact}</div>
+                    <div class="fact-text">${idx++}. ${fact}</div>
                 </div>
             `).join('');
-            // No safety section
+            // Safety critical facts (only those not in essential/optional)
+            let modelSafetyDiv = document.getElementById('modelSafetyFacts');
+            if (!modelSafetyDiv) {
+                modelSafetyDiv = document.createElement('div');
+                modelSafetyDiv.id = 'modelSafetyFacts';
+                modelOptionalDiv.parentNode.appendChild(modelSafetyDiv);
+            }
+            modelSafetyDiv.innerHTML = deduped.safety_critical
+                .filter(fact => !((currentQuestion.key_facts_model.essential || []).includes(fact) || (currentQuestion.key_facts_model.optional || []).includes(fact)))
+                .map((fact) => `
+                    <div class="fact-item">
+                        <div class="fact-text">${idx++}. ${fact}</div>
+                    </div>
+                `).join('');
         }
 
         function renderCorrectnessFacts() {
