@@ -1585,13 +1585,69 @@
                     }
                 });
                 
+                // For safety critical, we need to count ALL safety critical points that are covered
+                // This includes both the deduplicated ones shown in UI and those that appear in essential/optional
+                const allSafetyCritical = (currentQuestion.key_facts_manual.safety_critical || []);
+                let totalSafetyCovered = 0;
+                
+                // Count safety critical points that appear in essential and are covered
+                allSafetyCritical.forEach(safetyFact => {
+                    const essentialIndex = (currentQuestion.key_facts_manual.essential || []).indexOf(safetyFact);
+                    if (essentialIndex >= 0) {
+                        // This safety fact is in essential, check if the corresponding essential fact is covered
+                        const essentialFacts = (currentQuestion.key_facts_manual.essential || []);
+                        const allFacts = [
+                            ...deduped.essential.map(fact => ({ fact, type: 'essential' })),
+                            ...deduped.optional.map(fact => ({ fact, type: 'optional' })),
+                            ...deduped.safety_critical.map(fact => ({ fact, type: 'safety' }))
+                        ];
+                        
+                        const factIndex = allFacts.findIndex(({ fact }) => fact === safetyFact);
+                        if (factIndex >= 0 && allChecked[factIndex]) {
+                            totalSafetyCovered++;
+                        }
+                    } else {
+                        const optionalIndex = (currentQuestion.key_facts_manual.optional || []).indexOf(safetyFact);
+                        if (optionalIndex >= 0) {
+                            // This safety fact is in optional, check if the corresponding optional fact is covered
+                            const allFacts = [
+                                ...deduped.essential.map(fact => ({ fact, type: 'essential' })),
+                                ...deduped.optional.map(fact => ({ fact, type: 'optional' })),
+                                ...deduped.safety_critical.map(fact => ({ fact, type: 'safety' }))
+                            ];
+                            
+                            const factIndex = allFacts.findIndex(({ fact }) => fact === safetyFact);
+                            if (factIndex >= 0 && allChecked[factIndex]) {
+                                totalSafetyCovered++;
+                            }
+                        } else {
+                            // This safety fact is unique (not in essential/optional), it's already counted in coveredSafety
+                            // But we need to find which unique safety fact this is
+                            const uniqueSafetyFacts = deduped.safety_critical;
+                            const uniqueIndex = uniqueSafetyFacts.indexOf(safetyFact);
+                            if (uniqueIndex >= 0) {
+                                // Find the corresponding checkbox in the combined list
+                                const allFacts = [
+                                    ...deduped.essential.map(fact => ({ fact, type: 'essential' })),
+                                    ...deduped.optional.map(fact => ({ fact, type: 'optional' })),
+                                    ...deduped.safety_critical.map(fact => ({ fact, type: 'safety' }))
+                                ];
+                                
+                                const factIndex = allFacts.findIndex(({ fact }) => fact === safetyFact);
+                                if (factIndex >= 0 && allChecked[factIndex]) {
+                                    totalSafetyCovered++;
+                                }
+                            }
+                        }
+                    }
+                });
+                
                 const totalEssentialGT = (currentQuestion.key_facts_manual.essential || []).length;
                 const totalOptionalGT = (currentQuestion.key_facts_manual.optional || []).length;
-                const uniqueSafety = getUniqueSafetyKeyPoints(currentQuestion.key_facts_manual);
                 
                 results[qId].essential_covered = `${coveredEssential}/${totalEssentialGT}`;
                 results[qId].optional_covered = `${coveredOptional}/${totalOptionalGT}`;
-                results[qId].safety_covered = `${coveredSafety}/${uniqueSafety.length}`;
+                results[qId].safety_covered = `${totalSafetyCovered}/${allSafetyCritical.length}`;
                 
                 // For all covered: count all checked boxes, denominator is unique union
                 const allCovered = allChecked.filter(c => c).length;
