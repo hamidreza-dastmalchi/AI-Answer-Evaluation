@@ -973,6 +973,9 @@
                         optional: [
                             "Charging speed varies",
                             "Multiple charging options exist"
+                        ],
+                        safety_critical: [
+                            "Safety guidelines followed"
                         ]
                     }
                 },
@@ -1004,6 +1007,9 @@
                         optional: [
                             "Contact support if problems continue",
                             "Look for error indicators"
+                        ],
+                        safety_critical: [
+                            "Safety guidelines followed"
                         ]
                     }
                 }
@@ -1040,7 +1046,8 @@
                     },
                     key_facts_model: {
                         essential: model.key_facts?.essential || [],
-                        optional: model.key_facts?.optional || []
+                        optional: model.key_facts?.optional || [],
+                        safety_critical: model.key_facts?.safety_critical || []
                     }
                 };
             });
