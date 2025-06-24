@@ -1601,9 +1601,11 @@
             } else if (currentStep === 2) {
                 // Collect correctness data
                 const essentialCorrectness = [];
+                let mentionedEssentialCount = 0;
                 dedupedModel.essential.forEach((fact, index) => {
                     const notMentioned = document.querySelector(`input[name="correctness_essential_${index}_not_mentioned"]`).value === 'true';
                     if (!notMentioned) {
+                        mentionedEssentialCount++;
                         const isCorrect = document.querySelector(`input[name="correctness_essential_${index}_correct"]`).checked;
                         if (isCorrect) {
                             essentialCorrectness.push(true);
@@ -1612,9 +1614,11 @@
                 });
 
                 const optionalCorrectness = [];
+                let mentionedOptionalCount = 0;
                 dedupedModel.optional.forEach((fact, index) => {
                     const notMentioned = document.querySelector(`input[name="correctness_optional_${index}_not_mentioned"]`).value === 'true';
                     if (!notMentioned) {
+                        mentionedOptionalCount++;
                         const isCorrect = document.querySelector(`input[name="correctness_optional_${index}_correct"]`).checked;
                         if (isCorrect) {
                            optionalCorrectness.push(true);
@@ -1625,9 +1629,11 @@
                 // Safety critical correctness
                 const safetyCritical = dedupedModel.safety_critical || [];
                 const safetyCorrectness = [];
+                let mentionedSafetyCount = 0;
                 safetyCritical.forEach((fact, index) => {
                     const notMentioned = document.querySelector(`input[name="correctness_safety_${index}_not_mentioned"]`)?.value === 'true';
                     if (!notMentioned) {
+                        mentionedSafetyCount++;
                         const isCorrect = document.querySelector(`input[name="correctness_safety_${index}_correct"]`)?.checked;
                         if (isCorrect) {
                             safetyCorrectness.push(true);
@@ -1636,13 +1642,11 @@
                 });
 
                 const accurateEssential = essentialCorrectness.length;
-                const totalEssentialModel = dedupedModel.essential.length;
                 const accurateOptional = optionalCorrectness.length;
-                const totalOptionalModel = dedupedModel.optional.length;
                 const accurateSafety = safetyCorrectness.length;
-                const totalSafetyModel = safetyCritical.length;
-                results[qId].mentioned_correct_essential = `${accurateEssential}/${totalEssentialModel}`;
-                results[qId].mentioned_correct_all = `${accurateEssential + accurateOptional + accurateSafety}/${totalEssentialModel + totalOptionalModel + totalSafetyModel}`;
+                
+                results[qId].mentioned_correct_essential = `${accurateEssential}/${mentionedEssentialCount}`;
+                results[qId].mentioned_correct_all = `${accurateEssential + accurateOptional + accurateSafety}/${mentionedEssentialCount + mentionedOptionalCount + mentionedSafetyCount}`;
 
             } else if (currentStep === 3) {
                 // Collect relevance and actionability data
