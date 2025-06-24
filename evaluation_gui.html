@@ -1350,7 +1350,12 @@
 
         function renderModelFacts() {
             const currentQuestion = questions[currentIndex];
-            const modelKeyFacts = currentQuestion.key_facts; // FIXED: use key_facts, not key_facts_model
+            // Use key_facts if present, otherwise fallback to key_facts_model (for sample data)
+            const modelKeyFacts = currentQuestion.key_facts || currentQuestion.key_facts_model;
+            if (!modelKeyFacts) {
+                console.log('Model key facts are missing for this question:', currentQuestion);
+                return;
+            }
             // Debug logging
             console.log('Model key facts:', modelKeyFacts);
             // Deduplicate: remove any safety critical from essential/optional
@@ -1367,14 +1372,14 @@
             let idx = 1;
             const modelEssentialDiv = document.getElementById('modelEssentialFacts');
             modelEssentialDiv.innerHTML = essentials.map(fact => `
-                <div class=\"fact-item\">
-                    <div class=\"fact-text\">${idx++}. ${fact}</div>
+                <div class="fact-item">
+                    <div class="fact-text">${idx++}. ${fact}</div>
                 </div>
             `).join('');
             const modelOptionalDiv = document.getElementById('modelOptionalFacts');
             modelOptionalDiv.innerHTML = optionals.map(fact => `
-                <div class=\"fact-item\">
-                    <div class=\"fact-text\">${idx++}. ${fact}</div>
+                <div class="fact-item">
+                    <div class="fact-text">${idx++}. ${fact}</div>
                 </div>
             `).join('');
             // Safety critical facts (only those not in essential/optional)
@@ -1385,8 +1390,8 @@
                 modelOptionalDiv.parentNode.appendChild(modelSafetyDiv);
             }
             modelSafetyDiv.innerHTML = safetyOnly.map(fact => `
-                <div class=\"fact-item\">
-                    <div class=\"fact-text\">${idx++}. ${fact}</div>
+                <div class="fact-item">
+                    <div class="fact-text">${idx++}. ${fact}</div>
                 </div>
             `).join('');
         }
