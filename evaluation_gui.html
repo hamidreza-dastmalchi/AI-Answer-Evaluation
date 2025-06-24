@@ -1350,18 +1350,25 @@
 
         function renderModelFacts() {
             const currentQuestion = questions[currentIndex];
-            const deduped = getDedupedKeyPoints(currentQuestion.key_facts_model);
+            const modelKeyFacts = currentQuestion.key_facts_model;
+            // Deduplicate: remove any safety critical from essential/optional
+            const safetySet = new Set(modelKeyFacts.safety_critical || []);
+            const essentials = (modelKeyFacts.essential || []).filter(fact => !safetySet.has(fact));
+            const optionals = (modelKeyFacts.optional || []).filter(fact => !safetySet.has(fact));
+            // Only show safety criticals not in essential/optional
+            const safetyOnly = (modelKeyFacts.safety_critical || []).filter(fact =>
+                !((modelKeyFacts.essential || []).includes(fact) || (modelKeyFacts.optional || []).includes(fact))
+            );
+
             let idx = 1;
-            // Essential facts
             const modelEssentialDiv = document.getElementById('modelEssentialFacts');
-            modelEssentialDiv.innerHTML = (currentQuestion.key_facts_model.essential || []).filter(fact => !deduped.safety_critical.includes(fact)).map((fact) => `
+            modelEssentialDiv.innerHTML = essentials.map(fact => `
                 <div class="fact-item">
                     <div class="fact-text">${idx++}. ${fact}</div>
                 </div>
             `).join('');
-            // Optional facts
             const modelOptionalDiv = document.getElementById('modelOptionalFacts');
-            modelOptionalDiv.innerHTML = (currentQuestion.key_facts_model.optional || []).filter(fact => !deduped.safety_critical.includes(fact)).map((fact) => `
+            modelOptionalDiv.innerHTML = optionals.map(fact => `
                 <div class="fact-item">
                     <div class="fact-text">${idx++}. ${fact}</div>
                 </div>
@@ -1373,13 +1380,11 @@
                 modelSafetyDiv.id = 'modelSafetyFacts';
                 modelOptionalDiv.parentNode.appendChild(modelSafetyDiv);
             }
-            modelSafetyDiv.innerHTML = deduped.safety_critical
-                .filter(fact => !((currentQuestion.key_facts_model.essential || []).includes(fact) || (currentQuestion.key_facts_model.optional || []).includes(fact)))
-                .map((fact) => `
-                    <div class="fact-item">
-                        <div class="fact-text">${idx++}. ${fact}</div>
-                    </div>
-                `).join('');
+            modelSafetyDiv.innerHTML = safetyOnly.map(fact => `
+                <div class="fact-item">
+                    <div class="fact-text">${idx++}. ${fact}</div>
+                </div>
+            `).join('');
         }
 
         function renderCorrectnessFacts() {
