@@ -1326,43 +1326,35 @@
             const currentQuestion = questions[currentIndex];
             const deduped = getDedupedKeyPoints(currentQuestion.key_facts_manual);
             let idx = 1;
+            
+            // Combine all facts into a single list
+            const allFacts = [
+                ...deduped.essential.map(fact => ({ fact, type: 'essential' })),
+                ...deduped.optional.map(fact => ({ fact, type: 'optional' })),
+                ...deduped.safety_critical.map(fact => ({ fact, type: 'safety' }))
+            ];
+            
             // Essential facts
             const gtEssentialDiv = document.getElementById('gtEssentialFacts');
-            gtEssentialDiv.innerHTML = deduped.essential.map((fact) => `
+            gtEssentialDiv.innerHTML = allFacts.map(({ fact, type }) => `
                 <div class="fact-item">
-                    <input type="checkbox" id="gt_essential_${idx}" class="fact-checkbox">
+                    <input type="checkbox" id="gt_${type}_${idx}" class="fact-checkbox">
                     <div class="fact-text">${idx++}. ${fact}</div>
                 </div>
             `).join('');
-            // Optional facts
+            
+            // Optional facts (empty since we combined everything above)
             const gtOptionalDiv = document.getElementById('gtOptionalFacts');
-            gtOptionalDiv.innerHTML = deduped.optional.map((fact) => `
-                <div class="fact-item">
-                    <input type="checkbox" id="gt_optional_${idx}" class="fact-checkbox">
-                    <div class="fact-text">${idx++}. ${fact}</div>
-                </div>
-            `).join('');
-            // Safety critical facts (only those not in essential/optional)
+            gtOptionalDiv.innerHTML = '';
+            
+            // Safety critical facts (empty since we combined everything above)
             let gtSafetyDiv = document.getElementById('gtSafetyFacts');
             if (!gtSafetyDiv) {
                 gtSafetyDiv = document.createElement('div');
                 gtSafetyDiv.id = 'gtSafetyFacts';
                 gtOptionalDiv.parentNode.appendChild(gtSafetyDiv);
             }
-            if (deduped.safety_critical.length > 0) {
-                gtSafetyDiv.innerHTML = `
-                    <h4 style="margin-top: 20px; color: #dc3545;">Safety Critical Key Facts</h4>
-                    <p><em>Check the box for each safety critical point covered by the AI.</em></p>
-                    ${deduped.safety_critical.map((fact) => `
-                        <div class="fact-item">
-                            <input type="checkbox" id="gt_safety_${idx}" class="fact-checkbox">
-                            <div class="fact-text">${idx++}. ${fact}</div>
-                        </div>
-                    `).join('')}
-                `;
-            } else {
-                gtSafetyDiv.innerHTML = '';
-            }
+            gtSafetyDiv.innerHTML = '';
         }
 
         function renderModelFacts() {
@@ -1568,42 +1560,43 @@
 
             // Collect data based on current step
             if (currentStep === 1) {
-                // Collect completeness data
-                const gtEssentialSelections = Array.from(document.querySelectorAll('#gtEssentialFacts input[type="checkbox"]'))
-                    .map(cb => cb.checked);
-                const gtOptionalSelections = Array.from(document.querySelectorAll('#gtOptionalFacts input[type="checkbox"]'))
-                    .map(cb => cb.checked);
-                const gtSafetySelections = Array.from(document.querySelectorAll('#gtSafetyFacts input[type="checkbox"]'))
-                    .map(cb => cb.checked);
+                // Collect completeness data from combined list
+                const allCheckboxes = Array.from(document.querySelectorAll('#gtEssentialFacts input[type="checkbox"]'));
+                const allChecked = allCheckboxes.map(cb => cb.checked);
                 
-                const coveredEssential = gtEssentialSelections.filter(c => c).length;
-                const totalEssentialGT = (currentQuestion.key_facts_manual.essential || []).length;
-                results[qId].essential_covered = `${coveredEssential}/${totalEssentialGT}`;
+                // Get the deduped facts to match with checkboxes
+                const deduped = getDedupedKeyPoints(currentQuestion.key_facts_manual);
+                const allFacts = [
+                    ...deduped.essential.map(fact => ({ fact, type: 'essential' })),
+                    ...deduped.optional.map(fact => ({ fact, type: 'optional' })),
+                    ...deduped.safety_critical.map(fact => ({ fact, type: 'safety' }))
+                ];
                 
-                const coveredOptional = gtOptionalSelections.filter(c => c).length;
-                const totalOptionalGT = (currentQuestion.key_facts_manual.optional || []).length;
-                results[qId].optional_covered = `${coveredOptional}/${totalOptionalGT}`;
-                
-                // For all covered: count all checked boxes, denominator is unique union
-                const allSelections = [
-                    ...(currentQuestion.key_facts_manual.essential || []).map((fact, i) => gtEssentialSelections[i] ? fact : null),
-                    ...(currentQuestion.key_facts_manual.optional || []).map((fact, i) => gtOptionalSelections[i] ? fact : null)
-                ].filter(Boolean);
-                
-                // Add safety critical checkboxes for those not in essential/optional
-                const uniqueSafety = getUniqueSafetyKeyPoints(currentQuestion.key_facts_manual);
+                // Count covered facts by type
+                let coveredEssential = 0;
+                let coveredOptional = 0;
                 let coveredSafety = 0;
-                uniqueSafety.forEach((fact, idx) => {
-                    if (gtSafetySelections[idx]) {
-                        coveredSafety++;
-                        allSelections.push(fact);
+                
+                allFacts.forEach(({ fact, type }, index) => {
+                    if (allChecked[index]) {
+                        if (type === 'essential') coveredEssential++;
+                        else if (type === 'optional') coveredOptional++;
+                        else if (type === 'safety') coveredSafety++;
                     }
                 });
                 
-                const allCovered = allSelections.length;
+                const totalEssentialGT = (currentQuestion.key_facts_manual.essential || []).length;
+                const totalOptionalGT = (currentQuestion.key_facts_manual.optional || []).length;
+                const uniqueSafety = getUniqueSafetyKeyPoints(currentQuestion.key_facts_manual);
+                
+                results[qId].essential_covered = `${coveredEssential}/${totalEssentialGT}`;
+                results[qId].optional_covered = `${coveredOptional}/${totalOptionalGT}`;
+                results[qId].safety_covered = `${coveredSafety}/${uniqueSafety.length}`;
+                
+                // For all covered: count all checked boxes, denominator is unique union
+                const allCovered = allChecked.filter(c => c).length;
                 const allUnique = getAllUniqueKeyPoints(currentQuestion.key_facts_manual).length;
                 results[qId].all_covered = `${allCovered}/${allUnique}`;
-                results[qId].safety_covered = `${coveredSafety}/${uniqueSafety.length}`;
 
             } else if (currentStep === 2) {
                 // Collect correctness data
