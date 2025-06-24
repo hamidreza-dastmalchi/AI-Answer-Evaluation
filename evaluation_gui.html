@@ -1308,13 +1308,17 @@
             return nonDupSafety;
         }
 
-        function getDedupedKeyPoints(manual) {
-            // Remove any safety critical key point from essential/optional for display
-            const safetySet = new Set(manual.safety_critical || []);
+        function getDedupedKeyPoints(keyFacts) {
+            // Show all essential and optional, then only safety criticals not present in essential/optional
+            const essential = keyFacts.essential || [];
+            const optional = keyFacts.optional || [];
+            const safety_critical = (keyFacts.safety_critical || []).filter(fact =>
+                !essential.includes(fact) && !optional.includes(fact)
+            );
             return {
-                essential: (manual.essential || []).filter(fact => !safetySet.has(fact)),
-                optional: (manual.optional || []).filter(fact => !safetySet.has(fact)),
-                safety_critical: (manual.safety_critical || [])
+                essential,
+                optional,
+                safety_critical
             };
         }
 
@@ -1324,7 +1328,7 @@
             let idx = 1;
             // Essential facts
             const gtEssentialDiv = document.getElementById('gtEssentialFacts');
-            gtEssentialDiv.innerHTML = (currentQuestion.key_facts_manual.essential || []).filter(fact => !deduped.safety_critical.includes(fact)).map((fact) => `
+            gtEssentialDiv.innerHTML = deduped.essential.map((fact) => `
                 <div class="fact-item">
                     <input type="checkbox" id="gt_essential_${idx}" class="fact-checkbox">
                     <div class="fact-text">${idx++}. ${fact}</div>
@@ -1332,7 +1336,7 @@
             `).join('');
             // Optional facts
             const gtOptionalDiv = document.getElementById('gtOptionalFacts');
-            gtOptionalDiv.innerHTML = (currentQuestion.key_facts_manual.optional || []).filter(fact => !deduped.safety_critical.includes(fact)).map((fact) => `
+            gtOptionalDiv.innerHTML = deduped.optional.map((fact) => `
                 <div class="fact-item">
                     <input type="checkbox" id="gt_optional_${idx}" class="fact-checkbox">
                     <div class="fact-text">${idx++}. ${fact}</div>
@@ -1345,14 +1349,12 @@
                 gtSafetyDiv.id = 'gtSafetyFacts';
                 gtOptionalDiv.parentNode.appendChild(gtSafetyDiv);
             }
-            gtSafetyDiv.innerHTML = deduped.safety_critical
-                .filter(fact => !((currentQuestion.key_facts_manual.essential || []).includes(fact) || (currentQuestion.key_facts_manual.optional || []).includes(fact)))
-                .map((fact) => `
-                    <div class="fact-item">
-                        <input type="checkbox" id="gt_safety_${idx}" class="fact-checkbox">
-                        <div class="fact-text">${idx++}. ${fact}</div>
-                    </div>
-                `).join('');
+            gtSafetyDiv.innerHTML = deduped.safety_critical.map((fact) => `
+                <div class="fact-item">
+                    <input type="checkbox" id="gt_safety_${idx}" class="fact-checkbox">
+                    <div class="fact-text">${idx++}. ${fact}</div>
+                </div>
+            `).join('');
         }
 
         function renderModelFacts() {
@@ -1367,26 +1369,16 @@
             }
             // Debug logging
             console.log('Model key facts:', modelKeyFacts);
-            // Deduplicate: remove any safety critical from essential/optional
-            const safetySet = new Set(modelKeyFacts.safety_critical || []);
-            const essentials = (modelKeyFacts.essential || []).filter(fact => !safetySet.has(fact));
-            const optionals = (modelKeyFacts.optional || []).filter(fact => !safetySet.has(fact));
-            // Only show safety criticals not in essential/optional
-            const safetyOnly = (modelKeyFacts.safety_critical || []).filter(fact =>
-                !((modelKeyFacts.essential || []).includes(fact) || (modelKeyFacts.optional || []).includes(fact))
-            );
-            // Debug logging
-            console.log('AI assistant safetyOnly facts:', safetyOnly);
-
+            const deduped = getDedupedKeyPoints(modelKeyFacts);
             let idx = 1;
             const modelEssentialDiv = document.getElementById('modelEssentialFacts');
-            modelEssentialDiv.innerHTML = essentials.map(fact => `
+            modelEssentialDiv.innerHTML = deduped.essential.map(fact => `
                 <div class="fact-item">
                     <div class="fact-text">${idx++}. ${fact}</div>
                 </div>
             `).join('');
             const modelOptionalDiv = document.getElementById('modelOptionalFacts');
-            modelOptionalDiv.innerHTML = optionals.map(fact => `
+            modelOptionalDiv.innerHTML = deduped.optional.map(fact => `
                 <div class="fact-item">
                     <div class="fact-text">${idx++}. ${fact}</div>
                 </div>
@@ -1398,7 +1390,7 @@
                 modelSafetyDiv.id = 'modelSafetyFacts';
                 modelOptionalDiv.parentNode.appendChild(modelSafetyDiv);
             }
-            modelSafetyDiv.innerHTML = safetyOnly.map(fact => `
+            modelSafetyDiv.innerHTML = deduped.safety_critical.map(fact => `
                 <div class="fact-item">
                     <div class="fact-text">${idx++}. ${fact}</div>
                 </div>
