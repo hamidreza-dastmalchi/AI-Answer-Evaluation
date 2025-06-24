@@ -1350,7 +1350,7 @@
 
         function renderModelFacts() {
             const currentQuestion = questions[currentIndex];
-            const modelKeyFacts = currentQuestion.key_facts_model;
+            const modelKeyFacts = currentQuestion.key_facts; // FIXED: use key_facts, not key_facts_model
             // Debug logging
             console.log('Model key facts:', modelKeyFacts);
             // Deduplicate: remove any safety critical from essential/optional
