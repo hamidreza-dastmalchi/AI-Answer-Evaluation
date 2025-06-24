@@ -1350,6 +1350,8 @@
 
         function renderModelFacts() {
             const currentQuestion = questions[currentIndex];
+            // Debug: print the full question object
+            console.log('Current question:', currentQuestion);
             // Use key_facts if present, otherwise fallback to key_facts_model (for sample data)
             const modelKeyFacts = currentQuestion.key_facts || currentQuestion.key_facts_model;
             if (!modelKeyFacts) {
