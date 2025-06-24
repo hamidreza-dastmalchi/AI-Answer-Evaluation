@@ -1370,6 +1370,7 @@
             // Debug logging
             console.log('Model key facts:', modelKeyFacts);
             const deduped = getDedupedKeyPoints(modelKeyFacts);
+            console.log('Deduped key facts:', deduped);
             let idx = 1;
             
             // Combine all facts into a single list with continuous numbering
@@ -1378,6 +1379,7 @@
                 ...deduped.optional.map(fact => ({ fact, type: 'optional' })),
                 ...deduped.safety_critical.map(fact => ({ fact, type: 'safety' }))
             ];
+            console.log('All model facts:', allModelFacts);
             
             const modelEssentialDiv = document.getElementById('modelEssentialFacts');
             modelEssentialDiv.innerHTML = allModelFacts.map(({ fact, type }) => `
