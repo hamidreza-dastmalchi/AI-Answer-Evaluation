@@ -13,11 +13,13 @@
       "optional": [
         "optional 1",
         "optional 2_1",
-        "optional 2_2_not relevant"
+        "optional 2_2_not relevant",
+        "optional 3"
       ],
       "safety_critical": [
         "safety 2",
-        "essential 2"
+        "essential 2",
+        "optional 3"
       ]
     }
   }
