@@ -18,7 +18,9 @@
         "optional 3_2_not relevant"
       ],
       "safety_critical": [
-        "safety 2"
+        "safety 2",
+        "safety 3_1",
+        "safety 3_2_not relevant"
       ]
     }
   }
