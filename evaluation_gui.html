@@ -1560,7 +1560,7 @@
                 });
                 
                 // For safety critical, we need to count ALL safety critical points that are covered
-                // This includes both the deduplicated ones shown in UI and those that appear in essential/optional
+                // This includes both the deduped ones shown in UI and those that appear in essential/optional
                 const allSafetyCritical = (currentQuestion.key_facts_manual.safety_critical || []);
                 let totalSafetyCovered = 0;
                 
@@ -1627,6 +1627,10 @@
                 const allCovered = allChecked.filter(c => c).length;
                 const allUnique = getAllUniqueKeyPoints(currentQuestion.key_facts_manual).length;
                 results[qId].all_covered = `${allCovered}/${allUnique}`;
+                
+                // Save detailed checkbox states for restoration
+                results[qId].step1_checkboxes = allChecked;
+                results[qId].step1_facts = allFacts.map(({ fact, type }) => ({ fact, type }));
 
             } else if (currentStep === 2) {
                 // Collect correctness data from the deduplicated structure
@@ -1644,8 +1648,20 @@
                 let mentionedOptionalCount = 0;
                 let mentionedSafetyCount = 0;
                 
+                // Save detailed correctness states
+                const correctnessStates = [];
+                
                 allModelFacts.forEach(({ fact, type }, index) => {
                     const notMentioned = document.querySelector(`input[name="correctness_${type}_${index}_not_mentioned"]`).value === 'true';
+                    const isCorrect = document.querySelector(`input[name="correctness_${type}_${index}_correct"]`).checked;
+                    
+                    correctnessStates.push({
+                        fact,
+                        type,
+                        notMentioned,
+                        isCorrect
+                    });
+                    
                     if (!notMentioned) {
                         const isCorrect = document.querySelector(`input[name="correctness_${type}_${index}_correct"]`).checked;
                         if (type === 'essential') {
@@ -1667,6 +1683,9 @@
                 
                 results[qId].mentioned_correct_essential = `${accurateEssential}/${mentionedEssentialCount}`;
                 results[qId].mentioned_correct_all = `${accurateEssential + accurateOptional + accurateSafety}/${mentionedEssentialCount + mentionedOptionalCount + mentionedSafetyCount}`;
+                
+                // Save detailed correctness states for restoration
+                results[qId].step2_correctness = correctnessStates;
 
             } else if (currentStep === 3) {
                 // Collect relevance and actionability data from the deduplicated structure
@@ -1681,8 +1700,17 @@
                 const optionalRelevance = [];
                 const safetyRelevance = [];
                 
+                // Save detailed relevance states
+                const relevanceStates = [];
+                
                 allModelFacts.forEach(({ fact, type }, index) => {
                     const isRelevant = document.querySelector(`input[id="relevance_relevant_${type}_${index + 1}"]`).checked;
+                    relevanceStates.push({
+                        fact,
+                        type,
+                        isRelevant
+                    });
+                    
                     if (type === 'essential') {
                         essentialRelevance.push(isRelevant);
                     } else if (type === 'optional') {
@@ -1703,6 +1731,10 @@
 
                 results[qId].relevance = `${relevantEssential + relevantOptional + relevantSafety}/${totalEssentialModel + totalOptionalModel + totalSafetyModel}`;
                 results[qId].is_actionable = isActionable ? 1 : 0;
+                
+                // Save detailed relevance states for restoration
+                results[qId].step3_relevance = relevanceStates;
+                results[qId].step3_actionable = isActionable;
             }
 
             // Auto-save to Firebase after each question completion
@@ -2216,43 +2248,60 @@
             const savedData = results[questionId];
             if (!savedData) return;
 
+            console.log('Restoring saved state for question:', questionId, 'step:', step, 'data:', savedData);
+
             if (step === 1) {
-                // Restore completeness data
-                if (savedData.covered_essential_ground_truth !== undefined) {
-                    const essentialCheckboxes = document.querySelectorAll('#gtEssentialFacts input[type="checkbox"]');
-                    const optionalCheckboxes = document.querySelectorAll('#gtOptionalFacts input[type="checkbox"]');
+                // Restore completeness data using detailed saved states
+                if (savedData.step1_checkboxes && savedData.step1_facts) {
+                    const allCheckboxes = Array.from(document.querySelectorAll('#gtEssentialFacts input[type="checkbox"]'));
                     
-                    // Restore essential facts (simplified - just check first N boxes)
-                    let checkedCount = 0;
-                    essentialCheckboxes.forEach((cb, index) => {
-                        if (checkedCount < savedData.covered_essential_ground_truth) {
-                            cb.checked = true;
-                            checkedCount++;
-                        } else {
-                            cb.checked = false;
-                        }
-                    });
-                    
-                    // Restore optional facts
-                    checkedCount = 0;
-                    optionalCheckboxes.forEach((cb, index) => {
-                        if (checkedCount < savedData.covered_optional_ground_truth) {
-                            cb.checked = true;
-                            checkedCount++;
-                        } else {
-                            cb.checked = false;
+                    // Restore checkboxes using the saved detailed states
+                    savedData.step1_checkboxes.forEach((isChecked, index) => {
+                        if (index < allCheckboxes.length) {
+                            allCheckboxes[index].checked = isChecked;
                         }
                     });
                 }
             } else if (step === 2) {
-                // Restore correctness data (simplified restoration)
-                console.log('Restoring correctness data for question:', questionId);
+                // Restore correctness data using detailed saved states
+                if (savedData.step2_correctness) {
+                    savedData.step2_correctness.forEach((state, index) => {
+                        const notMentionedInput = document.querySelector(`input[name="correctness_${state.type}_${index}_not_mentioned"]`);
+                        const correctCheckbox = document.querySelector(`input[name="correctness_${state.type}_${index}_correct"]`);
+                        const notMentionedBtn = document.getElementById(`not_mentioned_btn_${state.type}_${index}`);
+                        const row = document.getElementById(`eval_row_${state.type}_${index}`);
+                        
+                        if (notMentionedInput && correctCheckbox && notMentionedBtn && row) {
+                            notMentionedInput.value = state.notMentioned.toString();
+                            correctCheckbox.checked = state.isCorrect;
+                            
+                            if (state.notMentioned) {
+                                notMentionedBtn.classList.add('active');
+                                row.classList.add('faded');
+                            } else {
+                                notMentionedBtn.classList.remove('active');
+                                row.classList.remove('faded');
+                            }
+                        }
+                    });
+                }
+                
             } else if (step === 3) {
-                // Restore relevance and actionability data
-                if (savedData.is_actionable !== undefined) {
+                // Restore relevance and actionability data using detailed saved states
+                if (savedData.step3_relevance) {
+                    savedData.step3_relevance.forEach((state, index) => {
+                        const relevanceCheckbox = document.querySelector(`input[id="relevance_relevant_${state.type}_${index + 1}"]`);
+                        if (relevanceCheckbox) {
+                            relevanceCheckbox.checked = state.isRelevant;
+                        }
+                    });
+                }
+                
+                // Restore actionability
+                if (savedData.step3_actionable !== undefined) {
                     const actionabilityCheckbox = document.getElementById('actionability');
                     if (actionabilityCheckbox) {
-                        actionabilityCheckbox.checked = savedData.is_actionable === 1;
+                        actionabilityCheckbox.checked = savedData.step3_actionable;
                     }
                 }
             }
