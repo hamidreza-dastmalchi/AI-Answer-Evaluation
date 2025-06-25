@@ -1195,20 +1195,20 @@
             if (currentStep === 1) {
                 renderGroundTruthFacts();
                 renderModelFacts();
-                // Restore saved state if resuming
-                if (isResuming && results[currentQuestion.id]) {
+                // Restore saved state if available
+                if (results[currentQuestion.id]) {
                     restoreSavedState(currentQuestion.id, 1);
                 }
             } else if (currentStep === 2) {
                 renderCorrectnessFacts();
-                // Restore saved state if resuming
-                if (isResuming && results[currentQuestion.id]) {
+                // Restore saved state if available
+                if (results[currentQuestion.id]) {
                     restoreSavedState(currentQuestion.id, 2);
                 }
             } else if (currentStep === 3) {
                 renderRelevanceAndActionabilityFacts();
-                // Restore saved state if resuming
-                if (isResuming && results[currentQuestion.id]) {
+                // Restore saved state if available
+                if (results[currentQuestion.id]) {
                     restoreSavedState(currentQuestion.id, 3);
                 }
             }
