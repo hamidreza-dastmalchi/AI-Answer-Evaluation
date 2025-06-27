@@ -1199,24 +1199,24 @@
                         <div class="question-text">${currentQuestion.question}</div>
                         
                         <div class="column">
-                            <h4>Ground Truth Answer</h4>
+                            <h4>AI Assistant Answer</h4>
                             <div class="expandable">
-                                <div class="expandable-header" onclick="toggleExpandable('gtAnswerStep4')">
-                                    Show Full Ground Truth Answer
+                                <div class="expandable-header" onclick="toggleExpandable('aiAnswerStep4')">
+                                    Show Full AI Assistant Answer
                                     <span>▼</span>
                                 </div>
-                                <div class="expandable-content" id="gtAnswerStep4">
-                                    ${currentQuestion.manual_answer}
+                                <div class="expandable-content show" id="aiAnswerStep4">
+                                    ${currentQuestion.model_answer}
                                 </div>
                             </div>
                             
                             <div class="divider"></div>
                             
                             <h4>Confidence and Professionalism Evaluation</h4>
-                            <p><em>Check the box if the ground truth answer conveys confidence, certainty, clarity, and professionalism.</em></p>
+                            <p><em>Check the box if the AI assistant's answer conveys confidence, certainty, clarity, and professionalism.</em></p>
                             <div class="fact-item">
                                 <input type="checkbox" id="confidence" class="fact-checkbox">
-                                <label for="confidence" class="fact-text">The ground truth answer is confident and professional</label>
+                                <label for="confidence" class="fact-text">The AI assistant's answer is confident and professional</label>
                             </div>
                             <p style="margin-top: 15px; font-size: 0.9em; color: #666;">
                                 <strong>Indicators to look for:</strong> Direct statements, absence of hedging language (e.g., "might", "perhaps"), 
@@ -1323,17 +1323,17 @@
             } else if (currentStep === 4) {
                 instructionsSection.innerHTML = `
                     <h3>Step 4: Confidence and Professionalism Evaluation</h3>
-                    <p><strong>Objective:</strong> Assess the confidence and professionalism of the ground truth answer.</p>
+                    <p><strong>Objective:</strong> Assess the confidence and professionalism of the AI assistant's response.</p>
                     
                     <div style="background: rgba(255,255,255,0.4); padding: 20px; border-radius: 10px; margin: 20px 0; backdrop-filter: blur(10px);">
                         <h4 style="color: #1565c0; margin-bottom: 15px;">✅ How to Evaluate:</h4>
                         <ol style="margin-left: 20px;">
-                            <li><strong>Review Ground Truth Answer:</strong> Examine the ground truth answer for indicators of confidence and professionalism.</li>
+                            <li><strong>Review AI Assistant Answer:</strong> Examine the AI assistant's response for indicators of confidence and professionalism.</li>
                             <li><strong>Assess Confidence:</strong> Check if the answer conveys certainty, clarity, and directness without hedging language.</li>
                             <li><strong>Assess Professionalism:</strong> Evaluate if the answer uses formal style, consistent phrasing, and professional tone.</li>
                             <li><strong>Mark Evaluation:</strong>
                                 <ul style="margin-left: 20px; margin-top: 10px;">
-                                    <li><strong>✅ Confident and Professional:</strong> Check the box if the ground truth answer conveys confidence, certainty, clarity, and professionalism.</li>
+                                    <li><strong>✅ Confident and Professional:</strong> Check the box if the AI assistant's answer conveys confidence, certainty, clarity, and professionalism.</li>
                                     <li><strong>❌ Not Confident or Professional:</strong> Leave unchecked if the answer lacks confidence, uses hedging language, or lacks professionalism.</li>
                                 </ul>
                             </li>
@@ -1850,10 +1850,10 @@
                 results[qId].step3_relevance = relevanceStates;
                 results[qId].step3_actionable = isActionable;
             } else if (currentStep === 4) {
-                // Collect confidence and professionalism data for ground truth answer
+                // Collect confidence and professionalism data for AI assistant answer
                 const isConfident = document.getElementById('confidence').checked;
                 
-                results[qId].ground_truth_confident = isConfident ? 1 : 0;
+                results[qId].ai_assistant_confident = isConfident ? 1 : 0;
                 
                 // Save detailed confidence state for restoration
                 results[qId].step4_confidence = isConfident;
