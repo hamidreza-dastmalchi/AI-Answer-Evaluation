@@ -1187,6 +1187,44 @@
                         </div>
                     </div>
                 `;
+            } else if (currentStep === 4) {
+                stepContent = `
+                    <div class="question-header">
+                        <h2>Question ${currentIndex + 1}/${questions.length}</h2>
+                    </div>
+
+                    <!-- Step 4: Evaluate Confidence and Professionalism -->
+                    <div class="section">
+                        <h3>Step 4: Evaluate Confidence and Professionalism</h3>
+                        <div class="question-text">${currentQuestion.question}</div>
+                        
+                        <div class="column">
+                            <h4>Ground Truth Answer</h4>
+                            <div class="expandable">
+                                <div class="expandable-header" onclick="toggleExpandable('gtAnswerStep4')">
+                                    Show Full Ground Truth Answer
+                                    <span>▼</span>
+                                </div>
+                                <div class="expandable-content" id="gtAnswerStep4">
+                                    ${currentQuestion.manual_answer}
+                                </div>
+                            </div>
+                            
+                            <div class="divider"></div>
+                            
+                            <h4>Confidence and Professionalism Evaluation</h4>
+                            <p><em>Check the box if the ground truth answer conveys confidence, certainty, clarity, and professionalism.</em></p>
+                            <div class="fact-item">
+                                <input type="checkbox" id="confidence" class="fact-checkbox">
+                                <label for="confidence" class="fact-text">The ground truth answer is confident and professional</label>
+                            </div>
+                            <p style="margin-top: 15px; font-size: 0.9em; color: #666;">
+                                <strong>Indicators to look for:</strong> Direct statements, absence of hedging language (e.g., "might", "perhaps"), 
+                                consistent phrasing, and formal style that conveys certainty and professionalism.
+                            </p>
+                        </div>
+                    </div>
+                `;
             }
             
             mainContent.innerHTML = stepContent;
@@ -1210,6 +1248,11 @@
                 // Restore saved state if available
                 if (results[currentQuestion.id]) {
                     restoreSavedState(currentQuestion.id, 3);
+                }
+            } else if (currentStep === 4) {
+                // No rendering needed for Step 4 - just restore saved state if available
+                if (results[currentQuestion.id]) {
+                    restoreSavedState(currentQuestion.id, 4);
                 }
             }
             
@@ -1275,6 +1318,34 @@
                             <li><strong>✅ Actionable:</strong> Check the box if the response provides clear next steps, specific instructions, meaningful guidance that helps the user complete a task, or information that meaningfully advances their understanding of the topic.</li>
                             <li><strong>❌ Not Actionable:</strong> Leave unchecked if the response is too vague to act upon or doesn't provide any useful information or guidance.</li>
                         </ul>
+                    </div>
+                `;
+            } else if (currentStep === 4) {
+                instructionsSection.innerHTML = `
+                    <h3>Step 4: Confidence and Professionalism Evaluation</h3>
+                    <p><strong>Objective:</strong> Assess the confidence and professionalism of the ground truth answer.</p>
+                    
+                    <div style="background: rgba(255,255,255,0.4); padding: 20px; border-radius: 10px; margin: 20px 0; backdrop-filter: blur(10px);">
+                        <h4 style="color: #1565c0; margin-bottom: 15px;">✅ How to Evaluate:</h4>
+                        <ol style="margin-left: 20px;">
+                            <li><strong>Review Ground Truth Answer:</strong> Examine the ground truth answer for indicators of confidence and professionalism.</li>
+                            <li><strong>Assess Confidence:</strong> Check if the answer conveys certainty, clarity, and directness without hedging language.</li>
+                            <li><strong>Assess Professionalism:</strong> Evaluate if the answer uses formal style, consistent phrasing, and professional tone.</li>
+                            <li><strong>Mark Evaluation:</strong>
+                                <ul style="margin-left: 20px; margin-top: 10px;">
+                                    <li><strong>✅ Confident and Professional:</strong> Check the box if the ground truth answer conveys confidence, certainty, clarity, and professionalism.</li>
+                                    <li><strong>❌ Not Confident or Professional:</strong> Leave unchecked if the answer lacks confidence, uses hedging language, or lacks professionalism.</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        
+                        <div style="background: rgba(255,255,255,0.6); padding: 15px; border-radius: 8px; margin-top: 15px;">
+                            <h5 style="color: #1565c0; margin-bottom: 10px;">Indicators to Look For:</h5>
+                            <ul style="margin-left: 20px;">
+                                <li><strong>Confidence Indicators:</strong> Direct statements, absence of hedging language (e.g., "might", "perhaps", "maybe"), clear and definitive language</li>
+                                <li><strong>Professionalism Indicators:</strong> Formal style, consistent phrasing, proper technical terminology, well-structured sentences</li>
+                            </ul>
+                        </div>
                     </div>
                 `;
             }
@@ -1453,9 +1524,48 @@
             ];
             
             modelRelevanceDiv.innerHTML = allModelFacts.map(({ fact, type }) => `
-                <div class="fact-item">
+                    <div class="fact-item">
                     <input type="checkbox" id="relevance_relevant_${type}_${idx}" class="fact-checkbox">
                     <div class="fact-text">${idx++}. ${fact}</div>
+                    </div>
+            `).join('');
+        }
+
+        function renderConfidenceAndProfessionalismFacts() {
+            const currentQuestion = questions[currentIndex];
+            const dedupedManual = getDedupedKeyPoints(currentQuestion.key_facts_manual);
+            const dedupedModel = getDedupedKeyPoints(currentQuestion.key_facts_model);
+            
+            // Ground truth facts for reference
+            let idx = 1;
+            const gtConfidenceDiv = document.getElementById('gtConfidenceFacts');
+            const allGtFacts = [
+                ...dedupedManual.essential.map(fact => ({ fact, type: 'essential' })),
+                ...dedupedManual.optional.map(fact => ({ fact, type: 'optional' })),
+                ...dedupedManual.safety_critical.map(fact => ({ fact, type: 'safety' }))
+            ];
+            gtConfidenceDiv.innerHTML = allGtFacts.map(({ fact }) => `
+                <div class="fact-item">
+                    <div class="fact-text">${idx++}. ${fact}</div>
+                </div>
+            `).join('');
+
+            // Model facts with evaluation options using checkboxes
+            let midx = 1;
+            const modelConfidenceDiv = document.getElementById('modelConfidenceFacts');
+            const allModelFacts = [
+                ...dedupedModel.essential.map(fact => ({ fact, type: 'essential' })),
+                ...dedupedModel.optional.map(fact => ({ fact, type: 'optional' })),
+                ...dedupedModel.safety_critical.map(fact => ({ fact, type: 'safety' }))
+            ];
+            modelConfidenceDiv.innerHTML = allModelFacts.map(({ fact, type }, index) => `
+                <div class="fact-item" id="eval_row_${type}_${index}">
+                    <input type="checkbox" name="confidence_${type}_${index}_confident" class="fact-checkbox" onchange="handleNotMentionedChange('${type}', ${index})">
+                    <div class="fact-text">${midx++}. ${fact}</div>
+                    <button type="button" class="not-mentioned-btn" id="not_mentioned_btn_${type}_${index}" onclick="toggleNotMentioned('${type}', ${index})">
+                        Not Mentioned
+                    </button>
+                    <input type="hidden" name="confidence_${type}_${index}_inconfident" value="false">
                 </div>
             `).join('');
         }
@@ -1483,11 +1593,15 @@
                 } else {
                     nextBtn.textContent = 'Finish ➡️';
                 }
+            } else if (currentStep === 4) {
+                prevBtn.disabled = false;
+                prevBtn.textContent = '⬅️ Previous Step';
+                nextBtn.textContent = 'Finish ➡️';
             }
 
             // Calculate progress based on current question and step
-            const totalSteps = questions.length * 3;
-            const currentProgress = (currentIndex * 3 + currentStep);
+            const totalSteps = questions.length * 4;
+            const currentProgress = (currentIndex * 4 + currentStep);
             const progress = (currentProgress / totalSteps) * 100;
             
             progressFill.style.width = progress + '%';
@@ -1735,10 +1849,18 @@
                 // Save detailed relevance states for restoration
                 results[qId].step3_relevance = relevanceStates;
                 results[qId].step3_actionable = isActionable;
+            } else if (currentStep === 4) {
+                // Collect confidence and professionalism data for ground truth answer
+                const isConfident = document.getElementById('confidence').checked;
+                
+                results[qId].ground_truth_confident = isConfident ? 1 : 0;
+                
+                // Save detailed confidence state for restoration
+                results[qId].step4_confidence = isConfident;
             }
 
             // Auto-save to Firebase after each question completion
-            if (currentStep === 3) {
+            if (currentStep === 4) {
                 autoSaveToFirebase();
             }
         }
@@ -1820,7 +1942,7 @@
             } else if (currentIndex > 0) {
                 // Go to previous question, last step
                 currentIndex--;
-                currentStep = 3;
+                currentStep = 4;
             }
             
             updateUI();
@@ -1829,7 +1951,7 @@
         function nextQuestion() {
             saveCurrentState();
             
-            if (currentStep < 3) {
+            if (currentStep < 4) {
                 // Go to next step
                 currentStep++;
             } else if (currentIndex < questions.length - 1) {
@@ -2302,6 +2424,14 @@
                     const actionabilityCheckbox = document.getElementById('actionability');
                     if (actionabilityCheckbox) {
                         actionabilityCheckbox.checked = savedData.step3_actionable;
+                    }
+                }
+            } else if (step === 4) {
+                // Restore confidence and professionalism data
+                if (savedData.step4_confidence !== undefined) {
+                    const confidenceCheckbox = document.getElementById('confidence');
+                    if (confidenceCheckbox) {
+                        confidenceCheckbox.checked = savedData.step4_confidence;
                     }
                 }
             }
